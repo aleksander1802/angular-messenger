@@ -1,1 +1,84 @@
-<p>register-page works!</p>
+<form class="register" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <h2 class="register__title">Sign up</h2>
+
+    <div
+        class="register__control"
+        [ngClass]="{ invalid: name?.touched && name?.invalid }"
+    >
+        <label for="name">name</label>
+        <input
+            id="name"
+            type="name"
+            formControlName="name"
+            autocomplete="name"
+        />
+        <div class="validation" *ngIf="name?.touched && name?.invalid">
+            <small *ngIf="getError('name', 'required')"
+                >Please enter a name</small
+            >
+        </div>
+    </div>
+
+    <div
+        class="register__control"
+        [ngClass]="{ invalid: email?.touched && email?.invalid }"
+    >
+        <label for="email">email</label>
+        <input
+            id="email"
+            type="email"
+            formControlName="email"
+            autocomplete="email"
+        />
+        <div class="validation" *ngIf="email?.touched && email?.invalid">
+            <small *ngIf="getError('email', 'required')"
+                >Please enter a register email</small
+            >
+            <small *ngIf="getError('email', 'email')"
+                >The register email is invalid</small
+            >
+            <small
+                *ngIf="isPrimaryDuplicationError || getError('email', 'taken')"
+                >Email address is already taken</small
+            >
+        </div>
+    </div>
+
+    <div
+        class="register__control"
+        [ngClass]="{ invalid: password?.touched && password?.invalid }"
+    >
+        <label for="password"> password </label>
+        <input
+            id="password"
+            type="password"
+            formControlName="password"
+            autocomplete="current-password"
+            (input)="password?.markAsTouched()"
+        />
+        <div class="validation" *ngIf="password?.touched && password?.invalid">
+            <small *ngIf="getError('password', 'required')"
+                >Please enter a password. <br
+            /></small>
+            <small *ngIf="getError('password', 'strongPassword')">
+                Your password isn't strong enough. <br />
+                Recommendations: {{ password?.errors?.['message'] }}
+            </small>
+        </div>
+    </div>
+
+    <div class="register__button-submit">
+        <app-cyber-button
+            [disabled]="
+                registerForm.invalid ||
+                isSubmitting ||
+                isPrimaryDuplicationError ||
+                isHttpError
+            "
+            type="submit"
+            [buttonText]="isSubmitting ? 'Registering...' : 'Register'"
+        ></app-cyber-button>
+    </div>
+</form>
+
+<app-toast></app-toast>

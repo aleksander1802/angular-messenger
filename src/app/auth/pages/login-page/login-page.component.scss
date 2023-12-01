@@ -1,0 +1,58 @@
+.login {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 700px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+    background: var(--background-auth);
+    border-radius: 10px;
+    &__title {
+        margin-bottom: 1rem;
+    }
+
+    &__control {
+        color: #888;
+
+        label {
+            padding-left: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        input {
+            width: 100%;
+            height: 3rem;
+            border-color: transparent;
+            background-color: var(--background);
+            transition: border-color 0.3s;
+            outline-color: var(--primary);
+            margin: 0.3rem auto;
+            padding: 1rem;
+        }
+    }
+    &__link {
+        padding:  1rem 0;
+        font-size: .8rem;
+    }
+    &__button {
+        &-submit {
+            display: flex;
+            padding-top: 1rem;
+        }
+    }
+    
+}
+
+.validation {
+    color: var(--danger-color);
+}
+
+.invalid {
+    color: var(--danger-color);
+
+    input {
+        border: 1px solid var(--danger-color);
+        outline-color: var(--danger-color);
+    }
+}

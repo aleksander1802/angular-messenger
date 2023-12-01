@@ -3,9 +3,19 @@ import { CommonModule } from '@angular/common';
 import { RegisterPageComponent } from './pages/register-page/register-page.component';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { AuthRoutingModule } from './auth-routing.module';
+import { SharedModule } from '../shared/shared.module';
+import { ReactiveFormsModule } from '@angular/forms';
+import { RegisterService } from './services/register/register.service';
+import { ToastService } from '../shared/services/toast/toast.service';
 
 @NgModule({
     declarations: [RegisterPageComponent, LoginPageComponent],
-    imports: [CommonModule, AuthRoutingModule],
+    providers: [RegisterService, ToastService],
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        AuthRoutingModule,
+        SharedModule,
+    ],
 })
 export class AuthModule {}

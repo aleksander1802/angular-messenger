@@ -9,15 +9,14 @@ const routes: Routes = [
         children: [
             {
                 path: '',
-                redirectTo: 'signin',
+                redirectTo: 'auth',
                 pathMatch: 'full',
             },
             {
-                path: 'signin',
+                path: 'auth',
                 loadChildren: () =>
                     import('./auth/auth.module').then((m) => m.AuthModule),
             },
-
             // {
             //     path: '**',
             //     component: NotFoundComponent,

@@ -1,8 +1,10 @@
 :root {
     --primary: #4081ec;
     --background: #e5e5e5;
+    --background-auth: #efefef;
     --background-primary: rgb(20, 83, 220);
     --danger-color: crimson;
+    --success-color: rgb(64, 146, 66);
 }
 
 * {
@@ -16,6 +18,7 @@
     margin: auto;
     padding-top: 2rem;
     padding-bottom: 2rem;
+    min-height: 100vh;
 }
 
 html,
@@ -23,6 +26,7 @@ body {
     height: 100%;
 }
 body {
+    position: relative;
     margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
     overflow-y: scroll;
