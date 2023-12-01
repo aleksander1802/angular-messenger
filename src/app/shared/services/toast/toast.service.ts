@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root',
+})
 export class ToastService {
     private toastSubject = new Subject<{ message: string; isError: boolean }>();
     private closeToastSubject = new Subject<void>();
@@ -10,7 +12,6 @@ export class ToastService {
     closeToast$ = this.closeToastSubject.asObservable();
 
     showToast(message: string, isError: boolean) {
-        console.log('showToast is called:', message, isError);
         this.toastSubject.next({ message, isError });
     }
 

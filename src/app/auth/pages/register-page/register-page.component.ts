@@ -32,7 +32,7 @@ export class RegisterPageComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.registerForm = this.fb.group({
             name: ['Shadow', [Validators.required]],
-            email: ['courses@mail.ru', [Validators.required, Validators.email]],
+            email: ['courses@mail.r', [Validators.required, Validators.email]],
             password: ['1!qQwerty', [Validators.required, passwordValidator()]],
         });
 
@@ -81,7 +81,7 @@ export class RegisterPageComponent implements OnInit, OnDestroy {
 
         this.usedEmails = [];
 
-        this.router.navigate(['/signin']);
+        this.router.navigate(['auth', 'signin']);
     }
 
     private handleRegistrationError(error: HttpErrorResponse) {

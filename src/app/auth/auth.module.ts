@@ -6,11 +6,10 @@ import { AuthRoutingModule } from './auth-routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RegisterService } from './services/register/register.service';
-import { ToastService } from '../shared/services/toast/toast.service';
 
 @NgModule({
     declarations: [RegisterPageComponent, LoginPageComponent],
-    providers: [RegisterService, ToastService],
+    providers: [RegisterService],
     imports: [
         CommonModule,
         ReactiveFormsModule,
