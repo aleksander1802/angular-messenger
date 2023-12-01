@@ -6,18 +6,23 @@ const routes: Routes = [
     {
         path: '',
         component: MainLayoutComponent,
-        // children: [
-        //     {
-        //         path: '',
-        //         // redirectTo: 'login',
-        //         pathMatch: 'full',
-        //     },
+        children: [
+            {
+                path: '',
+                redirectTo: 'signin',
+                pathMatch: 'full',
+            },
+            {
+                path: 'signin',
+                loadChildren: () =>
+                    import('./auth/auth.module').then((m) => m.AuthModule),
+            },
 
-        //     // {
-        //     //     path: '**',
-        //     //     component: NotFoundComponent,
-        //     // },
-        // ],
+            // {
+            //     path: '**',
+            //     component: NotFoundComponent,
+            // },
+        ],
     },
 ];
 
