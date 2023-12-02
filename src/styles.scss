@@ -1,12 +1,14 @@
 :root {
     --primary: #4081ec;
     --background: #e5e5e5;
-    --background-auth: #efefef;
+    --background-auth: #efefef54;
     --background-primary: rgb(20, 83, 220);
     --danger-color: crimson;
     --success-color: rgb(64, 146, 66);
     --background-orange: #fb5c56;
     --color-beige: #e9e3ca;
+    --background-light: url("./assets//wallpapers/light-theme-1080.png")
+        center/cover no-repeat;
 }
 
 * {
@@ -32,6 +34,7 @@ body {
     margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
     overflow-y: scroll;
+    background: var(--background-light);
 }
 
 ul {
