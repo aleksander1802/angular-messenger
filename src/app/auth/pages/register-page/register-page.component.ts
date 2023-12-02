@@ -20,6 +20,7 @@ export class RegisterPageComponent implements OnInit, OnDestroy {
     isHttpError = false;
     isPrimaryDuplicationError = false;
     usedEmails: string[] = [];
+    
     private emailSubscription: Subscription | undefined;
 
     constructor(
@@ -31,9 +32,9 @@ export class RegisterPageComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.registerForm = this.fb.group({
-            name: ['Shadow', [Validators.required]],
-            email: ['courses@mail.r', [Validators.required, Validators.email]],
-            password: ['1!qQwerty', [Validators.required, passwordValidator()]],
+            name: ['', [Validators.required]],
+            email: ['', [Validators.required, Validators.email]],
+            password: ['', [Validators.required, passwordValidator()]],
         });
 
         this.emailSubscription = this.registerForm
@@ -67,7 +68,6 @@ export class RegisterPageComponent implements OnInit, OnDestroy {
         const formData: RegisterFormValue = this.registerForm.value;
 
         this.isSubmitting = true;
-        this.isHttpError = false;
 
         this.registerService.registerUser(formData).subscribe({
             next: () => this.handleRegistrationSuccess(),

@@ -1,5 +1,5 @@
 <form class="login" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-    <h2 class="login__title">Sign in</h2>
+    <h2 class="login__title">Sign In</h2>
 
     <div
         class="login__control"
@@ -49,15 +49,19 @@
 
     <div class="login__link">
         <span>Don't have an account? </span>
-        <a routerLink="/auth/signup"> Click here. </a>
+        <a routerLink="/auth/signup"> Sign Up </a>
     </div>
 
     <div class="login__button-submit">
         <app-cyber-button
-            [disabled]="loginForm.invalid"
+            [disabled]="
+                loginForm.invalid ||
+                isSubmitting ||
+                isHttpError ||
+                hasUserChangedInput
+            "
             type="submit"
-            [buttonText]="'Login'"
-        >
-        </app-cyber-button>
+            [buttonText]="isSubmitting ? 'Logging in...' : 'Login'"
+        ></app-cyber-button>
     </div>
 </form>
