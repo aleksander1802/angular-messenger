@@ -37,6 +37,7 @@
             <small *ngIf="getError('email', 'email')"
                 >The register email is invalid</small
             >
+
             <small
                 *ngIf="isPrimaryDuplicationError || getError('email', 'taken')"
                 >Email address is already taken</small

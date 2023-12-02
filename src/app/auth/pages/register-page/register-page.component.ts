@@ -146,10 +146,9 @@ export class RegisterPageComponent implements OnInit, OnDestroy {
 
     private checkForDuplication(value: string) {
         this.isPrimaryDuplicationError = this.usedEmails.includes(value);
+
         if (this.isPrimaryDuplicationError) {
             this.registerForm.get('email')?.setErrors({ taken: true });
-        } else {
-            this.registerForm.get('email')?.setErrors(null);
         }
     }
 
