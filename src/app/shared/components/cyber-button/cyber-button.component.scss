@@ -4,7 +4,6 @@
         85%,
         calc(var(--primary-lightness, 50) * 1%)
     );
-
     --shadow-primary: hsl(var(--shadow-primary-hue), 90%, 50%);
     --primary-hue: 600;
     --primary-lightness: 50;
