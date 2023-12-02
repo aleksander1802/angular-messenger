@@ -34,11 +34,18 @@ export class LoginPageComponent implements OnInit, OnDestroy {
     ) {}
 
     ngOnInit() {
+        this.initForm();
+        this.subscribeToFormChanges();
+    }
+
+    private initForm() {
         this.loginForm = this.fb.group({
             email: ['courses@mail', [Validators.required, Validators.email]],
             password: ['1!qQwerty', [Validators.required, passwordValidator()]],
         });
+    }
 
+    private subscribeToFormChanges() {
         this.formChangesSubscription = this.loginForm.valueChanges.subscribe(
             () => {
                 if (this.hasUserChangedInput) {
