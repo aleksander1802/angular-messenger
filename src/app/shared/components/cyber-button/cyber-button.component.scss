@@ -103,9 +103,9 @@
         8% 80%,
         0 70%
     );
-    font-family: "Cyber", sans-serif;
+
     color: var(--color);
-    cursor: pointer;
+    cursor: var(--cursor-pointer);
     background: transparent;
     text-transform: uppercase;
     font-size: var(--font-size);
@@ -270,7 +270,7 @@
 
 .cybr-btn:disabled {
     opacity: 0.5;
-    cursor: not-allowed;
+    cursor: var(--cursor-disabled);
 }
 
 .cybr-btn:hover:disabled .cybr-btn__glitch {

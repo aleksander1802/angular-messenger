@@ -8,14 +8,14 @@
     padding: 2rem 1.5rem;
     background: var(--background-auth);
     border-radius: 10px;
-    cursor: default;
+
     clip-path: polygon(
         0 0,
-        calc(100% - 90px) 0,
-        100% 90px,
+        calc(100% - 95px) 0,
+        100% 95px,
         100% 100%,
-        64px 100%,
-        0 calc(100% - 64px)
+        70px 100%,
+        0 calc(100% - 70px)
     );
 
     &__title {
@@ -44,6 +44,9 @@
     &__link {
         padding: 1rem 0;
         font-size: 0.8rem;
+        a {
+            color: var(--color-alert);
+        }
     }
     &__button {
         &-submit {

@@ -8,19 +8,19 @@
     padding: 2rem 1.5rem;
     background: var(--background-auth);
     border-radius: 10px;
-    cursor: default;
+    
 
     clip-path: polygon(
         0 0,
-        calc(100% - 110px) 0,
-        100% 110px,
+        calc(100% - 115px) 0,
+        100% 115px,
         100% 100%,
         60px 100%,
         0 calc(100% - 60px)
     );
 
     --mask: conic-gradient(
-        from -45deg at top 80px right 110px,
+        from -45deg at top 80px right 115px,
         #000,
         #0000 1deg 45deg,
         #000 35deg
