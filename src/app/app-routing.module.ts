@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MainLayoutComponent } from './shared/components/main-layout/main-layout.component';
 import { NotFoundComponent } from './core/pages/not-found/not-found.component';
+import { ProfilePageComponent } from './core/pages/profile-page/profile-page.component';
 
 const routes: Routes = [
     {
@@ -17,6 +18,10 @@ const routes: Routes = [
                 path: 'auth',
                 loadChildren: () =>
                     import('./auth/auth.module').then((m) => m.AuthModule),
+            },
+            {
+                path: 'profile',
+                component: ProfilePageComponent,
             },
             {
                 path: '**',

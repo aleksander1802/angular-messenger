@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { APP_REGISTER } from '../../../../../constants';
-import { RegisterFormValue } from '../../models/register.interface';
+import { APP_REGISTER } from '../../../../constants';
+import { RegisterFormValue } from '../models/register.interface';
 
 @Injectable()
 export class RegisterService {

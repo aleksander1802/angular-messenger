@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { passwordValidator } from '../../validators/password.validator';
-import { RegisterService } from '../../services/register/register.service';
+import { RegisterService } from '../../services/register.service';
 import { Router } from '@angular/router';
 import { RegisterFormValue } from '../../models/register.interface';
 import { ToastService } from 'src/app/shared/services/toast/toast.service';

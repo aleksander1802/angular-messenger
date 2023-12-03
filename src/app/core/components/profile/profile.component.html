@@ -1,0 +1,16 @@
+<div *ngIf="profile$ | async as profile; else loading">
+    <h2>User Profile</h2>
+    <ul>
+        <li><strong>User ID:</strong> {{ profile.uid.S }}</li>
+        <li><strong>Email:</strong> {{ profile.email.S }}</li>
+        <li>
+            <strong>Creation Time:</strong>
+            {{ profile.createdAt.S | date : "medium" }}
+        </li>
+        <li><strong>User Name:</strong> {{ profile.name.S }}</li>
+    </ul>
+</div>
+
+<ng-template #loading>
+    <p>Loading...</p>
+</ng-template>

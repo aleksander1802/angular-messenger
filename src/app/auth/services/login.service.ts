@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { APP_LOGIN } from '../../../../../constants';
+import { APP_LOGIN } from '../../../../constants';
 import { HttpClient } from '@angular/common/http';
-import { LoginResponse } from '../../models/login-response.interface';
-import { LoginFormValue } from '../../models/login.interface';
+import { LoginResponse } from '../models/login-response.interface';
+import { LoginFormValue } from '../models/login.interface';
 
 @Injectable()
 export class LoginService {

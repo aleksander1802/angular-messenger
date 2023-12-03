@@ -5,8 +5,8 @@ import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { AuthRoutingModule } from './auth-routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
-import { RegisterService } from './services/register/register.service';
-import { LoginService } from './services/login/login.service';
+import { RegisterService } from './services/register.service';
+import { LoginService } from './services/login.service';
 
 @NgModule({
     declarations: [RegisterPageComponent, LoginPageComponent],
