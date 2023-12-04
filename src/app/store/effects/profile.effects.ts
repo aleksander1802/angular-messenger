@@ -50,4 +50,38 @@ export class ProfileEffects {
             )
         )
     );
+
+    updateProfile$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(profileActions.updateProfile),
+            mergeMap((action) =>
+                this.profileService.updateProfile({ name: action.name }).pipe(
+                    map(() => {
+                        this.toastService.showToast(
+                            'Profile updated successfully',
+                            false
+                        );
+                        return profileActions.updateProfileSuccess({
+                            name: action.name,
+                        });
+                    }),
+                    catchError((error) => {
+                        let errorMessage = 'Unknown Error';
+
+                        if (error.status === 0) {
+                            errorMessage = 'Internet connection lost';
+                        } else {
+                            errorMessage = error.error.message;
+                        }
+
+                        this.toastService.showToast(errorMessage, true);
+
+                        return of(
+                            profileActions.updateProfileFailure({ error })
+                        );
+                    })
+                )
+            )
+        )
+    );
 }

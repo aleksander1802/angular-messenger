@@ -1,4 +1,4 @@
-@import url('./assets/fonts/nier/stylesheet.scss');
+@import url("./assets/fonts/nier/stylesheet.scss");
 
 :root {
     --primary: #4081ec;
@@ -15,16 +15,11 @@
     --background-light: url("./assets//wallpapers/light-theme-1080.png")
         center/cover no-repeat;
 
-    --cursor-default: url("./assets/cursors/Hack_Normal_Select_v2.cur"),
-        default;
-    --cursor-pointer: url("./assets/cursors/Hack_Link_Select_v2.cur"),
-        default;
-    --сursor-text: url("./assets/cursors/Hack_Text_Select_v2.cur"),
-        default;
-    --cursor-disabled: url("./assets/cursors/Hack_Unavailable_v2.cur"),
-        default;
-    --cursor-link: url("./assets/cursors/Hack_Location_Select.cur"),
-        default;
+    --cursor-default: url("./assets/cursors/Hack_Normal_Select_v2.cur"), default;
+    --cursor-pointer: url("./assets/cursors/Hack_Link_Select_v2.cur"), default;
+    --сursor-text: url("./assets/cursors/Hack_Text_Select_v2.cur"), default;
+    --cursor-disabled: url("./assets/cursors/Hack_Unavailable_v2.cur"), default;
+    --cursor-link: url("./assets/cursors/Hack_Location_Select.cur"), default;
 }
 
 * {
@@ -47,7 +42,7 @@ body {
 }
 body {
     position: relative;
-    margin: 0;    
+    margin: 0;
     overflow-y: scroll;
     background: var(--background-light);
 }
@@ -76,8 +71,8 @@ button,
 input,
 select,
 textarea {
-	font-family: var(--nier-font), Arial, Helvetica, sans-serif;
+    font-family: var(--nier-font), Arial, Helvetica, sans-serif;
 }
 strong {
-	font-family: Arial, Helvetica, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
 }

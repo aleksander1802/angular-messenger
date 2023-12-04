@@ -1,14 +1,68 @@
-<div *ngIf="profile$ | async as profile; else loading">
-    <h2>User Profile</h2>
-    <ul>
-        <li><strong>User ID:</strong> {{ profile.uid.S }}</li>
-        <li><strong>Email:</strong> {{ profile.email.S }}</li>
-        <li>
-            <strong>Creation Time:</strong>
-            {{ profile.createdAt.S | date : "medium" }}
-        </li>
-        <li><strong>User Name:</strong> {{ profile.name.S }}</li>
-    </ul>
+<div class="profile" *ngIf="profile$ | async as profile; else loading">
+    <h2 class="profile__title">User Profile</h2>
+    <div class="profile__form">
+        <ul class="profile__list">
+            <li><strong>User ID:</strong> {{ profile.uid.S }}</li>
+            <li><strong>Email:</strong> {{ profile.email.S }}</li>
+            <li>
+                <strong>Creation Time:</strong>
+                {{ profile.createdAt.S | date : "longDate" }}
+            </li>
+            <li>
+                <strong>User Name:</strong>
+                <ng-container *ngIf="!isEditMode; else editModeComponent">
+                    {{ profile.name.S }}
+                </ng-container>
+            </li>
+        </ul>
+    </div>
+
+    <div class="profile__edit__button" *ngIf="!isEditMode">
+        <app-cyber-button
+            type="button"
+            (click)="onEditClick($event)"
+            [buttonText]="'Edit'"
+        ></app-cyber-button>
+    </div>
+
+    <ng-template #editModeComponent>
+        <form *ngIf="profileForm" [formGroup]="profileForm">
+            <div
+                class="profile__control"
+                [ngClass]="{ invalid: name?.touched && name?.invalid }"
+            >
+                <input
+                    id="name"
+                    type="name"
+                    formControlName="name"
+                    autocomplete="name"
+                />
+                <div class="validation" *ngIf="name?.touched && name?.invalid">
+                    <small *ngIf="getError('name', 'required')">
+                        Please enter a name
+                    </small>
+                    <small *ngIf="getError('name', 'maxlength')">
+                        The name exceeds 40 characters
+                    </small>
+                </div>
+            </div>
+
+            <div class="profile__edit__buttons">
+                <app-cyber-button
+                    [disabled]="profileForm.invalid"
+                    type="button"
+                    (click)="onSaveClick($event)"
+                    [buttonText]="'Save'"
+                ></app-cyber-button>
+
+                <app-cyber-button
+                    type="button"
+                    (click)="onCancelClick($event)"
+                    [buttonText]="'Cancel'"
+                ></app-cyber-button>
+            </div>
+        </form>
+    </ng-template>
 </div>
 
 <ng-template #loading>

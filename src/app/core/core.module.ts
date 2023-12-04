@@ -14,12 +14,15 @@ import {
     profileReducer,
 } from '../store/reducers/profile.reducer';
 
+import { SharedModule } from '../shared/shared.module';
+
 @NgModule({
     declarations: [NotFoundComponent, ProfileComponent, ProfilePageComponent],
     providers: [httpInterceptorProviders],
     imports: [
         CommonModule,
-        HttpClientModule,
+        HttpClientModule,        
+        SharedModule,
         StoreModule.forRoot(rootReducer),
         StoreModule.forFeature(profileFeatureKey, profileReducer),
         EffectsModule.forRoot([ProfileEffects]),

@@ -12,3 +12,7 @@ export interface UserProfile {
         S: string;
     };
 }
+
+export interface UserProfileName {
+    name: string;
+}

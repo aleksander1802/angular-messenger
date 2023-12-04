@@ -37,7 +37,7 @@ export class RegisterPageComponent implements OnInit, OnDestroy {
 
     private initForm() {
         this.registerForm = this.fb.group({
-            name: ['', [Validators.required]],
+            name: ['', [Validators.required, Validators.maxLength(40)]],
             email: ['', [Validators.required, Validators.email]],
             password: ['', [Validators.required, passwordValidator()]],
         });
@@ -98,14 +98,10 @@ export class RegisterPageComponent implements OnInit, OnDestroy {
             const errorType: RegistrationErrorType = error.error.type;
 
             switch (errorType) {
-                case RegistrationErrorType.InvalidFormData:
+                case RegistrationErrorType.InvalidFormData ||
+                    RegistrationErrorType.UnknownFormat ||
+                    RegistrationErrorType.MissingParameters:
                     this.handleInvalidFormDataException(error.error.message);
-                    break;
-                case RegistrationErrorType.UnknownFormat:
-                    this.handleUnknownFormatException(error.error.message);
-                    break;
-                case RegistrationErrorType.MissingParameters:
-                    this.handleMissingParametersException(error.error.message);
                     break;
                 case RegistrationErrorType.UserExists:
                     this.handlePrimaryDuplicationException(error.error.message);
@@ -120,14 +116,6 @@ export class RegisterPageComponent implements OnInit, OnDestroy {
     }
 
     private handleInvalidFormDataException(message: string) {
-        this.toastService.showToast(message, true);
-    }
-
-    private handleUnknownFormatException(message: string) {
-        this.toastService.showToast(message, true);
-    }
-
-    private handleMissingParametersException(message: string) {
         this.toastService.showToast(message, true);
     }
 
