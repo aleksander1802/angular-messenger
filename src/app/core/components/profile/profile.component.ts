@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, take } from 'rxjs';
 import {
     loadProfile,
+    logoutProfile,
     updateProfile,
 } from 'src/app/store/actions/profile.actions';
 import { selectProfile } from 'src/app/store/selectors/profile.selectors';
 import { UserProfile, UserProfileName } from '../../models/profile.interface';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-profile',
@@ -18,8 +20,13 @@ export class ProfileComponent implements OnInit {
     profile$: Observable<UserProfile | null> | undefined;
     isEditMode = false;
     profileForm: FormGroup | undefined;
+    isloggedOut = false;
 
-    constructor(private store: Store, private fb: FormBuilder) {}
+    constructor(
+        private store: Store,
+        private fb: FormBuilder,
+        private router: Router
+    ) {}
 
     ngOnInit() {
         this.profile$ = this.store.pipe(select(selectProfile));
@@ -67,5 +74,28 @@ export class ProfileComponent implements OnInit {
             this.store.dispatch(updateProfile(updatedProfileName));
             this.isEditMode = false;
         }
+    }
+
+    onLogout() {
+        if (this.isloggedOut) {
+            return;
+        }
+
+        this.store
+            .select(selectProfile)
+            .pipe(take(3))
+            .subscribe((data) => {
+                if (data === null) {
+                    this.isloggedOut = false;
+                    localStorage.clear();
+
+                    this.router.navigateByUrl('/auth/signin');
+                } else {
+                    this.isloggedOut = false;
+                }
+            });
+
+        this.isloggedOut = true;
+        this.store.dispatch(logoutProfile());
     }
 }

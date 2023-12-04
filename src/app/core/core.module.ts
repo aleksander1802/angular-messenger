@@ -21,7 +21,7 @@ import { SharedModule } from '../shared/shared.module';
     providers: [httpInterceptorProviders],
     imports: [
         CommonModule,
-        HttpClientModule,        
+        HttpClientModule,
         SharedModule,
         StoreModule.forRoot(rootReducer),
         StoreModule.forFeature(profileFeatureKey, profileReducer),

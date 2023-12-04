@@ -84,4 +84,38 @@ export class ProfileEffects {
             )
         )
     );
+
+    logoutProfile$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(profileActions.logoutProfile),
+            mergeMap(() =>
+                this.profileService.logoutProfile().pipe(
+                    map(() => {
+                        this.toastService.showToast(
+                            'You have successfully logged out!',
+                            false
+                        );
+
+                        return profileActions.logoutProfileSuccess();
+                    }),
+
+                    catchError((error) => {
+                        let errorMessage = 'Unknown Error';
+
+                        if (error.status === 0) {
+                            errorMessage = 'Internet connection lost';
+                        } else {
+                            errorMessage = error.error.message;
+                        }
+
+                        this.toastService.showToast(errorMessage, true);
+
+                        return of(
+                            profileActions.logoutProfileFailure({ error })
+                        );
+                    })
+                )
+            )
+        )
+    );
 }

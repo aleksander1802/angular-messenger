@@ -32,3 +32,14 @@ export const updateProfileFailure = createAction(
     ProfileActionType.PROFILE_UPDATE_FAILURE,
     props<{ error: ProfileError }>()
 );
+
+export const logoutProfile = createAction(ProfileActionType.PROFILE_LOGOUT);
+
+export const logoutProfileSuccess = createAction(
+    ProfileActionType.PROFILE_LOGOUT_SUCCESS
+);
+
+export const logoutProfileFailure = createAction(
+    ProfileActionType.PROFILE_LOGOUT_FAILURE,
+    props<{ error: ProfileError }>()
+);

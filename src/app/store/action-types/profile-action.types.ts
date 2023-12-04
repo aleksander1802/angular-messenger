@@ -6,4 +6,8 @@ export enum ProfileActionType {
     PROFILE_UPDATE = '[Profile] Update Profile',
     PROFILE_UPDATE_SUCCESS = '[Profile] Update Profile Success',
     PROFILE_UPDATE_FAILURE = '[Profile] Update Profile Failure',
+
+    PROFILE_LOGOUT = '[Profile] Logout Profile',
+    PROFILE_LOGOUT_SUCCESS = '[Profile] Logout Profile Success',
+    PROFILE_LOGOUT_FAILURE = '[Profile] Logout Profile Failure',
 }

@@ -68,3 +68,11 @@
 <ng-template #loading>
     <p>Loading...</p>
 </ng-template>
+
+<div class="profile__logout">
+    <app-cyber-button
+        [buttonText]="'Logout'"
+        (click)="onLogout()"
+        [disabled]="isloggedOut || (profile$ | async) === null"
+    ></app-cyber-button>
+</div>
