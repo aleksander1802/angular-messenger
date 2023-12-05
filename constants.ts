@@ -13,7 +13,7 @@ export const APP_GROUPS_CREATE =
     'https://tasks.app.rs.school/angular/groups/create';
 
 export const APP_GROUPS_DELETE =
-    'https://tasks.app.rs.school/angular/groups/delete?groupID={:groupID}';
+    'https://tasks.app.rs.school/angular/groups/delete';
 
 export const APP_USERS = 'https://tasks.app.rs.school/angular/users';
 

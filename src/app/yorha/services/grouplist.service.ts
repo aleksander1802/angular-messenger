@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import {
@@ -24,7 +24,9 @@ export class GroupListService {
     }
 
     deleteGroup(groupId: string) {
-        const url = APP_GROUPS_DELETE.replace('{:groupID}', groupId);
-        return this.http.delete(url);
+        const url = APP_GROUPS_DELETE;
+        const params = new HttpParams().set('groupID', groupId);
+
+        return this.http.delete(url, { params });
     }
 }
