@@ -95,6 +95,7 @@ export class ProfileEffects {
                             'You have successfully logged out!',
                             false
                         );
+                        localStorage.clear();
 
                         return profileActions.logoutProfileSuccess();
                     }),

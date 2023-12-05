@@ -73,6 +73,6 @@
     <app-cyber-button
         [buttonText]="'Logout'"
         (click)="onLogout()"
-        [disabled]="isloggedOut || (profile$ | async) === null"
+        [disabled]="(isProfileLoading$ | async) || false"
     ></app-cyber-button>
 </div>

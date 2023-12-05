@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { passwordValidator } from '../../validators/password.validator';
 import { LoginService } from '../../services/login.service';
 import { Router } from '@angular/router';
 import { ToastService } from 'src/app/shared/services/toast/toast.service';
@@ -41,7 +40,7 @@ export class LoginPageComponent implements OnInit, OnDestroy {
     private initForm() {
         this.loginForm = this.fb.group({
             email: ['courses@mail.ru', [Validators.required, Validators.email]],
-            password: ['1!qQwerty', [Validators.required, passwordValidator()]],
+            password: ['1!qQwerty', [Validators.required]],
         });
     }
 

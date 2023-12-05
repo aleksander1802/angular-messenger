@@ -1,13 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
-import { Observable, take } from 'rxjs';
+import { Observable } from 'rxjs';
 import {
     loadProfile,
     logoutProfile,
     updateProfile,
 } from 'src/app/store/actions/profile.actions';
-import { selectProfile } from 'src/app/store/selectors/profile.selectors';
+import {
+    selectProfile,
+    selectisProfileLoading,
+} from 'src/app/store/selectors/profile.selectors';
 import { UserProfile, UserProfileName } from '../../models/profile.interface';
 import { Router } from '@angular/router';
 
@@ -20,7 +23,7 @@ export class ProfileComponent implements OnInit {
     profile$: Observable<UserProfile | null> | undefined;
     isEditMode = false;
     profileForm: FormGroup | undefined;
-    isloggedOut = false;
+    isProfileLoading$: Observable<boolean> | undefined;
 
     constructor(
         private store: Store,
@@ -30,6 +33,10 @@ export class ProfileComponent implements OnInit {
 
     ngOnInit() {
         this.profile$ = this.store.pipe(select(selectProfile));
+        this.isProfileLoading$ = this.store.pipe(
+            select(selectisProfileLoading)
+        );
+
         this.store.dispatch(loadProfile());
 
         this.profileForm = this.fb.group({
@@ -77,25 +84,6 @@ export class ProfileComponent implements OnInit {
     }
 
     onLogout() {
-        if (this.isloggedOut) {
-            return;
-        }
-
-        this.store
-            .select(selectProfile)
-            .pipe(take(3))
-            .subscribe((data) => {
-                if (data === null) {
-                    this.isloggedOut = false;
-                    localStorage.clear();
-
-                    this.router.navigateByUrl('/auth/signin');
-                } else {
-                    this.isloggedOut = false;
-                }
-            });
-
-        this.isloggedOut = true;
         this.store.dispatch(logoutProfile());
     }
 }
