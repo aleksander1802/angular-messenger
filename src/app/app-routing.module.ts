@@ -9,11 +9,12 @@ const routes: Routes = [
         path: '',
         component: MainLayoutComponent,
         children: [
-            {
-                path: '',
-                redirectTo: 'auth',
-                pathMatch: 'full',
-            },
+            // {
+            //     path: '',
+            //     redirectTo: 'auth',
+            //     pathMatch: 'full',
+            // },
+           
             {
                 path: 'auth',
                 loadChildren: () =>
@@ -22,6 +23,11 @@ const routes: Routes = [
             {
                 path: 'profile',
                 component: ProfilePageComponent,
+            },
+            {
+                path: '',
+                loadChildren: () =>
+                    import('./yorha/yorha.module').then((m) => m.YoRHaModule),
             },
             {
                 path: '**',
