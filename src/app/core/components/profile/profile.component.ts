@@ -12,7 +12,6 @@ import {
     selectisProfileLoading,
 } from 'src/app/store/selectors/profile.selectors';
 import { UserProfile, UserProfileName } from '../../models/profile.interface';
-import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-profile',
@@ -25,11 +24,7 @@ export class ProfileComponent implements OnInit {
     profileForm: FormGroup | undefined;
     isProfileLoading$: Observable<boolean> | undefined;
 
-    constructor(
-        private store: Store,
-        private fb: FormBuilder,
-        private router: Router
-    ) {}
+    constructor(private store: Store, private fb: FormBuilder) {}
 
     ngOnInit() {
         this.profile$ = this.store.pipe(select(selectProfile));

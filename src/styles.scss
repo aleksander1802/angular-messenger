@@ -28,14 +28,6 @@
     padding: 0;
 }
 
-.container {
-    max-width: 1600px;
-    margin: auto;
-    padding-top: 2rem;
-    padding-bottom: 2rem;
-    min-height: 100vh;
-}
-
 html,
 body {
     height: 100%;
@@ -62,6 +54,14 @@ label {
 
 a {
     cursor: var(--cursor-link);
+}
+
+.container {
+    max-width: 1600px;
+    margin: auto;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    height: 100vh;
 }
 
 .cybr-btn,
