@@ -7,7 +7,8 @@ import { RegisterFormValue } from '../../models/register.interface';
 import { ToastService } from 'src/app/shared/services/toast/toast.service';
 import { RegistrationErrorType } from '../../models/registration-error.enum';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Subscription } from 'rxjs';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'app-register-page',
@@ -21,7 +22,7 @@ export class RegisterPageComponent implements OnInit, OnDestroy {
     isPrimaryDuplicationError = false;
     usedEmails: string[] = [];
 
-    private emailSubscription: Subscription | undefined;
+    private emailUnsubscribe$ = new Subject<void>();
 
     constructor(
         private fb: FormBuilder,
@@ -44,9 +45,10 @@ export class RegisterPageComponent implements OnInit, OnDestroy {
     }
 
     private subscribeToFormChanges() {
-        this.emailSubscription = this.registerForm
+        this.registerForm
             .get('email')
-            ?.valueChanges.subscribe((value) => {
+            ?.valueChanges.pipe(takeUntil(this.emailUnsubscribe$))
+            .subscribe((value) => {
                 this.checkForDuplication(value);
             });
     }
@@ -76,10 +78,13 @@ export class RegisterPageComponent implements OnInit, OnDestroy {
 
         this.isSubmitting = true;
 
-        this.registerService.registerUser(formData).subscribe({
-            next: () => this.handleRegistrationSuccess(),
-            error: (error) => this.handleRegistrationError(error),
-        });
+        this.registerService
+            .registerUser(formData)
+            .pipe(takeUntil(this.emailUnsubscribe$))
+            .subscribe({
+                next: () => this.handleRegistrationSuccess(),
+                error: (error) => this.handleRegistrationError(error),
+            });
     }
 
     private handleRegistrationSuccess() {
@@ -141,8 +146,7 @@ export class RegisterPageComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        if (this.emailSubscription) {
-            this.emailSubscription.unsubscribe();
-        }
+        this.emailUnsubscribe$.next();
+        this.emailUnsubscribe$.complete();
     }
 }
