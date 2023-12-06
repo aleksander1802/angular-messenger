@@ -18,10 +18,12 @@ export const createGroup = createAction(
     GroupsActionType.GROUP_CREATE,
     props<{ name: string }>()
 );
+
 export const createGroupSuccess = createAction(
     GroupsActionType.GROUP_CREATE_SUCCESS,
     props<{ group: GroupItem }>()
 );
+
 export const createGroupFailure = createAction(
     GroupsActionType.GROUP_CREATE_FAILURE,
     props<{ error: ErrorFailure }>()

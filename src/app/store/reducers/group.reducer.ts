@@ -1,12 +1,12 @@
 import { createReducer, on } from '@ngrx/store';
 import { ErrorFailure } from 'src/app/shared/models/error-types.interface';
-import { Group } from 'src/app/yorha/models/group.interface';
+import { GroupItem } from 'src/app/yorha/models/group.interface';
 import * as groupActions from '../actions/group.actions';
 
 export const groupFeatureKey = 'group';
 
 export interface GroupState {
-    groups: Group | null;
+    groups: GroupItem[] | null;
     loading: boolean;
     error: ErrorFailure | null;
 }
@@ -23,7 +23,7 @@ export const groupReducer = createReducer(
 
     on(groupActions.loadGroupListSuccess, (state, action) => ({
         ...state,
-        groups: action,
+        groups: action.Items,
         loading: false,
     })),
 
@@ -31,5 +31,5 @@ export const groupReducer = createReducer(
         ...state,
         error,
         loading: false,
-    })),
+    }))
 );

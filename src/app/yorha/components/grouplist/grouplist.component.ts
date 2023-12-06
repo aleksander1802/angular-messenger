@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { GroupItem } from '../../models/group.interface';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { Store, select } from '@ngrx/store';
+import { selectGroup } from 'src/app/store/selectors/group.selectors';
+import { loadGroupList } from 'src/app/store/actions/group.actions';
 
 @Component({
     selector: 'app-grouplist',
@@ -12,45 +16,20 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
     ],
 })
 export class GrouplistComponent implements OnInit {
-    groupItems$: GroupItem[] = [
-        {
-            createdAt: {
-                S: '1701626535690',
-            },
-            id: {
-                S: '8imkx6o537u',
-            },
-            createdBy: {
-                S: '67vqsxoun2',
-            },
-            name: {
-                S: 'myGroup',
-            },
-        },
-        {
-            createdAt: {
-                S: '1701799690460',
-            },
-            id: {
-                S: 'n4a1vp648xm',
-            },
-            createdBy: {
-                S: 'qc6ffdt391',
-            },
-            name: {
-                S: 'test',
-            },
-        },
-    ];
+    groupItems$: Observable<GroupItem[] | null> | undefined;
     showDeleteModal = false;
     isCreateMode = false;
     groupForm: FormGroup | undefined;
 
     currentLocalStorageUID = '8imkx6o537u';
 
-    constructor(private fb: FormBuilder) {}
+    constructor(private store: Store, private fb: FormBuilder) {}
 
     ngOnInit() {
+        this.groupItems$ = this.store.pipe(select(selectGroup));
+
+        this.store.dispatch(loadGroupList());
+
         this.groupForm = this.fb.group({
             name: [
                 '',
@@ -90,6 +69,7 @@ export class GrouplistComponent implements OnInit {
 
     onCancelCreate(e: Event) {
         e.preventDefault();
+        this.groupForm?.reset();
         this.isCreateMode = false;
     }
 

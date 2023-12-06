@@ -13,15 +13,18 @@
             <mat-icon>refresh</mat-icon>
         </div>
     </div>
-    <!-- *ngFor="groupItems | async as item; else loading" -->
-    <div class="group__list">
+
+    <div
+        class="group__list"
+        *ngIf="groupItems$ | async as groupData; else loading"
+    >
         <ul class="group__list__items">
-            <li *ngFor="let item of groupItems$" class="group__list__item">
+            <li *ngFor="let item of groupData" class="group__list__item">
                 <a href="#" class="group__list__item__link">{{
                     item.name.S
                 }}</a>
                 <mat-icon
-                (click)="openDeleteModal($event)"
+                    (click)="openDeleteModal($event)"
                     *ngIf="item.id.S === currentLocalStorageUID"
                     class="group__list__item__delete"
                     >delete</mat-icon
