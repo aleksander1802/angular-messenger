@@ -38,7 +38,7 @@ export class GroupEffects {
                         return groupActions.loadGroupListSuccess(groups);
                     }),
                     catchError((error) => {
-                        let errorMessage = 'Unknown Error';
+                        let errorMessage = error.message;
 
                         if (error.status === 0) {
                             errorMessage = 'Internet connection lost';
@@ -94,6 +94,37 @@ export class GroupEffects {
                         this.toastService.showToast(errorMessage, true);
 
                         return of(groupActions.createGroupFailure({ error }));
+                    })
+                )
+            )
+        )
+    );
+
+    deleteGroup$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(groupActions.deleteGroup),
+            switchMap(({ groupId }) =>
+                this.groupService.deleteGroup(groupId).pipe(
+                    map(() => {
+                        this.toastService.showToast(
+                            'The group was successfully deleted',
+                            false
+                        );
+
+                        return groupActions.deleteGroupSuccess({ groupId });
+                    }),
+                    catchError((error) => {
+                        let errorMessage = error.message;
+
+                        if (error.status === 0) {
+                            errorMessage = 'Internet connection lost';
+                        } else {
+                            errorMessage = error.error.message;
+                        }
+
+                        this.toastService.showToast(errorMessage, true);
+
+                        return of(groupActions.deleteGroupFailure({ error }));
                     })
                 )
             )

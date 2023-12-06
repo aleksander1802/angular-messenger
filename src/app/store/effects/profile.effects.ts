@@ -39,7 +39,7 @@ export class ProfileEffects {
                         profileActions.loadProfileSuccess({ profile })
                     ),
                     catchError((error) => {
-                        let errorMessage = 'Unknown Error';
+                        let errorMessage = error.message;
 
                         if (error.status === 0) {
                             errorMessage = 'Internet connection lost';
@@ -70,7 +70,7 @@ export class ProfileEffects {
                         });
                     }),
                     catchError((error) => {
-                        let errorMessage = 'Unknown Error';
+                        let errorMessage = error.message;
 
                         if (error.status === 0) {
                             errorMessage = 'Internet connection lost';
@@ -107,7 +107,7 @@ export class ProfileEffects {
                     }),
 
                     catchError((error) => {
-                        let errorMessage = 'Unknown Error';
+                        let errorMessage = error.message;
 
                         if (error.status === 0) {
                             errorMessage = 'Internet connection lost';

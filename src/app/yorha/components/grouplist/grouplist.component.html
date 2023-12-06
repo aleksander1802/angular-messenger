@@ -24,7 +24,7 @@
                     item.name.S
                 }}</a>
                 <mat-icon
-                    (click)="openDeleteModal()"
+                    (click)="openDeleteModal(item.id.S)"
                     *ngIf="item.createdBy.S === currentLocalStorageUID.uid"
                     class="group__list__item__delete"
                     >delete</mat-icon
@@ -40,11 +40,12 @@
             </h2>
             <div class="group__modal__buttons">
                 <app-cyber-button
+                    [disabled]="(this.isGroupLoading$ | async) || false"
                     (click)="confirmDelete()"
                     [buttonText]="'Delete'"
                 ></app-cyber-button>
                 <app-cyber-button
-                    (click)="cancelDelete()"
+                    (click)="cancelGroupDelete()"
                     [buttonText]="'Cancel'"
                 ></app-cyber-button>
             </div>
@@ -58,7 +59,7 @@
                 class="group__form__control"
                 [ngClass]="{ invalid: name?.touched && name?.invalid }"
             >
-                <label for="name">name</label>
+                <label for="name">group name</label>
                 <input
                     id="name"
                     type="name"

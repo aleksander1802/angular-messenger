@@ -10,6 +10,7 @@ import {
 } from 'src/app/store/selectors/group.selectors';
 import {
     createGroup,
+    deleteGroup,
     loadGroupList,
 } from 'src/app/store/actions/group.actions';
 import { LocalStorageAuthValue } from 'src/app/auth/models/login-response.interface';
@@ -37,6 +38,8 @@ export class GrouplistComponent implements OnInit, OnDestroy {
 
     private createGroupSubscription: Subscription | undefined;
 
+    private currentGroupId: string | null = null;
+
     constructor(private store: Store, private fb: FormBuilder) {}
 
     ngOnInit() {
@@ -54,6 +57,7 @@ export class GrouplistComponent implements OnInit, OnDestroy {
             .pipe(filter((groups) => groups !== null))
             .subscribe(() => {
                 this.onCancelCreate();
+                this.cancelGroupDelete();
             });
 
         this.store.dispatch(loadGroupList());
@@ -111,16 +115,24 @@ export class GrouplistComponent implements OnInit, OnDestroy {
         this.isCreateMode = false;
     }
 
-    openDeleteModal() {
+    openDeleteModal(groupId?: string) {
+        if (groupId) {
+            this.currentGroupId = groupId;
+        }
         this.showDeleteModal = true;
     }
 
-    cancelDelete() {
+    cancelGroupDelete() {
+        this.currentGroupId = null;
         this.showDeleteModal = false;
     }
 
     confirmDelete() {
-        this.showDeleteModal = false;
+        const groupId = this.currentGroupId;
+
+        if (groupId) {
+            this.store.dispatch(deleteGroup({ groupId }));
+        }
     }
 
     ngOnDestroy() {
