@@ -12,10 +12,41 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
     ],
 })
 export class GrouplistComponent implements OnInit {
-    groupItems$: GroupItem[] = [];
+    groupItems$: GroupItem[] = [
+        {
+            createdAt: {
+                S: '1701626535690',
+            },
+            id: {
+                S: '8imkx6o537u',
+            },
+            createdBy: {
+                S: '67vqsxoun2',
+            },
+            name: {
+                S: 'myGroup',
+            },
+        },
+        {
+            createdAt: {
+                S: '1701799690460',
+            },
+            id: {
+                S: 'n4a1vp648xm',
+            },
+            createdBy: {
+                S: 'qc6ffdt391',
+            },
+            name: {
+                S: 'test',
+            },
+        },
+    ];
     showDeleteModal = false;
     isCreateMode = false;
     groupForm: FormGroup | undefined;
+
+    currentLocalStorageUID = '8imkx6o537u';
 
     constructor(private fb: FormBuilder) {}
 

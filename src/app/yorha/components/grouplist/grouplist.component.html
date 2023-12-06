@@ -20,6 +20,12 @@
                 <a href="#" class="group__list__item__link">{{
                     item.name.S
                 }}</a>
+                <mat-icon
+                (click)="openDeleteModal($event)"
+                    *ngIf="item.id.S === currentLocalStorageUID"
+                    class="group__list__item__delete"
+                    >delete</mat-icon
+                >
             </li>
         </ul>
     </div>
@@ -56,10 +62,7 @@
                     formControlName="name"
                     autocomplete="name"
                 />
-                <div
-                    class="validation"
-                    *ngIf="name?.touched && name?.invalid"
-                >
+                <div class="validation" *ngIf="name?.touched && name?.invalid">
                     <small *ngIf="getError('name', 'required')">
                         Please enter a name
                     </small>
@@ -67,8 +70,7 @@
                         The name exceeds 30 characters
                     </small>
                     <small *ngIf="getError('name', 'pattern')">
-                        The name must contain only letters, numbers, or
-                        spaces
+                        The name must contain only letters, numbers, or spaces
                     </small>
                 </div>
             </div>
