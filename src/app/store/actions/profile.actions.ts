@@ -1,10 +1,11 @@
 import { createAction, props } from '@ngrx/store';
-import { ProfileError } from 'src/app/core/models/error.interface';
+
 import {
     UserProfile,
     UserProfileName,
 } from 'src/app/core/models/profile.interface';
 import { ProfileActionType } from '../action-types/profile-action.types';
+import { ErrorFailure } from 'src/app/shared/models/error-types.interface';
 
 export const loadProfile = createAction(ProfileActionType.PROFILE_LOAD);
 
@@ -15,7 +16,7 @@ export const loadProfileSuccess = createAction(
 
 export const loadProfileFailure = createAction(
     ProfileActionType.PROFILE_LOAD_FAILURE,
-    props<{ error: ProfileError }>()
+    props<{ error: ErrorFailure }>()
 );
 
 export const updateProfile = createAction(
@@ -30,7 +31,7 @@ export const updateProfileSuccess = createAction(
 
 export const updateProfileFailure = createAction(
     ProfileActionType.PROFILE_UPDATE_FAILURE,
-    props<{ error: ProfileError }>()
+    props<{ error: ErrorFailure }>()
 );
 
 export const logoutProfile = createAction(ProfileActionType.PROFILE_LOGOUT);
@@ -41,5 +42,5 @@ export const logoutProfileSuccess = createAction(
 
 export const logoutProfileFailure = createAction(
     ProfileActionType.PROFILE_LOGOUT_FAILURE,
-    props<{ error: ProfileError }>()
+    props<{ error: ErrorFailure }>()
 );

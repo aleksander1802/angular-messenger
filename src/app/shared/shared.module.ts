@@ -5,10 +5,16 @@ import { MainLayoutComponent } from './components/main-layout/main-layout.compon
 import { RouterModule } from '@angular/router';
 import { ToastComponent } from './components/toast/toast.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MaterialModule } from '../material/material.module';
 
 @NgModule({
     declarations: [CyberButtonComponent, MainLayoutComponent, ToastComponent],
-    imports: [CommonModule, RouterModule, ReactiveFormsModule],
-    exports: [CyberButtonComponent, ToastComponent, ReactiveFormsModule],
+    imports: [CommonModule, RouterModule, ReactiveFormsModule, MaterialModule],
+    exports: [
+        CyberButtonComponent,
+        ToastComponent,
+        ReactiveFormsModule,
+        MaterialModule,
+    ],
 })
 export class SharedModule {}

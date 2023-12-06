@@ -7,16 +7,16 @@ import {
     APP_GROUPS_CREATE,
     APP_GROUPS_DELETE,
 } from '../../../../constants';
-import { GroupList, GroupItem } from '../models/groups.interface';
+import { Group, GroupItem } from '../models/group.interface';
 
 @Injectable({
     providedIn: 'root',
 })
-export class GroupListService {
+export class GroupService {
     constructor(private http: HttpClient) {}
 
-    getGroups(): Observable<GroupList> {
-        return this.http.get<GroupList>(APP_GROUPS_LIST);
+    getGroups(): Observable<Group> {
+        return this.http.get<Group>(APP_GROUPS_LIST);
     }
 
     createGroup(name: string): Observable<GroupItem> {

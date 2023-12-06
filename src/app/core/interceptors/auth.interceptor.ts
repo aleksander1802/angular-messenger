@@ -4,24 +4,33 @@ import {
     HttpHandler,
     HttpRequest,
 } from '@angular/common/http';
+import { LocalStorageAuthValue } from 'src/app/auth/models/login-response.interface';
+import { APP_LOGIN, APP_REGISTER } from '../../../../constants';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
     intercept(req: HttpRequest<unknown>, next: HttpHandler) {
-        const token = localStorage.getItem('token') || '';
-        const uid = localStorage.getItem('uid') || '';
-        const email = localStorage.getItem('email') || '';
+        const { url } = req;
+        if (!url.startsWith(APP_LOGIN || APP_REGISTER)) {
+            const storageValue: LocalStorageAuthValue = JSON.parse(
+                localStorage.getItem('auth') || ''
+            );
 
-        const headers = {
-            'rs-uid': uid,
-            'rs-email': email,
-            Authorization: `Bearer ${token}`,
-        };
+            const { email, token, uid } = storageValue;
 
-        const modifiedReq = req.clone({
-            setHeaders: headers,
-        });
+            const headers = {
+                'rs-uid': uid,
+                'rs-email': email,
+                Authorization: `Bearer ${token}`,
+            };
 
-        return next.handle(modifiedReq);
+            const modifiedReq = req.clone({
+                setHeaders: headers,
+            });
+
+            return next.handle(modifiedReq);
+        }
+
+        return next.handle(req);
     }
 }

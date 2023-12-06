@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoginService } from '../../services/login.service';
-import { Router } from '@angular/router';
 import { ToastService } from 'src/app/shared/services/toast/toast.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import {
@@ -10,6 +9,8 @@ import {
 } from '../../models/login-response.interface';
 import { LoginFormValue } from '../../models/login.interface';
 import { Subject, Subscription, takeUntil } from 'rxjs';
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-login-page',
@@ -28,8 +29,9 @@ export class LoginPageComponent implements OnInit, OnDestroy {
     constructor(
         private fb: FormBuilder,
         private loginService: LoginService,
-        private router: Router,
-        private toastService: ToastService
+        private toastService: ToastService,
+        private authService: AuthService,
+        private router: Router
     ) {}
 
     ngOnInit() {
@@ -88,26 +90,17 @@ export class LoginPageComponent implements OnInit, OnDestroy {
     private handleLoginSuccess(data: LoginResponse) {
         this.isSubmitting = false;
 
-        this.saveCredentialsToLocalStorage(data);
+        this.authService.saveCredentialsToLocalStorage(
+            data,
+            this.loginForm.value.email
+        );
 
         this.showToastAndRedirect();
     }
 
-    private saveCredentialsToLocalStorage(data: LoginResponse) {
-        if (data.token) {
-            localStorage.setItem('token', data.token);
-        }
-
-        if (data.uid) {
-            localStorage.setItem('uid', data.uid);
-        }
-
-        localStorage.setItem('email', this.loginForm.value.email);
-    }
-
     private showToastAndRedirect() {
         this.toastService.showToast('Login successful!', false);
-        this.router.navigateByUrl('/profile');
+        this.router.navigateByUrl('/');
     }
 
     private handleLoginError(error: HttpErrorResponse) {

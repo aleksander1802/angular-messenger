@@ -1,0 +1,40 @@
+.group {
+    &__modal {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 700px;        
+        margin: 0 auto;
+        padding: 2rem 1.5rem;
+        background: var(--background-auth);
+        border-radius: 10px;
+        min-height: 300px;
+
+        clip-path: polygon(
+            0 0,
+            calc(100% - 115px) 0,
+            100% 115px,
+            100% 100%,
+            60px 100%,
+            0 calc(100% - 60px)
+        );
+
+        -webkit-mask: var(--mask);
+        mask: var(--mask);
+
+        &__title {
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+            padding-right: 6rem;
+        }
+
+        
+        &__buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1.5rem;
+        }
+    }
+}

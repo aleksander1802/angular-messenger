@@ -3,31 +3,31 @@ import { RouterModule, Routes } from '@angular/router';
 import { MainLayoutComponent } from './shared/components/main-layout/main-layout.component';
 import { NotFoundComponent } from './core/pages/not-found/not-found.component';
 import { ProfilePageComponent } from './core/pages/profile-page/profile-page.component';
+import { LoginGuard } from './auth/guards/login.guard';
+import { AuthGuard } from './auth/guards/auth.guard';
 
 const routes: Routes = [
     {
         path: '',
         component: MainLayoutComponent,
         children: [
-            // {
-            //     path: '',
-            //     redirectTo: 'auth',
-            //     pathMatch: 'full',
-            // },
-           
             {
                 path: 'auth',
                 loadChildren: () =>
                     import('./auth/auth.module').then((m) => m.AuthModule),
-            },
-            {
-                path: 'profile',
-                component: ProfilePageComponent,
+                canActivate: [LoginGuard],
             },
             {
                 path: '',
                 loadChildren: () =>
                     import('./yorha/yorha.module').then((m) => m.YoRHaModule),
+
+                canActivate: [AuthGuard],
+            },
+            {
+                path: 'profile',
+                component: ProfilePageComponent,
+                canActivate: [AuthGuard],
             },
             {
                 path: '**',

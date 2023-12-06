@@ -1,14 +1,14 @@
 import { createReducer, on } from '@ngrx/store';
 import * as profileActions from '../actions/profile.actions';
-import { ProfileError } from 'src/app/core/models/error.interface';
 import { UserProfile } from 'src/app/core/models/profile.interface';
+import { ErrorFailure } from 'src/app/shared/models/error-types.interface';
 
 export const profileFeatureKey = 'profile';
 
 export interface ProfileState {
     data: UserProfile | null;
     loading: boolean;
-    error: ProfileError | null;
+    error: ErrorFailure | null;
 }
 
 export const initialState: ProfileState = {
@@ -32,6 +32,11 @@ export const profileReducer = createReducer(
         ...state,
         error,
         loading: true,
+    })),
+
+    on(profileActions.updateProfile, (state) => ({
+        ...state,
+        loading: false,
     })),
 
     on(profileActions.updateProfileSuccess, (state, { name }) => ({

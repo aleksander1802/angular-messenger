@@ -34,12 +34,6 @@ p {
         0 calc(100% - 60px)
     );
 
-    --mask: conic-gradient(
-        from -46deg at top 85px right 115px,
-        #000,
-        #0000 1deg 46deg,
-        #000 35deg
-    );
     -webkit-mask: var(--mask);
     mask: var(--mask);
 

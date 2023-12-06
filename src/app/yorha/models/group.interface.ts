@@ -1,4 +1,4 @@
-export interface GroupList {
+export interface Group {
     Count: number;
     Items: GroupItem[];
 }

@@ -13,14 +13,18 @@ import * as profileActions from '../actions/profile.actions';
 import { ProfileService } from '../../core/services/profile.service';
 import { selectProfile } from '../selectors/profile.selectors';
 import { ToastService } from 'src/app/shared/services/toast/toast.service';
+import { AuthService } from 'src/app/auth/services/auth.service';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class ProfileEffects {
     constructor(
         private actions$: Actions,
         private store: Store,
+        private router: Router,
         private profileService: ProfileService,
-        private toastService: ToastService
+        private toastService: ToastService,
+        private authService: AuthService
     ) {}
 
     loadProfile$ = createEffect(() =>
@@ -95,7 +99,9 @@ export class ProfileEffects {
                             'You have successfully logged out!',
                             false
                         );
-                        localStorage.clear();
+
+                        this.authService.clearCredentials();
+                        this.router.navigate(['/auth']);
 
                         return profileActions.logoutProfileSuccess();
                     }),
