@@ -18,6 +18,16 @@ export interface GroupItem {
     };
 }
 
+export interface GroupName {
+    name: string;
+}
+
 export interface GroupCreateId {
     groupID: string;
+}
+
+export interface GeneratedGroup {
+    name: string;
+    createdAt: string;
+    createdBy: string;
 }

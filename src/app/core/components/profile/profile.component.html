@@ -19,8 +19,8 @@
 
     <div class="profile__edit__button" *ngIf="!isEditMode">
         <app-cyber-button
-            type="button"
-            (click)="onEditClick($event)"
+            
+            (click)="onEditClick()"
             [buttonText]="'Edit'"
         ></app-cyber-button>
     </div>
@@ -50,14 +50,12 @@
             <div class="profile__edit__buttons">
                 <app-cyber-button
                     [disabled]="profileForm.invalid"
-                    type="button"
-                    (click)="onSaveClick($event)"
+                    (click)="onSaveClick()"
                     [buttonText]="'Save'"
                 ></app-cyber-button>
 
                 <app-cyber-button
-                    type="button"
-                    (click)="onCancelClick($event)"
+                    (click)="onCancelClick()"
                     [buttonText]="'Cancel'"
                 ></app-cyber-button>
             </div>

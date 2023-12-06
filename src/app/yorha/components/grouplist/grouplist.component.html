@@ -5,7 +5,7 @@
         <div class="group__buttons__create">
             <app-cyber-button
                 [buttonText]="'Create'"
-                (click)="onCreateClick($event)"
+                (click)="onCreateClick()"
             ></app-cyber-button>
         </div>
         <div class="group__buttons__refresh">
@@ -24,8 +24,8 @@
                     item.name.S
                 }}</a>
                 <mat-icon
-                    (click)="openDeleteModal($event)"
-                    *ngIf="item.id.S === currentLocalStorageUID"
+                    (click)="openDeleteModal()"
+                    *ngIf="item.createdBy.S === currentLocalStorageUID.uid"
                     class="group__list__item__delete"
                     >delete</mat-icon
                 >
@@ -40,11 +40,11 @@
             </h2>
             <div class="group__modal__buttons">
                 <app-cyber-button
-                    (click)="confirmDelete($event)"
+                    (click)="confirmDelete()"
                     [buttonText]="'Delete'"
                 ></app-cyber-button>
                 <app-cyber-button
-                    (click)="cancelDelete($event)"
+                    (click)="cancelDelete()"
                     [buttonText]="'Cancel'"
                 ></app-cyber-button>
             </div>
@@ -80,15 +80,17 @@
 
             <div class="group__form__buttons">
                 <app-cyber-button
-                    [disabled]="groupForm.invalid"
-                    type="button"
-                    (click)="onCreateGroupSubmit($event)"
+                    [disabled]="
+                        groupForm.invalid ||
+                        (this.isGroupLoading$ | async) ||
+                        false
+                    "
+                    (click)="onCreateGroupSubmit()"
                     [buttonText]="'Create'"
                 ></app-cyber-button>
 
                 <app-cyber-button
-                    type="button"
-                    (click)="onCancelCreate($event)"
+                    (click)="onCancelCreate()"
                     [buttonText]="'Cancel'"
                 ></app-cyber-button>
             </div>

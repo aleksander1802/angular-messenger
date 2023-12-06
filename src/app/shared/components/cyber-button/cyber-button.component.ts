@@ -8,4 +8,5 @@ import { Component, Input } from '@angular/core';
 export class CyberButtonComponent {
     @Input() buttonText = '';
     @Input() disabled: boolean | undefined;
+    @Input() type: 'button' | 'submit' = 'button'; 
 }

@@ -47,8 +47,8 @@ export class ProfileComponent implements OnInit {
         return this.profileForm?.get(controlName)?.hasError(errorName);
     }
 
-    onEditClick(e: Event) {
-        e.preventDefault();
+    onEditClick() {
+        
         this.isEditMode = true;
 
         this.profile$?.subscribe((profile) => {
@@ -60,14 +60,14 @@ export class ProfileComponent implements OnInit {
         });
     }
 
-    onCancelClick(e: Event) {
-        e.preventDefault();
+    onCancelClick() {
+        
         this.profileForm?.reset();
         this.isEditMode = false;
     }
 
-    onSaveClick(e: Event) {
-        e.preventDefault();
+    onSaveClick() {
+        
         if (this.profileForm?.valid) {
             const updatedProfileName: UserProfileName = {
                 name: this.profileForm.value.name,

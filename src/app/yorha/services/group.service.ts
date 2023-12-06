@@ -7,7 +7,7 @@ import {
     APP_GROUPS_CREATE,
     APP_GROUPS_DELETE,
 } from '../../../../constants';
-import { Group, GroupItem } from '../models/group.interface';
+import { Group, GroupCreateId } from '../models/group.interface';
 
 @Injectable({
     providedIn: 'root',
@@ -19,8 +19,8 @@ export class GroupService {
         return this.http.get<Group>(APP_GROUPS_LIST);
     }
 
-    createGroup(name: string): Observable<GroupItem> {
-        return this.http.post<GroupItem>(APP_GROUPS_CREATE, { name });
+    createGroup(name: string): Observable<GroupCreateId> {
+        return this.http.post<GroupCreateId>(APP_GROUPS_CREATE, { name });
     }
 
     deleteGroup(groupId: string) {

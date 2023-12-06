@@ -1,6 +1,10 @@
 import { createAction, props } from '@ngrx/store';
 import { GroupsActionType } from '../action-types/group-action.types';
-import { Group, GroupItem } from 'src/app/yorha/models/group.interface';
+import {
+    GeneratedGroup,
+    Group,
+    GroupItem,
+} from 'src/app/yorha/models/group.interface';
 import { ErrorFailure } from 'src/app/shared/models/error-types.interface';
 
 export const loadGroupList = createAction(GroupsActionType.GROUP_LIST_LOAD);
@@ -16,12 +20,12 @@ export const loadGroupListFailure = createAction(
 
 export const createGroup = createAction(
     GroupsActionType.GROUP_CREATE,
-    props<{ name: string }>()
+    props<GeneratedGroup>()
 );
 
 export const createGroupSuccess = createAction(
     GroupsActionType.GROUP_CREATE_SUCCESS,
-    props<{ group: GroupItem }>()
+    props<GroupItem>()
 );
 
 export const createGroupFailure = createAction(

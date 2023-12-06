@@ -7,12 +7,15 @@ import {
     catchError,
     withLatestFrom,
     filter,
+    switchMap,
 } from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
 import * as groupActions from '../actions/group.actions';
-import { selectProfile } from '../selectors/profile.selectors';
+
 import { ToastService } from 'src/app/shared/services/toast/toast.service';
 import { GroupService } from 'src/app/yorha/services/group.service';
+import { GroupItem } from 'src/app/yorha/models/group.interface';
+import { selectGroup } from '../selectors/group.selectors';
 
 @Injectable()
 export class GroupEffects {
@@ -26,12 +29,14 @@ export class GroupEffects {
     loadGroup$ = createEffect(() =>
         this.actions$.pipe(
             ofType(groupActions.loadGroupList),
-            withLatestFrom(this.store.pipe(select(selectProfile))),
+            withLatestFrom(this.store.pipe(select(selectGroup))),
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
             filter(([_action, groups]) => !groups),
             mergeMap(() =>
                 this.groupService.getGroups().pipe(
-                    map((groups) => groupActions.loadGroupListSuccess(groups)),
+                    map((groups) => {
+                        return groupActions.loadGroupListSuccess(groups);
+                    }),
                     catchError((error) => {
                         let errorMessage = 'Unknown Error';
 
@@ -43,6 +48,52 @@ export class GroupEffects {
 
                         this.toastService.showToast(errorMessage, true);
                         return of(groupActions.loadGroupListFailure({ error }));
+                    })
+                )
+            )
+        )
+    );
+
+    createGroup$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(groupActions.createGroup),
+            switchMap((group) =>
+                this.groupService.createGroup(group.name).pipe(
+                    map((groupID) => {
+                        const newGroup: GroupItem = {
+                            id: {
+                                S: groupID.groupID,
+                            },
+                            name: {
+                                S: group.name,
+                            },
+                            createdAt: {
+                                S: Date.now().toString(),
+                            },
+                            createdBy: {
+                                S: group.createdBy,
+                            },
+                        };
+
+                        this.toastService.showToast(
+                            'The group was successfully created',
+                            false
+                        );
+
+                        return groupActions.createGroupSuccess(newGroup);
+                    }),
+                    catchError((error) => {
+                        let errorMessage = error.message;
+
+                        if (error.status === 0) {
+                            errorMessage = 'Internet connection lost';
+                        } else {
+                            errorMessage = error.error.message;
+                        }
+
+                        this.toastService.showToast(errorMessage, true);
+
+                        return of(groupActions.createGroupFailure({ error }));
                     })
                 )
             )
