@@ -12,6 +12,7 @@ import {
     selectisProfileLoading,
 } from 'src/app/store/selectors/profile.selectors';
 import { UserProfile, UserProfileName } from '../../models/profile.interface';
+import { Location } from '@angular/common';
 
 @Component({
     selector: 'app-profile',
@@ -24,7 +25,11 @@ export class ProfileComponent implements OnInit {
     profileForm: FormGroup | undefined;
     isProfileLoading$: Observable<boolean> | undefined;
 
-    constructor(private store: Store, private fb: FormBuilder) {}
+    constructor(
+        private store: Store,
+        private fb: FormBuilder,
+        private location: Location
+    ) {}
 
     ngOnInit() {
         this.profile$ = this.store.pipe(select(selectProfile));
@@ -48,7 +53,6 @@ export class ProfileComponent implements OnInit {
     }
 
     onEditClick() {
-        
         this.isEditMode = true;
 
         this.profile$?.subscribe((profile) => {
@@ -61,13 +65,11 @@ export class ProfileComponent implements OnInit {
     }
 
     onCancelClick() {
-        
         this.profileForm?.reset();
         this.isEditMode = false;
     }
 
     onSaveClick() {
-        
         if (this.profileForm?.valid) {
             const updatedProfileName: UserProfileName = {
                 name: this.profileForm.value.name,
@@ -80,5 +82,9 @@ export class ProfileComponent implements OnInit {
 
     onLogout() {
         this.store.dispatch(logoutProfile());
+    }
+
+    backToPreviousPage() {
+        this.location.back();
     }
 }

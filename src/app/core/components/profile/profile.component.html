@@ -74,3 +74,11 @@
         [disabled]="(isProfileLoading$ | async) || false"
     ></app-cyber-button>
 </div>
+
+<div class="profile__prevpage">
+    <app-cyber-button
+        [buttonText]="'Back'"
+        (click)="backToPreviousPage()"
+        [disabled]="(isProfileLoading$ | async) || false"
+    ></app-cyber-button>
+</div>

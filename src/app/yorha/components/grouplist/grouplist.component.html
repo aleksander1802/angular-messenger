@@ -17,7 +17,7 @@
             </div>
 
             <button
-            class="group__buttons__refresh__button"
+                class="group__buttons__refresh__button"
                 [disabled]="
                     (countdownSubscription | async) ||
                     (this.isGroupLoading$ | async)
@@ -28,8 +28,6 @@
             </button>
         </div>
     </div>
-
-   
 
     <div
         class="group__list"

@@ -5,11 +5,11 @@
         calc(var(--primary-lightness, 50) * 1%)
     );
     --shadow-primary: hsl(var(--shadow-primary-hue), 90%, 50%);
-    --primary-hue: 600;
-    --primary-lightness: 50;
+    --primary-hue: 100;
+    --primary-lightness: 0;
     --color: hsl(0, 0%, 100%);
     --font-size: 26px;
-    --shadow-primary-hue: 500;
+    --shadow-primary-hue: 400;
     --label-size: 9px;
     --shadow-secondary-hue: 60;
     --shadow-secondary: hsl(var(--shadow-secondary-hue), 90%, 60%);
@@ -164,7 +164,7 @@
     bottom: -5%;
     right: 5%;
     font-weight: normal;
-    color: hsl(0, 0%, 100%);
+    color: var(--font-dark);
     font-size: var(--label-size);
 }
 
