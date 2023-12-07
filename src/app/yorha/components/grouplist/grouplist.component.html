@@ -6,6 +6,9 @@
             <app-cyber-button
                 [buttonText]="'Create'"
                 (click)="onCreateClick()"
+                [disabled]="
+                    showDeleteModal || (this.isGroupLoading$ | async) || false
+                "
             ></app-cyber-button>
         </div>
         <div class="group__buttons__refresh">
@@ -23,12 +26,17 @@
                 <a href="#" class="group__list__item__link">{{
                     item.name.S
                 }}</a>
-                <mat-icon
+                <button
+                    [disabled]="
+                        isCreateMode || (this.isGroupLoading$ | async) || false
+                    "
                     (click)="openDeleteModal(item.id.S)"
                     *ngIf="item.createdBy.S === currentLocalStorageUID.uid"
-                    class="group__list__item__delete"
-                    >delete</mat-icon
                 >
+                    <mat-icon class="group__list__item__delete"
+                        >delete</mat-icon
+                    >
+                </button>
             </li>
         </ul>
     </div>
