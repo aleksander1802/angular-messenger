@@ -19,6 +19,19 @@
         &__refresh {
             display: flex;
             gap: 1rem;
+            &__button {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background-color: transparent;
+                border: none;
+                cursor: var(--cursor-pointer);
+                mat-icon {
+                    width: 1.6rem;
+                    height: 1.6rem;
+                    font-size: 1.6rem;
+                }
+            }
         }
     }
 
@@ -84,15 +97,21 @@
                 }
             }
             &__delete {
+                display: flex;
+                align-items: center;
+                justify-content: center;
                 position: absolute;
-                text-align: center;
-                width: 1.6rem;
-                height: 1.6rem;
-                font-size: 1.6rem;
+                background-color: transparent;
+                border: none;
                 right: -1.6rem;
                 top: 50%;
                 transform: translateY(-50%);
                 cursor: var(--cursor-pointer);
+                mat-icon {
+                    width: 1.6rem;
+                    height: 1.6rem;
+                    font-size: 1.6rem;
+                }
             }
 
             a {

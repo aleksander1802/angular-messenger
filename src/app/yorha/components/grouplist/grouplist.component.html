@@ -13,10 +13,11 @@
         </div>
         <div class="group__buttons__refresh">
             <div *ngIf="countdownSubscription | async">
-                {{ countdownSubscription | async }} seconds
+                Next update in {{ countdownSubscription | async }} seconds
             </div>
 
             <button
+            class="group__buttons__refresh__button"
                 [disabled]="
                     (countdownSubscription | async) ||
                     (this.isGroupLoading$ | async)
@@ -28,6 +29,8 @@
         </div>
     </div>
 
+   
+
     <div
         class="group__list"
         *ngIf="groupItems$ | async as groupData; else loading"
@@ -38,6 +41,7 @@
                     item.name.S
                 }}</a>
                 <button
+                    type="button"
                     class="group__list__item__delete"
                     [disabled]="
                         isCreateMode || (this.isGroupLoading$ | async) || false
