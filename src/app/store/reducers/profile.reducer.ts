@@ -31,12 +31,12 @@ export const profileReducer = createReducer(
     on(profileActions.loadProfileFailure, (state, { error }) => ({
         ...state,
         error,
-        loading: true,
+        loading: false,
     })),
 
     on(profileActions.updateProfile, (state) => ({
         ...state,
-        loading: false,
+        loading: true,
     })),
 
     on(profileActions.updateProfileSuccess, (state, { name }) => ({
@@ -66,6 +66,11 @@ export const profileReducer = createReducer(
     on(profileActions.logoutProfileFailure, (state, { error }) => ({
         ...state,
         error,
+        loading: false,
+    })),
+
+    on(profileActions.loadProfileUpdateLoading, (state) => ({
+        ...state,
         loading: false,
     }))
 );

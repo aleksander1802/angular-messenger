@@ -5,9 +5,10 @@ import { YoRHaRoutingModule } from './yorha-routing.module';
 import { GrouplistComponent } from './components/grouplist/grouplist.component';
 import { SharedModule } from '../shared/shared.module';
 import { PeoplelistComponent } from './components/peoplelist/peoplelist.component';
+import { ProfileLinkComponent } from './components/profile-link/profile-link.component';
 
 @NgModule({
-    declarations: [HomePageComponent, GrouplistComponent, PeoplelistComponent],
+    declarations: [HomePageComponent, GrouplistComponent, PeoplelistComponent, ProfileLinkComponent],
     imports: [CommonModule, SharedModule, YoRHaRoutingModule],
 })
 export class YoRHaModule {}

@@ -83,5 +83,10 @@ export const groupReducer = createReducer(
         ...state,
         error,
         loading: false,
+    })),
+
+    on(groupActions.loadGroupListUpdateLoading, (state) => ({
+        ...state,
+        loading: false,
     }))
 );

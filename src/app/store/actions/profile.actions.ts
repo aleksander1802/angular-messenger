@@ -44,3 +44,7 @@ export const logoutProfileFailure = createAction(
     ProfileActionType.PROFILE_LOGOUT_FAILURE,
     props<{ error: ErrorFailure }>()
 );
+
+export const loadProfileUpdateLoading = createAction(
+    ProfileActionType.PROFILE_LOADING_FALSE
+);

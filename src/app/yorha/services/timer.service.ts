@@ -23,8 +23,6 @@ export class TimerService {
     }
 
     startTimer(key: string) {
-        console.log(`Starting timer for key: ${key}`);
-
         timer(1000, 1000)
             .pipe(
                 takeWhile(() => {

@@ -33,9 +33,7 @@ export const createGroupFailure = createAction(
     props<{ error: ErrorFailure }>()
 );
 
-export const updateGroupList = createAction(
-    GroupsActionType.GROUP_UPDATE
-);
+export const updateGroupList = createAction(GroupsActionType.GROUP_UPDATE);
 
 export const updateGroupListSuccess = createAction(
     GroupsActionType.GROUP_UPDATE_SUCCESS,
@@ -56,6 +54,10 @@ export const deleteGroupSuccess = createAction(
     props<{ groupId: string }>()
 );
 export const deleteGroupFailure = createAction(
-    GroupsActionType.GROUP_DELETE_SUCCESS,
+    GroupsActionType.GROUP_DELETE_FAILURE,
     props<{ error: ErrorFailure }>()
+);
+
+export const loadGroupListUpdateLoading = createAction(
+    GroupsActionType.GROUP_LOADING_FALSE
 );

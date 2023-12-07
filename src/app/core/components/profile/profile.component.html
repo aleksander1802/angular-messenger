@@ -19,7 +19,7 @@
 
     <div class="profile__edit__button" *ngIf="!isEditMode">
         <app-cyber-button
-            
+            [disabled]="(isProfileLoading$ | async) || false"
             (click)="onEditClick()"
             [buttonText]="'Edit'"
         ></app-cyber-button>
@@ -79,6 +79,6 @@
     <app-cyber-button
         [buttonText]="'Back'"
         (click)="backToPreviousPage()"
-        [disabled]="(isProfileLoading$ | async) || false"
+        [disabled]=" (isProfileLoading$ | async) || false"
     ></app-cyber-button>
 </div>

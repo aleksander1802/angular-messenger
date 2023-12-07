@@ -1,13 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, ofType, createEffect } from '@ngrx/effects';
 import { of } from 'rxjs';
-import {
-    mergeMap,
-    map,
-    catchError,
-    withLatestFrom,
-    filter,
-} from 'rxjs/operators';
+import { mergeMap, map, catchError, withLatestFrom } from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
 import * as profileActions from '../actions/profile.actions';
 import { ProfileService } from '../../core/services/profile.service';
@@ -32,26 +26,31 @@ export class ProfileEffects {
             ofType(profileActions.loadProfile),
             withLatestFrom(this.store.pipe(select(selectProfile))),
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            filter(([_action, profile]) => !profile),
-            mergeMap(() =>
-                this.profileService.getProfile().pipe(
-                    map((profile) =>
-                        profileActions.loadProfileSuccess({ profile })
-                    ),
-                    catchError((error) => {
-                        let errorMessage = error.message;
+            mergeMap(([_action, profile]) => {
+                if (profile) {
+                    return of(profileActions.loadProfileUpdateLoading());
+                } else {
+                    return this.profileService.getProfile().pipe(
+                        map((profile) =>
+                            profileActions.loadProfileSuccess({ profile })
+                        ),
+                        catchError((error) => {
+                            let errorMessage = error.message;
 
-                        if (error.status === 0) {
-                            errorMessage = 'Internet connection lost';
-                        } else {
-                            errorMessage = error.error.message;
-                        }
+                            if (error.status === 0) {
+                                errorMessage = 'Internet connection lost';
+                            } else {
+                                errorMessage = error.error.message;
+                            }
 
-                        this.toastService.showToast(errorMessage, true);
-                        return of(profileActions.loadProfileFailure({ error }));
-                    })
-                )
-            )
+                            this.toastService.showToast(errorMessage, true);
+                            return of(
+                                profileActions.loadProfileFailure({ error })
+                            );
+                        })
+                    );
+                }
+            })
         )
     );
 

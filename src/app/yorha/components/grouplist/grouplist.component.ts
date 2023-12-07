@@ -52,27 +52,42 @@ export class GrouplistComponent implements OnInit, OnDestroy {
     ) {}
 
     ngOnInit() {
+        this.initGroupListDispatch();
         this.getLocalStorageUid();
         this.initForm();
+        this.initGroupItemsObservable();
+        this.initIsGroupLoadingObservable();
+        this.initCreateGroupErrorObservable();
+        this.initCountdownSubscription();
+    }
 
+    private initGroupItemsObservable() {
         this.groupItems$ = this.store.pipe(select(selectGroup));
-        this.isGroupLoading$ = this.store.pipe(select(selectGroupLoading));
-
-        this.createGroupError$ = this.store.pipe(
-            select(selectCreateGroupError)
-        );
-
-        this.countdownSubscription = this.timerService.getTimer(
-            this.countdownKey
-        );
-
         this.createGroupSubscription = this.groupItems$
             .pipe(filter((groups) => groups !== null))
             .subscribe(() => {
                 this.onCancelCreate();
                 this.cancelGroupDelete();
             });
+    }
 
+    private initIsGroupLoadingObservable() {
+        this.isGroupLoading$ = this.store.pipe(select(selectGroupLoading));
+    }
+
+    private initCreateGroupErrorObservable() {
+        this.createGroupError$ = this.store.pipe(
+            select(selectCreateGroupError)
+        );
+    }
+
+    private initCountdownSubscription() {
+        this.countdownSubscription = this.timerService.getTimer(
+            this.countdownKey
+        );
+    }
+
+    private initGroupListDispatch() {
         this.store.dispatch(loadGroupList());
     }
 

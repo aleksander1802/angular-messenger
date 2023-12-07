@@ -48,7 +48,7 @@ $angular-messenger-theme: mat.define-light-theme(
     --background-primary: rgb(20, 83, 220);
     --danger-color: crimson;
     --success-color: rgb(64, 146, 66);
-    --color-alert: rgb(205, 102, 77);
+    --color-alert: rgb(209, 86, 55);
     --color-beige: #e9e3ca;
     --font-light: #fff;
     --font-dark: #000;
@@ -68,6 +68,7 @@ $angular-messenger-theme: mat.define-light-theme(
     --color-high-trans: rgba(218, 212, 187, 0.8);
     --color-low-trans: rgba(87, 84, 74, 0.6);
     --color-alert-trans: rgba(8, 4, 3, 0.7);
+
 
     --mask: conic-gradient(
         from -46deg at top 85px right 115px,

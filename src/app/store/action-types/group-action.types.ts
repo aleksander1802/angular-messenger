@@ -14,4 +14,6 @@ export enum GroupsActionType {
     GROUP_DELETE = '[Group List] Delete Group',
     GROUP_DELETE_SUCCESS = '[Group List] Delete Group Success',
     GROUP_DELETE_FAILURE = '[Group List] Delete Group Failure',
+
+    GROUP_LOADING_FALSE = '[Group List] Load Group Update Loading',
 }

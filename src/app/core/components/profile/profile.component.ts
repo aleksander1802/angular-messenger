@@ -32,16 +32,27 @@ export class ProfileComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-        this.profile$ = this.store.pipe(select(selectProfile));
-        this.isProfileLoading$ = this.store.pipe(
-            select(selectisProfileLoading)
-        );
-
-        this.store.dispatch(loadProfile());
+        this.loadProfileData();
+        this.initializeProfile$();
+        this.initializeIsProfileLoading$();
 
         this.profileForm = this.fb.group({
             name: ['', [Validators.required, Validators.maxLength(40)]],
         });
+    }
+
+    private loadProfileData() {
+        this.store.dispatch(loadProfile());
+    }
+
+    private initializeProfile$() {
+        this.profile$ = this.store.pipe(select(selectProfile));
+    }
+
+    private initializeIsProfileLoading$() {
+        this.isProfileLoading$ = this.store.pipe(
+            select(selectisProfileLoading)
+        );
     }
 
     get name() {

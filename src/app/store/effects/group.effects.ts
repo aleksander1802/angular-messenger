@@ -6,7 +6,6 @@ import {
     map,
     catchError,
     withLatestFrom,
-    filter,
     switchMap,
 } from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
@@ -32,26 +31,31 @@ export class GroupEffects {
             ofType(groupActions.loadGroupList),
             withLatestFrom(this.store.pipe(select(selectGroup))),
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            filter(([_action, groups]) => !groups),
-            mergeMap(() =>
-                this.groupService.getGroups().pipe(
-                    map((groups) => {
-                        return groupActions.loadGroupListSuccess(groups);
-                    }),
-                    catchError((error) => {
-                        let errorMessage = error.message;
+            mergeMap(([_action, groups]) => {
+                if (groups) {
+                    return of(groupActions.loadGroupListUpdateLoading());
+                } else {
+                    return this.groupService.getGroups().pipe(
+                        map((groups) => {
+                            return groupActions.loadGroupListSuccess(groups);
+                        }),
+                        catchError((error) => {
+                            let errorMessage = error.message;
 
-                        if (error.status === 0) {
-                            errorMessage = 'Internet connection lost';
-                        } else {
-                            errorMessage = error.error.message;
-                        }
+                            if (error.status === 0) {
+                                errorMessage = 'Internet connection lost';
+                            } else {
+                                errorMessage = error.error.message;
+                            }
 
-                        this.toastService.showToast(errorMessage, true);
-                        return of(groupActions.loadGroupListFailure({ error }));
-                    })
-                )
-            )
+                            this.toastService.showToast(errorMessage, true);
+                            return of(
+                                groupActions.loadGroupListFailure({ error })
+                            );
+                        })
+                    );
+                }
+            })
         )
     );
 
@@ -67,9 +71,8 @@ export class GroupEffects {
                             false
                         );
 
-                        this.timerService.setTimer('groupTimer', 60)
+                        this.timerService.setTimer('groupTimer', 60);
                         this.timerService.startTimer('groupTimer');
-                        console.log('EFFECT DISPATCHFHWWGFHJWGH');
 
                         return groupActions.updateGroupListSuccess(groups);
                     }),
