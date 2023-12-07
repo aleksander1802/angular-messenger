@@ -21,6 +21,7 @@ import { groupFeatureKey, groupReducer } from '../store/reducers/group.reducer';
 @NgModule({
     declarations: [NotFoundComponent, ProfileComponent, ProfilePageComponent],
     providers: [httpInterceptorProviders],
+
     imports: [
         CommonModule,
         HttpClientModule,

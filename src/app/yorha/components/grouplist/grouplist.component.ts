@@ -12,9 +12,11 @@ import {
     createGroup,
     deleteGroup,
     loadGroupList,
+    updateGroupList,
 } from 'src/app/store/actions/group.actions';
 import { LocalStorageAuthValue } from 'src/app/auth/models/login-response.interface';
 import { ErrorFailure } from 'src/app/shared/models/error-types.interface';
+import { TimerService } from '../../services/timer.service';
 
 @Component({
     selector: 'app-grouplist',
@@ -38,9 +40,16 @@ export class GrouplistComponent implements OnInit, OnDestroy {
 
     private createGroupSubscription: Subscription | undefined;
 
+    countdownSubscription: Observable<number | null> | undefined;
+    private countdownKey = 'groupTimer';
+
     private currentGroupId: string | null = null;
 
-    constructor(private store: Store, private fb: FormBuilder) {}
+    constructor(
+        private store: Store,
+        private fb: FormBuilder,
+        private timerService: TimerService
+    ) {}
 
     ngOnInit() {
         this.getLocalStorageUid();
@@ -53,6 +62,10 @@ export class GrouplistComponent implements OnInit, OnDestroy {
             select(selectCreateGroupError)
         );
 
+        this.countdownSubscription = this.timerService.getTimer(
+            this.countdownKey
+        );
+
         this.createGroupSubscription = this.groupItems$
             .pipe(filter((groups) => groups !== null))
             .subscribe(() => {
@@ -61,6 +74,10 @@ export class GrouplistComponent implements OnInit, OnDestroy {
             });
 
         this.store.dispatch(loadGroupList());
+    }
+
+    onRefreshClick() {
+        this.store.dispatch(updateGroupList());
     }
 
     private getLocalStorageUid() {

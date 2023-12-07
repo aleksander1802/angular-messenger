@@ -7,6 +7,10 @@ export enum GroupsActionType {
     GROUP_CREATE_SUCCESS = '[Group List] Create Group Success',
     GROUP_CREATE_FAILURE = '[Group List] Create Group Failure',
 
+    GROUP_UPDATE = '[Group List] Update Group',
+    GROUP_UPDATE_SUCCESS = '[Group List] Update Group Success',
+    GROUP_UPDATE_FAILURE = '[Group List] Update Group Failure',
+
     GROUP_DELETE = '[Group List] Delete Group',
     GROUP_DELETE_SUCCESS = '[Group List] Delete Group Success',
     GROUP_DELETE_FAILURE = '[Group List] Delete Group Failure',

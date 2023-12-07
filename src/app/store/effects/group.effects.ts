@@ -11,11 +11,11 @@ import {
 } from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
 import * as groupActions from '../actions/group.actions';
-
 import { ToastService } from 'src/app/shared/services/toast/toast.service';
 import { GroupService } from 'src/app/yorha/services/group.service';
 import { GroupItem } from 'src/app/yorha/models/group.interface';
 import { selectGroup } from '../selectors/group.selectors';
+import { TimerService } from 'src/app/yorha/services/timer.service';
 
 @Injectable()
 export class GroupEffects {
@@ -23,7 +23,8 @@ export class GroupEffects {
         private actions$: Actions,
         private store: Store,
         private groupService: GroupService,
-        private toastService: ToastService
+        private toastService: ToastService,
+        private timerService: TimerService
     ) {}
 
     loadGroup$ = createEffect(() =>
@@ -48,6 +49,43 @@ export class GroupEffects {
 
                         this.toastService.showToast(errorMessage, true);
                         return of(groupActions.loadGroupListFailure({ error }));
+                    })
+                )
+            )
+        )
+    );
+
+    updateGroup$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(groupActions.updateGroupList),
+
+            mergeMap(() =>
+                this.groupService.getGroups().pipe(
+                    map((groups) => {
+                        this.toastService.showToast(
+                            'Groups have been successfully updated',
+                            false
+                        );
+
+                        this.timerService.setTimer('groupTimer', 60)
+                        this.timerService.startTimer('groupTimer');
+                        console.log('EFFECT DISPATCHFHWWGFHJWGH');
+
+                        return groupActions.updateGroupListSuccess(groups);
+                    }),
+                    catchError((error) => {
+                        let errorMessage = error.message;
+
+                        if (error.status === 0) {
+                            errorMessage = 'Internet connection lost';
+                        } else {
+                            errorMessage = error.error.message;
+                        }
+
+                        this.toastService.showToast(errorMessage, true);
+                        return of(
+                            groupActions.updateGroupListFailure({ error })
+                        );
                     })
                 )
             )

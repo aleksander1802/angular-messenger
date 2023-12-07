@@ -10,6 +10,7 @@ import { MaterialModule } from '../material/material.module';
 @NgModule({
     declarations: [CyberButtonComponent, MainLayoutComponent, ToastComponent],
     imports: [CommonModule, RouterModule, ReactiveFormsModule, MaterialModule],
+
     exports: [
         CyberButtonComponent,
         ToastComponent,

@@ -9,12 +9,14 @@ export interface GroupState {
     groups: GroupItem[] | null;
     loading: boolean;
     error: ErrorFailure | null;
+    isGroupTimerRunning: boolean;
 }
 
 export const initialState: GroupState = {
     groups: null,
     loading: false,
     error: null,
+    isGroupTimerRunning: false,
 };
 
 export const groupReducer = createReducer(
@@ -45,6 +47,20 @@ export const groupReducer = createReducer(
     }),
 
     on(groupActions.createGroupFailure, (state, { error }) => ({
+        ...state,
+        error,
+        loading: false,
+    })),
+
+    on(groupActions.updateGroupList, (state) => ({ ...state, loading: true })),
+
+    on(groupActions.updateGroupListSuccess, (state, action) => ({
+        ...state,
+        groups: action.Items,
+        loading: false,
+    })),
+
+    on(groupActions.updateGroupListFailure, (state, { error }) => ({
         ...state,
         error,
         loading: false,

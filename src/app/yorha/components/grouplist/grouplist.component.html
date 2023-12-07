@@ -12,8 +12,19 @@
             ></app-cyber-button>
         </div>
         <div class="group__buttons__refresh">
-            <div>timer</div>
-            <mat-icon>refresh</mat-icon>
+            <div *ngIf="countdownSubscription | async">
+                {{ countdownSubscription | async }} seconds
+            </div>
+
+            <button
+                [disabled]="
+                    (countdownSubscription | async) ||
+                    (this.isGroupLoading$ | async)
+                "
+                (click)="onRefreshClick()"
+            >
+                <mat-icon>refresh</mat-icon>
+            </button>
         </div>
     </div>
 
@@ -27,15 +38,14 @@
                     item.name.S
                 }}</a>
                 <button
+                    class="group__list__item__delete"
                     [disabled]="
                         isCreateMode || (this.isGroupLoading$ | async) || false
                     "
                     (click)="openDeleteModal(item.id.S)"
                     *ngIf="item.createdBy.S === currentLocalStorageUID.uid"
                 >
-                    <mat-icon class="group__list__item__delete"
-                        >delete</mat-icon
-                    >
+                    <mat-icon>delete</mat-icon>
                 </button>
             </li>
         </ul>
