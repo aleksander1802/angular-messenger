@@ -19,6 +19,20 @@ export const loadPeopleListFailure = createAction(
     props<{ error: ErrorFailure }>()
 );
 
+export const updatePeopleList = createAction(
+    PeopleActionType.PEOPLE_LIST_UPDATE
+);
+
+export const updatePeopleListSuccess = createAction(
+    PeopleActionType.PEOPLE_LIST_UPDATE_SUCCESS,
+    props<People>()
+);
+
+export const updatePeopleListFailure = createAction(
+    PeopleActionType.PEOPLE_LIST_UPDATE_FAILURE,
+    props<{ error: ErrorFailure }>()
+);
+
 export const loadConversations = createAction(
     PeopleActionType.CONVERSATIONS_LIST_LOAD
 );
@@ -50,4 +64,4 @@ export const createConversationFailure = createAction(
 
 export const loadPeopleListLoadingFalse = createAction(
     PeopleActionType.PEOPLE_LIST_LOADING_FALSE
-)
+);

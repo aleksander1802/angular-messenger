@@ -54,7 +54,6 @@ export class GrouplistComponent implements OnInit, OnDestroy {
         this.initForm();
         this.initGroupItemsObservable();
         this.initIsGroupLoadingObservable();
-
         this.initCountdownSubscription();
     }
 

@@ -3,30 +3,26 @@
 
     <div class="people__buttons">
         <div class="people__buttons__refresh">
-            <!-- <div *ngIf="countdownSubscription | async">
-                Next update in 
-                {{ countdownSubscription | async }}
-                 seconds
-            </div> -->
+            <div *ngIf="countdownSubscription$ | async">
+                Next update in
+                {{ countdownSubscription$ | async }}
+                seconds
+            </div>
 
-            <button class="people__buttons__refresh__button">
-                <mat-icon>refresh</mat-icon>
-            </button>
-
-            <!-- <button
+            <button
                 class="people__buttons__refresh__button"
                 [disabled]="
-                    (countdownSubscription | async) ||
-                    (this.isGroupLoading$ | async)
+                    (countdownSubscription$ | async) ||
+                    (this.isPeopleListLoading$ | async)
                 "
-                (click)="onRefreshClick()"
+                (click)="onUpdatePeopleList()"
             >
                 <mat-icon>refresh</mat-icon>
-            </button> -->
+            </button>
         </div>
     </div>
 
-    <div class="people__list">
+    <!-- <div class="people__list">
         <ul class="people__list__items">
             <li class="people__list__item"
                 *ngFor="let person of people$"
@@ -34,26 +30,25 @@
                     'active-conversation': isConversationActive(person)
                 }"
             >
-                <a href="#" class="group__list__item__link" >{{
+                <a href="#" class="people__list__item__link" >{{
+                    person.name.S
+                }}</a>
+            </li>
+        </ul>
+    </div> -->
+
+    <div
+        class="people__list"
+        *ngIf="peopleItems$ | async as peopleData; else loading"
+    >
+        <ul class="people__list__items">
+            <li *ngFor="let person of peopleData" class="people__list__item">
+                <a href="#" class="people__list__item__link">{{
                     person.name.S
                 }}</a>
             </li>
         </ul>
     </div>
-
-    <!-- <div
-        class="people__list"
-        *ngIf="peopleItems$ | async as peopleData; else loading"
-    >
-        <ul class="people__list__items">
-            <li *ngFor="let item of peopleData" class="group__list__item">
-                <a [routerLink]="['/conversation', person.uid.S]">{{
-                    person.name.S
-                }}</a>
-               
-            </li>
-        </ul>
-    </div> -->
 
     <ng-template #loading>
         <p>Loading...</p>

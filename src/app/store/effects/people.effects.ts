@@ -51,4 +51,43 @@ export class PeopleEffects {
             })
         )
     );
+
+    updatePeople$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(peopleActions.updatePeopleList),
+
+            mergeMap(() =>
+                this.peopleService.getPeopleList().pipe(
+                    map((groups) => {
+                        this.toastService.showToast(
+                            'People list have been successfully updated',
+                            false
+                        );
+
+                        const timerKey = 'peopleTimer';
+                        const timerCountdown = 60;
+
+                        this.timerService.setTimer(timerKey, timerCountdown);
+                        this.timerService.startTimer(timerKey);
+
+                        return peopleActions.updatePeopleListSuccess(groups);
+                    }),
+                    catchError((error) => {
+                        let errorMessage = error.message;
+
+                        if (error.status === 0) {
+                            errorMessage = 'Internet connection lost';
+                        } else {
+                            errorMessage = error.error.message;
+                        }
+
+                        this.toastService.showToast(errorMessage, true);
+                        return of(
+                            peopleActions.updatePeopleListFailure({ error })
+                        );
+                    })
+                )
+            )
+        )
+    );
 }

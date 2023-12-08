@@ -38,9 +38,9 @@ export class RegisterPageComponent implements OnInit, OnDestroy {
 
     private initForm() {
         this.registerForm = this.fb.group({
-            name: ['Shadow', [Validators.required, Validators.maxLength(40)]],
-            email: ['courses@mail.ru', [Validators.required, Validators.email]],
-            password: ['1!qQwerty', [Validators.required, passwordValidator()]],
+            name: ['', [Validators.required, Validators.maxLength(40)]],
+            email: ['', [Validators.required, Validators.email]],
+            password: ['', [Validators.required, passwordValidator()]],
         });
     }
 

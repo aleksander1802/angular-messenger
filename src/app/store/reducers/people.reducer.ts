@@ -41,6 +41,24 @@ export const peopleReducer = createReducer(
         peopleListLoading: false,
     })),
 
+    on(peopleActions.updatePeopleList, (state) => ({
+        ...state,
+        peopleListLoading: true,
+    })),
+
+    on(peopleActions.updatePeopleListSuccess, (state, action) => ({
+        ...state,
+        people: action.Items,
+        error: null,
+        peopleListLoading: false,
+    })),
+
+    on(peopleActions.updatePeopleListFailure, (state, { error }) => ({
+        ...state,
+        error,
+        peopleListLoading: false,
+    })),
+
     on(peopleActions.loadPeopleListLoadingFalse, (state) => ({
         ...state,
         peopleListLoading: false,

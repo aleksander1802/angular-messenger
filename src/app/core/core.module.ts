@@ -17,6 +17,11 @@ import {
 import { SharedModule } from '../shared/shared.module';
 import { GroupEffects } from '../store/effects/group.effects';
 import { groupFeatureKey, groupReducer } from '../store/reducers/group.reducer';
+import {
+    peopleFeatureKey,
+    peopleReducer,
+} from '../store/reducers/people.reducer';
+import { PeopleEffects } from '../store/effects/people.effects';
 
 @NgModule({
     declarations: [NotFoundComponent, ProfileComponent, ProfilePageComponent],
@@ -29,7 +34,8 @@ import { groupFeatureKey, groupReducer } from '../store/reducers/group.reducer';
         StoreModule.forRoot(rootReducer),
         StoreModule.forFeature(profileFeatureKey, profileReducer),
         StoreModule.forFeature(groupFeatureKey, groupReducer),
-        EffectsModule.forRoot([ProfileEffects, GroupEffects]),
+        StoreModule.forFeature(peopleFeatureKey, peopleReducer),
+        EffectsModule.forRoot([ProfileEffects, GroupEffects, PeopleEffects]),
     ],
 })
 export class CoreModule {}
