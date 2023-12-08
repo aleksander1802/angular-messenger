@@ -1,6 +1,6 @@
 <div class="group">
     <h2>Groups</h2>
- 
+
     <div class="group__buttons">
         <div class="group__buttons__create">
             <app-cyber-button
@@ -35,9 +35,11 @@
     >
         <ul class="group__list__items">
             <li *ngFor="let item of groupData" class="group__list__item">
-                <a href="#" class="group__list__item__link">{{
-                    item.name.S
-                }}</a>
+                <a
+                [routerLink]="'/group/' + item.id.S"
+                    class="group__list__item__link"
+                    >{{ item.name.S }}</a
+                >
                 <button
                     type="button"
                     class="group__list__item__delete"
