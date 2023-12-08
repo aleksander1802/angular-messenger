@@ -19,6 +19,9 @@
             <small *ngIf="getError('name', 'maxlength')">
                 The name exceeds 40 characters
             </small>
+            <small *ngIf="getError('name', 'pattern')">
+                Allowed only letters or spaces
+            </small>
         </div>
     </div>
 

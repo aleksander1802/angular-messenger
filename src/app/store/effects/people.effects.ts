@@ -26,7 +26,7 @@ export class PeopleEffects {
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
             mergeMap(([_action, peoples]) => {
                 if (peoples) {
-                    return of(peopleActions.loadPeopleListLoadingFalse);
+                    return of(peopleActions.loadPeopleListLoadingFalse());
                 } else {
                     return this.peopleService.getPeopleList().pipe(
                         map((people) =>
@@ -58,7 +58,7 @@ export class PeopleEffects {
 
             mergeMap(() =>
                 this.peopleService.getPeopleList().pipe(
-                    map((groups) => {
+                    map((peoples) => {
                         this.toastService.showToast(
                             'People list have been successfully updated',
                             false
@@ -70,7 +70,7 @@ export class PeopleEffects {
                         this.timerService.setTimer(timerKey, timerCountdown);
                         this.timerService.startTimer(timerKey);
 
-                        return peopleActions.updatePeopleListSuccess(groups);
+                        return peopleActions.updatePeopleListSuccess(peoples);
                     }),
                     catchError((error) => {
                         let errorMessage = error.message;

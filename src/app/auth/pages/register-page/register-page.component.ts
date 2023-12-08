@@ -10,6 +10,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
+const namePattern = '^[a-zA-Z ]*$';
+
 @Component({
     selector: 'app-register-page',
     templateUrl: './register-page.component.html',
@@ -38,7 +40,14 @@ export class RegisterPageComponent implements OnInit, OnDestroy {
 
     private initForm() {
         this.registerForm = this.fb.group({
-            name: ['', [Validators.required, Validators.maxLength(40)]],
+            name: [
+                '',
+                [
+                    Validators.required,
+                    Validators.maxLength(40),
+                    Validators.pattern(namePattern),
+                ],
+            ],
             email: ['', [Validators.required, Validators.email]],
             password: ['', [Validators.required, passwordValidator()]],
         });

@@ -1,22 +1,22 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import * as fromPeopleList from '../reducers/people.reducer';
 
-export const selectGroupState =
+export const selectPeopleState =
     createFeatureSelector<fromPeopleList.PeopleState>(
         fromPeopleList.peopleFeatureKey
     );
 
 export const selectPeople = createSelector(
-    selectGroupState,
+    selectPeopleState,
     (state) => state.people
 );
 
 export const selectPeopleListLoading = createSelector(
-    selectGroupState,
+    selectPeopleState,
     (state) => state.peopleListLoading
 );
 
 export const selectConversationListLoading = createSelector(
-    selectGroupState,
+    selectPeopleState,
     (state) => state.conversationListLoading
 );

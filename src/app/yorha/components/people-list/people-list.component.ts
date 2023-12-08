@@ -215,16 +215,16 @@ export class PeopleListComponent implements OnInit, OnDestroy {
     constructor(private store: Store, private timerService: TimerService) {}
 
     ngOnInit() {
-        this.initGroupListDispatch();
-        this.initGroupItemsObservable();
+        this.initPeopleListDispatch();
+        this.initPeopleItemsObservable();
         this.initCountdownSubscription();
     }
 
-    private initGroupListDispatch() {
+    private initPeopleListDispatch() {
         this.store.dispatch(loadPeopleList());
     }
 
-    private initGroupItemsObservable() {
+    private initPeopleItemsObservable() {
         this.peopleItems$ = this.store.pipe(select(selectPeople));
     }
 
