@@ -75,14 +75,15 @@ export class PeopleEffects {
 
                         this.timerService.setTimer(timerKey, timerCountdown);
                         this.timerService.startTimer(timerKey);
-                            
-                            
+
                         const combinedPayload = {
                             people,
                             localStorageId: action,
                         };
 
-                        return peopleActions.updatePeopleListSuccess(combinedPayload);
+                        return peopleActions.updatePeopleListSuccess(
+                            combinedPayload
+                        );
                     }),
                     catchError((error) => {
                         let errorMessage = error.message;

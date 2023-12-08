@@ -12,8 +12,8 @@
             <button
                 class="people__buttons__refresh__button"
                 [disabled]="
-                    (countdownSubscription$ | async) ||
-                    (this.isPeopleListLoading$ | async)
+                     
+                    (this.isPeopleListLoading$ | async) || (countdownSubscription$ | async)
                 "
                 (click)="onUpdatePeopleList()"
             >
@@ -43,9 +43,12 @@
     >
         <ul class="people__list__items">
             <li *ngFor="let person of peopleData" class="people__list__item">
-                <a href="#" class="people__list__item__link">{{
-                    person.name.S
-                }}</a>
+                <button
+                    (click)="onStartConversationWithUser(person.uid.S)"
+                    class="people__list__item__button"
+                >
+                    {{ person.name.S }}
+                </button>
             </li>
         </ul>
     </div>

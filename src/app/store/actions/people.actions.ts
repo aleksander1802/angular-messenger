@@ -16,7 +16,7 @@ export const loadPeopleList = createAction(
 
 export const loadPeopleListSuccess = createAction(
     PeopleActionType.PEOPLE_LIST_LOAD_SUCCESS,
-    props<{people: People, localStorageId: LocalStorageAuthValue}>()
+    props<{ people: People; localStorageId: LocalStorageAuthValue }>()
 );
 
 export const loadPeopleListFailure = createAction(
@@ -31,7 +31,7 @@ export const updatePeopleList = createAction(
 
 export const updatePeopleListSuccess = createAction(
     PeopleActionType.PEOPLE_LIST_UPDATE_SUCCESS,
-    props<{people: People, localStorageId: LocalStorageAuthValue}>()
+    props<{ people: People; localStorageId: LocalStorageAuthValue }>()
 );
 
 export const updatePeopleListFailure = createAction(

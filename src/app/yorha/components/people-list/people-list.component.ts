@@ -1,13 +1,16 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import { PeopleItem } from '../../models/people.interface';
 import { TimerService } from '../../services/timer.service';
 import {
     loadPeopleList,
     updatePeopleList,
 } from 'src/app/store/actions/people.actions';
-import { selectPeople } from 'src/app/store/selectors/people.selectors';
+import {
+    selectPeople,
+    selectPeopleListLoading,
+} from 'src/app/store/selectors/people.selectors';
 import { LocalStorageAuthValue } from 'src/app/auth/models/login-response.interface';
 
 @Component({
@@ -15,14 +18,12 @@ import { LocalStorageAuthValue } from 'src/app/auth/models/login-response.interf
     templateUrl: './people-list.component.html',
     styleUrls: ['./people-list.component.scss'],
 })
-export class PeopleListComponent implements OnInit, OnDestroy {
+export class PeopleListComponent implements OnInit {
     peopleItems$: Observable<PeopleItem[] | null> | undefined;
 
     isPeopleListLoading$: Observable<boolean> | undefined;
 
     countdownSubscription$: Observable<number | null> | undefined;
-
-    peopleItemSubscription: Subscription | undefined;
 
     private countdownKey = 'peopleTimer';
 
@@ -34,6 +35,7 @@ export class PeopleListComponent implements OnInit, OnDestroy {
         this.getLocalStorageUid();
         this.initPeopleListDispatch();
         this.initPeopleItemsObservable();
+        this.initIsPeopleListLoadingObservable();
         this.initCountdownSubscription();
     }
 
@@ -57,15 +59,19 @@ export class PeopleListComponent implements OnInit, OnDestroy {
         this.store.dispatch(updatePeopleList(this.currentLocalStorage));
     }
 
+    private initIsPeopleListLoadingObservable() {
+        this.isPeopleListLoading$ = this.store.pipe(
+            select(selectPeopleListLoading)
+        );
+    }
+
     private initCountdownSubscription() {
         this.countdownSubscription$ = this.timerService.getTimer(
             this.countdownKey
         );
     }
 
-    ngOnDestroy() {
-        if (this.peopleItemSubscription) {
-            this.peopleItemSubscription.unsubscribe();
-        }
+    onStartConversationWithUser(userUid: string) {
+        console.log(userUid);
     }
 }
