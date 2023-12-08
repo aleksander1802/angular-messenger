@@ -11,7 +11,7 @@ import { APP_LOGIN, APP_REGISTER } from '../../../../constants';
 export class AuthInterceptor implements HttpInterceptor {
     intercept(req: HttpRequest<unknown>, next: HttpHandler) {
         const { url } = req;
-        if (!url.startsWith(APP_LOGIN || APP_REGISTER)) {
+        if (!url.startsWith(APP_LOGIN) && !url.startsWith(APP_REGISTER)) {
             const storageValue: LocalStorageAuthValue = JSON.parse(
                 localStorage.getItem('auth') || ''
             );
