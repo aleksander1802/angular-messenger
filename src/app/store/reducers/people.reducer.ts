@@ -28,12 +28,17 @@ export const peopleReducer = createReducer(
         peopleListLoading: true,
     })),
 
-    on(peopleActions.loadPeopleListSuccess, (state, action) => ({
-        ...state,
-        people: action.Items,
-        error: null,
-        peopleListLoading: false,
-    })),
+    on(peopleActions.loadPeopleListSuccess, (state, action) => {
+        const peopleListWithoutMe = action.people.Items.filter(
+            (people) => people.uid.S !== action.localStorageId.uid
+        );
+        return {
+            ...state,
+            people: peopleListWithoutMe,
+            error: null,
+            peopleListLoading: false,
+        };
+    }),
 
     on(peopleActions.loadPeopleListFailure, (state, { error }) => ({
         ...state,
@@ -46,12 +51,17 @@ export const peopleReducer = createReducer(
         peopleListLoading: true,
     })),
 
-    on(peopleActions.updatePeopleListSuccess, (state, action) => ({
-        ...state,
-        people: action.Items,
-        error: null,
-        peopleListLoading: false,
-    })),
+    on(peopleActions.updatePeopleListSuccess, (state, action) => {
+        const peopleListWithoutMe = action.people.Items.filter(
+            (people) => people.uid.S !== action.localStorageId.uid
+        );
+        return {
+            ...state,
+            people: peopleListWithoutMe,
+            error: null,
+            peopleListLoading: false,
+        };
+    }),
 
     on(peopleActions.updatePeopleListFailure, (state, { error }) => ({
         ...state,

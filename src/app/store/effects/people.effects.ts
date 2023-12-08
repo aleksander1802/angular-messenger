@@ -24,14 +24,21 @@ export class PeopleEffects {
             ofType(peopleActions.loadPeopleList),
             withLatestFrom(this.store.pipe(select(selectPeople))),
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            mergeMap(([_action, peoples]) => {
+            mergeMap(([action, peoples]) => {
                 if (peoples) {
                     return of(peopleActions.loadPeopleListLoadingFalse());
                 } else {
                     return this.peopleService.getPeopleList().pipe(
-                        map((people) =>
-                            peopleActions.loadPeopleListSuccess(people)
-                        ),
+                        map((people) => {
+                            const combinedPayload = {
+                                people,
+                                localStorageId: action,
+                            };
+
+                            return peopleActions.loadPeopleListSuccess(
+                                combinedPayload
+                            );
+                        }),
                         catchError((error) => {
                             let errorMessage = error.message;
 
@@ -55,10 +62,9 @@ export class PeopleEffects {
     updatePeople$ = createEffect(() =>
         this.actions$.pipe(
             ofType(peopleActions.updatePeopleList),
-
-            mergeMap(() =>
+            mergeMap((action) =>
                 this.peopleService.getPeopleList().pipe(
-                    map((peoples) => {
+                    map((people) => {
                         this.toastService.showToast(
                             'People list have been successfully updated',
                             false
@@ -69,8 +75,14 @@ export class PeopleEffects {
 
                         this.timerService.setTimer(timerKey, timerCountdown);
                         this.timerService.startTimer(timerKey);
+                            
+                            
+                        const combinedPayload = {
+                            people,
+                            localStorageId: action,
+                        };
 
-                        return peopleActions.updatePeopleListSuccess(peoples);
+                        return peopleActions.updatePeopleListSuccess(combinedPayload);
                     }),
                     catchError((error) => {
                         let errorMessage = error.message;
