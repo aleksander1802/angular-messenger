@@ -30,6 +30,6 @@ export interface CompanionId {
     companion: string;
 }
 
-export interface ConversationCreateId {
+export interface ConversationId {
     conversationID: string;
 }

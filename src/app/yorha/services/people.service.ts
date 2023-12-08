@@ -8,7 +8,7 @@ import { HttpClient } from '@angular/common/http';
 import {
     CompanionId,
     Conversation,
-    ConversationCreateId,
+    ConversationId,
     People,
 } from '../models/people.interface';
 import { Observable } from 'rxjs';
@@ -27,10 +27,8 @@ export class PeopleService {
         return this.http.get<Conversation>(APP_CONVERSATIONS_LIST);
     }
 
-    createConversation(
-        companionUid: CompanionId
-    ): Observable<ConversationCreateId> {
-        return this.http.post<ConversationCreateId>(
+    createConversation(companionUid: CompanionId): Observable<ConversationId> {
+        return this.http.post<ConversationId>(
             APP_CONVERSATIONS_CREATE,
             companionUid
         );

@@ -7,10 +7,10 @@
         width: 700px;        
         margin: 0 auto;
         padding: 2rem 1.5rem;
-        background: var(--background-auth);
+        background: var(--color-high-trans);
         border-radius: 10px;
         min-height: 300px;
-
+        z-index: 1;
         clip-path: polygon(
             0 0,
             calc(100% - 115px) 0,

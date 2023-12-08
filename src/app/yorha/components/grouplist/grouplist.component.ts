@@ -4,7 +4,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable, Subscription, filter } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 import {
-    selectCreateGroupError,
     selectGroup,
     selectGroupLoading,
 } from 'src/app/store/selectors/group.selectors';
@@ -15,7 +14,6 @@ import {
     updateGroupList,
 } from 'src/app/store/actions/group.actions';
 import { LocalStorageAuthValue } from 'src/app/auth/models/login-response.interface';
-import { ErrorFailure } from 'src/app/shared/models/error-types.interface';
 import { TimerService } from '../../services/timer.service';
 
 @Component({
@@ -30,7 +28,6 @@ import { TimerService } from '../../services/timer.service';
 export class GrouplistComponent implements OnInit, OnDestroy {
     groupItems$: Observable<GroupItem[] | null> | undefined;
     isGroupLoading$: Observable<boolean> | undefined;
-    createGroupError$: Observable<ErrorFailure | null> | undefined;
 
     showDeleteModal = false;
     isCreateMode = false;
@@ -57,7 +54,7 @@ export class GrouplistComponent implements OnInit, OnDestroy {
         this.initForm();
         this.initGroupItemsObservable();
         this.initIsGroupLoadingObservable();
-        this.initCreateGroupErrorObservable();
+
         this.initCountdownSubscription();
     }
 
@@ -73,12 +70,6 @@ export class GrouplistComponent implements OnInit, OnDestroy {
 
     private initIsGroupLoadingObservable() {
         this.isGroupLoading$ = this.store.pipe(select(selectGroupLoading));
-    }
-
-    private initCreateGroupErrorObservable() {
-        this.createGroupError$ = this.store.pipe(
-            select(selectCreateGroupError)
-        );
     }
 
     private initCountdownSubscription() {

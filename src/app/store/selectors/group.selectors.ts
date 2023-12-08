@@ -14,8 +14,3 @@ export const selectGroupLoading = createSelector(
     selectGroupState,
     (state) => state.loading
 );
-
-export const selectCreateGroupError = createSelector(
-    selectGroupState,
-    (state) => state.error
-);
