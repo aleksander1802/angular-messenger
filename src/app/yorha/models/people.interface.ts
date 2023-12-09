@@ -14,10 +14,10 @@ export interface PeopleItem {
 
 export interface Conversation {
     Count: number;
-    Items: ConverstaionItem[];
+    Items: ConversationItem[];
 }
 
-export interface ConverstaionItem {
+export interface ConversationItem {
     id: {
         S: string;
     };

@@ -1,24 +1,27 @@
 import { createReducer, on } from '@ngrx/store';
 import { ErrorFailure } from 'src/app/shared/models/error-types.interface';
-import { PeopleItem } from 'src/app/yorha/models/people.interface';
+import {
+    Conversation,
+    PeopleItem,
+} from 'src/app/yorha/models/people.interface';
 import * as peopleActions from '../actions/people.actions';
 
 export const peopleFeatureKey = 'people';
 
 export interface PeopleState {
     people: PeopleItem[] | null;
+    conversations: Conversation[] | null;
     peopleListLoading: boolean;
     conversationListLoading: boolean;
     error: ErrorFailure | null;
-    isPeopleTimerRunning: boolean;
 }
 
 export const initialState: PeopleState = {
     people: null,
+    conversations: null,
     peopleListLoading: false,
     conversationListLoading: false,
     error: null,
-    isPeopleTimerRunning: false,
 };
 
 export const peopleReducer = createReducer(

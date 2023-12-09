@@ -9,7 +9,7 @@ const routes: Routes = [
         path: '',
         component: HomePageComponent,
     },
-    { path: 'group/:groupId', component: GroupDetailComponent },
+    { path: 'group/:groupID', component: GroupDetailComponent },
     {
         path: 'conversation/:conversationId',
         component: ConversationDetailComponent,

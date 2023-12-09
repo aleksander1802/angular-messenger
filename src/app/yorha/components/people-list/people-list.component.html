@@ -12,8 +12,8 @@
             <button
                 class="people__buttons__refresh__button"
                 [disabled]="
-                     
-                    (this.isPeopleListLoading$ | async) || (countdownSubscription$ | async)
+                    (this.isPeopleListLoading$ | async) ||
+                    (countdownSubscription$ | async)
                 "
                 (click)="onUpdatePeopleList()"
             >
@@ -21,21 +21,6 @@
             </button>
         </div>
     </div>
-
-    <!-- <div class="people__list">
-        <ul class="people__list__items">
-            <li class="people__list__item"
-                *ngFor="let person of people$"
-                [ngClass]="{
-                    'active-conversation': isConversationActive(person)
-                }"
-            >
-                <a href="#" class="people__list__item__link" >{{
-                    person.name.S
-                }}</a>
-            </li>
-        </ul>
-    </div> -->
 
     <div
         class="people__list"
@@ -47,7 +32,7 @@
                     (click)="onStartConversationWithUser(person.uid.S)"
                     class="people__list__item__button"
                 >
-                    {{ person.name.S }}
+                    {{ person.uid.S }} {{ person.name.S }}
                 </button>
             </li>
         </ul>

@@ -22,3 +22,9 @@ export const APP_CONVERSATIONS_LIST =
 
 export const APP_CONVERSATIONS_CREATE =
     'https://tasks.app.rs.school/angular/conversations/create';
+
+export const APP_GROUP_MESSAGES =
+    'https://tasks.app.rs.school/angular/groups/read';
+
+export const APP_GROUP_ADD_NEW_MESSAGE =
+    'https://tasks.app.rs.school/angular/groups/append';

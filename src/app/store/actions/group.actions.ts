@@ -2,7 +2,7 @@ import { createAction, props } from '@ngrx/store';
 import { GroupsActionType } from '../action-types/group-action.types';
 import {
     GeneratedGroup,
-    Group,
+    Group,    
     GroupItem,
 } from 'src/app/yorha/models/group.interface';
 import { ErrorFailure } from 'src/app/shared/models/error-types.interface';
@@ -61,3 +61,4 @@ export const deleteGroupFailure = createAction(
 export const loadGroupListUpdateLoading = createAction(
     GroupsActionType.GROUP_LOADING_FALSE
 );
+

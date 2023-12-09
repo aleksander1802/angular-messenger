@@ -1,1 +1,45 @@
-<p>group-detail works!</p>
+<div class="groupMessage">
+    <h2>groupMessage</h2>
+
+    <div class="groupMessage__buttons">
+        <div class="groupMessage__buttons__refresh">
+            <div *ngIf="countdownSubscription$ | async">
+                Next update in
+                {{ countdownSubscription$ | async }}
+                seconds
+            </div>
+
+            <button
+                class="groupMessage__buttons__refresh__button"
+                [disabled]="
+                    (this.isgroupMessageLoading$ | async) ||
+                    (countdownSubscription$ | async)
+                "
+                (click)="onUpdateGroupMessages()"
+            >
+                <mat-icon>refresh</mat-icon>
+            </button>
+        </div>
+    </div>
+
+    <div
+        class="groupMessage__list"
+        *ngIf="items$ | async as groupMessageData; else loading"
+    >
+        <ul class="groupMessage__list__items">
+            <li *ngFor="let groupMessage of groupMessageData" class="groupMessage__list__item">
+                <div>
+                    <span>{{groupMessage.createdAt.S | date: 'medium'}} </span>
+                    
+                    <span> {{groupMessage.authorID.S}}</span>
+                    <br>
+                    <span>{{groupMessage.message.S}}</span>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <ng-template #loading>
+        <p>Loading...</p>
+    </ng-template>
+</div>

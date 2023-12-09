@@ -6,8 +6,13 @@ import {
     APP_GROUPS_LIST,
     APP_GROUPS_CREATE,
     APP_GROUPS_DELETE,
+    APP_GROUP_MESSAGES,
 } from '../../../../constants';
-import { Group, GroupCreateId } from '../models/group.interface';
+import {
+    Group,
+    GroupConversation,
+    GroupCreateId,
+} from '../models/group.interface';
 
 @Injectable({
     providedIn: 'root',
@@ -28,5 +33,19 @@ export class GroupService {
         const params = new HttpParams().set('groupID', groupId);
 
         return this.http.delete(url, { params });
+    }
+
+    getGroupMessages(groupID: string, since?: number) {
+        console.log(`Service: groupID: ${groupID} since: ${since}`);
+
+        let params = new HttpParams().set('groupID', groupID);
+
+        if (since) {
+            params = params.append('since', since.toString());
+        }
+
+        return this.http.get<GroupConversation>(APP_GROUP_MESSAGES, {
+            params,
+        });
     }
 }

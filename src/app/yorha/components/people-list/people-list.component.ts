@@ -21,6 +21,7 @@ import { LocalStorageAuthValue } from 'src/app/auth/models/login-response.interf
 export class PeopleListComponent implements OnInit {
     peopleItems$: Observable<PeopleItem[] | null> | undefined;
 
+    
     isPeopleListLoading$: Observable<boolean> | undefined;
 
     countdownSubscription$: Observable<number | null> | undefined;

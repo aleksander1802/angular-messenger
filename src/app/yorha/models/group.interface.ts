@@ -31,3 +31,25 @@ export interface GeneratedGroup {
     createdAt: string;
     createdBy: string;
 }
+
+export interface GroupConversation {
+    Count: number;
+    Items: GroupConversationItem[];
+}
+
+export interface GroupConversationItem {
+    authorID: {
+        S: string;
+    };
+    message: {
+        S: string;
+    };
+    createdAt: {
+        S: string;
+    };
+}
+
+export interface GroupConversationSendMessage {
+    groupID: string;
+    message: string;
+}
