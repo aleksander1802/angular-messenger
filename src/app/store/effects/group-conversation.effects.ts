@@ -37,9 +37,16 @@ export class GroupConversationEffects {
                             map((messages) => {
                                 console.log('Effect: messages:', messages);
 
+                                const sortedItems = messages.Items.sort(
+                                    (a, b) =>
+                                        a.createdAt.S.localeCompare(
+                                            b.createdAt.S
+                                        )
+                                );
+
                                 const combinedConversation = {
                                     groupID: action.groupID,
-                                    items: messages.Items,
+                                    items: sortedItems,
                                 };
 
                                 console.log(
@@ -85,9 +92,13 @@ export class GroupConversationEffects {
                             this.timerService.setTimer(action.groupID, 60);
                             this.timerService.startTimer(action.groupID);
 
+                            const sortedItems = messages.Items.sort((a, b) =>
+                                a.createdAt.S.localeCompare(b.createdAt.S)
+                            );
+
                             const combinedConversation = {
                                 groupID: action.groupID,
-                                items: messages.Items,
+                                items: sortedItems,
                             };
 
                             console.log(
