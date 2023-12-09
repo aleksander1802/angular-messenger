@@ -71,43 +71,45 @@ export class GroupConversationEffects {
         this.actions$.pipe(
             ofType(groupConversationActions.updateGroupConversation),
             switchMap((action) => {
-                return this.groupService.getGroupMessages(action.groupID, action.since).pipe(
-                    map((messages) => {
-                        console.log('action.groupID:', action.groupID);
+                return this.groupService
+                    .getGroupMessages(action.groupID, action.since)
+                    .pipe(
+                        map((messages) => {
+                            console.log('action.groupID:', action.groupID);
 
-                        this.toastService.showToast(
-                            'Group conversation have been successfully updated',
-                            false
-                        );
+                            this.toastService.showToast(
+                                'Group conversation have been successfully updated',
+                                false
+                            );
 
-                        this.timerService.setTimer(action.groupID, 60);
-                        this.timerService.startTimer(action.groupID);
+                            this.timerService.setTimer(action.groupID, 60);
+                            this.timerService.startTimer(action.groupID);
 
-                        const combinedConversation = {
-                            groupID: action.groupID,
-                            items: messages.Items,
-                        };
+                            const combinedConversation = {
+                                groupID: action.groupID,
+                                items: messages.Items,
+                            };
 
-                        console.log(
-                            'Combined Conversation:',
-                            combinedConversation
-                        );
+                            console.log(
+                                'Combined Conversation:',
+                                combinedConversation
+                            );
 
-                        return groupConversationActions.updateGroupConversationSuccess(
-                            combinedConversation
-                        );
-                    }),
-                    catchError((error) =>
-                        of(
-                            groupConversationActions.updateGroupConversationFailure(
-                                {
-                                    groupID: action.groupID,
-                                    error,
-                                }
+                            return groupConversationActions.updateGroupConversationSuccess(
+                                combinedConversation
+                            );
+                        }),
+                        catchError((error) =>
+                            of(
+                                groupConversationActions.updateGroupConversationFailure(
+                                    {
+                                        groupID: action.groupID,
+                                        error,
+                                    }
+                                )
                             )
                         )
-                    )
-                );
+                    );
             })
         )
     );

@@ -34,8 +34,6 @@ export class GroupDetailComponent implements OnInit {
 
     countdownSubscription$: Observable<number | null> | undefined;
 
-    private countdownKey = 'groupMessageTimer';
-
     currentLocalStorage!: LocalStorageAuthValue;
 
     currentGroupID: string | null = null;
@@ -59,11 +57,10 @@ export class GroupDetailComponent implements OnInit {
             this.initGroupMessageDispatch(this.currentGroupID);
             this.initGroupMessageItemsObservable(this.currentGroupID);
             this.initSinceValueObservable(this.currentGroupID);
+            this.initCountdownSubscription(this.currentGroupID);
         }
 
         this.initIsGroupMessagesLoadingObservable();
-
-        this.initCountdownSubscription();
     }
 
     private getLocalStorageUid() {
@@ -122,9 +119,9 @@ export class GroupDetailComponent implements OnInit {
         );
     }
 
-    private initCountdownSubscription() {
-        this.countdownSubscription$ = this.timerService.getTimer(
-            this.countdownKey
-        );
+    private initCountdownSubscription(groupID: string) {
+        if (groupID) {
+            this.countdownSubscription$ = this.timerService.getTimer(groupID);
+        }
     }
 }
