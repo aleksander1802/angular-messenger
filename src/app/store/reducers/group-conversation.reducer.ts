@@ -26,6 +26,8 @@ export const groupConversationReducer = createReducer<GroupConversationState>(
 
     on(
         groupConversationActions.loadGroupConversation,
+        groupConversationActions.updateGroupConversation,
+        groupConversationActions.sendGroupConversationMessage,
         (state: GroupConversationState) => ({
             ...state,
             loading: true,
@@ -34,49 +36,6 @@ export const groupConversationReducer = createReducer<GroupConversationState>(
 
     on(
         groupConversationActions.loadGroupConversationSuccess,
-        (state, { groupID, items }) => ({
-            ...state,
-            groupConversationItems: {
-                ...state.groupConversationItems,
-                [groupID]: {
-                    groupConversationItem: items,
-                    error: null,
-                    since:
-                        items && items.length > 0
-                            ? +items[items.length - 1].createdAt.S
-                            : null,
-                },
-            },
-            loading: false,
-        })
-    ),
-
-    on(
-        groupConversationActions.loadGroupConversationFailure,
-        (state, { groupID, error }) => ({
-            ...state,
-            groupConversationItems: state.groupConversationItems
-                ? {
-                      ...state.groupConversationItems,
-                      [groupID]: {
-                          ...state.groupConversationItems[groupID],
-                          error,
-                      },
-                  }
-                : null,
-            loading: false,
-        })
-    ),
-
-    on(
-        groupConversationActions.updateGroupConversation,
-        (state: GroupConversationState) => ({
-            ...state,
-            loading: true,
-        })
-    ),
-
-    on(
         groupConversationActions.updateGroupConversationSuccess,
         (state, { groupID, items }) => {
             const existingData = state.groupConversationItems?.[groupID] || {
@@ -90,7 +49,7 @@ export const groupConversationReducer = createReducer<GroupConversationState>(
                     ...state.groupConversationItems,
                     [groupID]: {
                         groupConversationItem:
-                            items.length > 0
+                            items && items.length > 0
                                 ? [
                                       ...(existingData.groupConversationItem ||
                                           []),
@@ -101,7 +60,6 @@ export const groupConversationReducer = createReducer<GroupConversationState>(
                                           []),
                                   ],
                         error: null,
-                        isTimerRunning: false,
                         since:
                             items && items.length > 0
                                 ? +items[items.length - 1].createdAt.S
@@ -114,6 +72,7 @@ export const groupConversationReducer = createReducer<GroupConversationState>(
     ),
 
     on(
+        groupConversationActions.loadGroupConversationFailure,
         groupConversationActions.updateGroupConversationFailure,
         (state, { groupID, error }) => {
             const existingData = state.groupConversationItems?.[groupID] || {
@@ -128,7 +87,55 @@ export const groupConversationReducer = createReducer<GroupConversationState>(
                     [groupID]: {
                         groupConversationItem:
                             existingData.groupConversationItem,
-                        error: error,
+                        error,
+                        since: existingData.since,
+                    },
+                },
+                loading: false,
+            };
+        }
+    ),
+
+    on(
+        groupConversationActions.sendGroupConversationMessageSuccess,
+        (state, { groupID, since }) => {
+            const existingData = state.groupConversationItems?.[groupID] || {
+                groupConversationItem: null,
+                since: null,
+            };
+
+            return {
+                ...state,
+                groupConversationItems: {
+                    ...state.groupConversationItems,
+                    [groupID]: {
+                        groupConversationItem:
+                            existingData.groupConversationItem,
+                        error: null,
+                        since,
+                    },
+                },
+                loading: false,
+            };
+        }
+    ),
+
+    on(
+        groupConversationActions.sendGroupConversationMessageFailure,
+        (state, { groupID, error }) => {
+            const existingData = state.groupConversationItems?.[groupID] || {
+                groupConversationItem: null,
+                since: null,
+            };
+
+            return {
+                ...state,
+                groupConversationItems: {
+                    ...state.groupConversationItems,
+                    [groupID]: {
+                        groupConversationItem:
+                            existingData.groupConversationItem,
+                        error,
                         since: existingData.since,
                     },
                 },

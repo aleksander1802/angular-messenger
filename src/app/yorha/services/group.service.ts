@@ -7,6 +7,7 @@ import {
     APP_GROUPS_CREATE,
     APP_GROUPS_DELETE,
     APP_GROUP_MESSAGES,
+    APP_GROUP_ADD_NEW_MESSAGE,
 } from '../../../../constants';
 import {
     Group,
@@ -36,18 +37,20 @@ export class GroupService {
     }
 
     getGroupMessages(groupID: string, since?: number) {
-        console.log(`Service: groupID: ${groupID} since: ${since}`);
-
         let params = new HttpParams().set('groupID', groupID);
 
         if (since) {
-            console.log('since');
-            
             params = params.append('since', since.toString());
         }
 
         return this.http.get<GroupConversation>(APP_GROUP_MESSAGES, {
             params,
         });
+    }
+
+    sendGroupMessage(groupID: string, message: string) {
+        const body = { groupID, message };
+
+        return this.http.post(APP_GROUP_ADD_NEW_MESSAGE, body);
     }
 }

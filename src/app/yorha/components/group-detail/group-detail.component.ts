@@ -1,15 +1,28 @@
-import { Component, OnInit } from '@angular/core';
+import {
+    Component,
+    ElementRef,
+    OnDestroy,
+    OnInit,
+    ViewChild,
+} from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import { Observable, distinctUntilChanged } from 'rxjs';
+import {
+    Observable,
+    Subject,
+    debounceTime,
+    distinctUntilChanged,
+    takeUntil,
+} from 'rxjs';
 import { LocalStorageAuthValue } from 'src/app/auth/models/login-response.interface';
-
 import { TimerService } from '../../services/timer.service';
-
 import { ActivatedRoute } from '@angular/router';
-
-import { GroupConversationItem } from '../../models/group.interface';
+import {
+    GroupConversationItem,
+    GroupConversationSendMessage,
+} from '../../models/group.interface';
 import {
     loadGroupConversation,
+    sendGroupConversationMessage,
     updateGroupConversation,
 } from 'src/app/store/actions/group-conversation.actions';
 import {
@@ -18,13 +31,20 @@ import {
     selectSince,
 } from 'src/app/store/selectors/group-conversation.selectors';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { deleteGroup } from 'src/app/store/actions/group.actions';
 
 @Component({
     selector: 'app-group-detail',
     templateUrl: './group-detail.component.html',
-    styleUrls: ['./group-detail.component.scss'],
+    styleUrls: [
+        './styles/group-detail.component.scss',
+        './styles/group-detail-form.component.scss',
+        './styles/group-detail-modal.component.scss',
+    ],
 })
-export class GroupDetailComponent implements OnInit {
+export class GroupDetailComponent implements OnInit, OnDestroy {
+    @ViewChild('scrollContainer') scrollContainer!: ElementRef;
+
     items$: Observable<GroupConversationItem[] | null> | undefined;
 
     isgroupMessageLoading$: Observable<boolean> | undefined;
@@ -39,9 +59,11 @@ export class GroupDetailComponent implements OnInit {
 
     currentGroupID: string | null = null;
 
-    hasItems: boolean | null = false;
-
     groupConversationForm: FormGroup | undefined;
+
+    private ngUnsubscribe = new Subject<void>();
+
+    showDeleteModal = false;
 
     constructor(
         private route: ActivatedRoute,
@@ -53,21 +75,20 @@ export class GroupDetailComponent implements OnInit {
     ngOnInit() {
         this.initForm();
         this.getLocalStorageUid();
+        this.initIsGroupMessagesLoadingObservable();
 
-        this.route.paramMap.subscribe((params) => {
-            if (params) {
-                this.currentGroupID = params.get('groupID');
-            }
-        });
+        this.route.paramMap
+            .pipe(takeUntil(this.ngUnsubscribe))
+            .subscribe((params) => {
+                if (params) {
+                    this.currentGroupID = params.get('groupID');
+                }
+            });
 
         if (this.currentGroupID) {
-            this.initGroupMessageDispatch(this.currentGroupID);
-            this.initGroupMessageItemsObservable(this.currentGroupID);
             this.initSinceValueObservable(this.currentGroupID);
             this.initCountdownSubscription(this.currentGroupID);
         }
-
-        this.initIsGroupMessagesLoadingObservable();
     }
 
     private initForm() {
@@ -77,7 +98,7 @@ export class GroupDetailComponent implements OnInit {
     }
 
     get message() {
-        return this.groupConversationForm?.get('name');
+        return this.groupConversationForm?.get('message');
     }
 
     getError(controlName: string, errorName: string) {
@@ -94,43 +115,52 @@ export class GroupDetailComponent implements OnInit {
         }
     }
 
-    private initGroupMessageDispatch(groupID: string) {
-        this.store.dispatch(loadGroupConversation({ groupID }));
+    private initGroupConverstionDispatch(groupID: string, since?: number) {
+        this.store.dispatch(loadGroupConversation({ groupID, since }));
     }
 
-    private initGroupMessageItemsObservable(groupID: string) {
+    private initGroupConverstionItemsObservable(groupID: string) {
         this.items$ = this.store.pipe(
             select(selectGroupConversationItems(groupID)),
             distinctUntilChanged()
         );
-
-        this.items$.subscribe((value) => {
-            console.log(value);
-
-            this.hasItems = value && value.length > 0;
-        });
     }
-
+    private debounceDelay = 1000;
     private initSinceValueObservable(groupID: string) {
-        console.log(groupID);
         this.currentSinceValue$ = this.store.pipe(
             select(selectSince(groupID)),
             distinctUntilChanged()
         );
 
-        this.currentSinceValue$.subscribe((value) => {
-            console.log(value);
+        this.currentSinceValue$
+            .pipe(
+                takeUntil(this.ngUnsubscribe),
+                debounceTime(this.debounceDelay)
+            )
+            .subscribe((value) => {
+                this.since = value;
+                if (value) {
+                    this.initGroupConverstionDispatch(groupID, value);
+                    this.initGroupConverstionItemsObservable(groupID);
+                } else {
+                    this.initGroupConverstionDispatch(groupID);
+                    this.initGroupConverstionItemsObservable(groupID);
+                }
 
-            this.since = value;
-        });
+                this.scrollToBottom();
+            });
+    }
+
+    private scrollToBottom() {
+        if (this.scrollContainer) {
+            this.scrollContainer.nativeElement.scrollTop =
+                this.scrollContainer.nativeElement.scrollHeight;
+        }
     }
 
     onUpdateGroupMessages() {
-        console.log(
-            `this.currentGroupID: ${this.currentGroupID}, this.since: ${this.since}`
-        );
         if (this.currentGroupID) {
-            if (this.hasItems && this.since) {
+            if (this.since) {
                 this.store.dispatch(
                     updateGroupConversation({
                         groupID: this.currentGroupID,
@@ -151,11 +181,55 @@ export class GroupDetailComponent implements OnInit {
         this.isgroupMessageLoading$ = this.store.pipe(
             select(selectGroupMessagesLoading)
         );
+
+        this.isgroupMessageLoading$
+            .pipe(takeUntil(this.ngUnsubscribe))
+            .subscribe(() => {
+                this.scrollToBottom();
+            });
     }
 
     private initCountdownSubscription(groupID: string) {
         if (groupID) {
             this.countdownSubscription$ = this.timerService.getTimer(groupID);
         }
+    }
+
+    onSendConversationMessage() {
+        if (this.groupConversationForm?.invalid) {
+            return;
+        }
+
+        if (this.groupConversationForm?.valid && this.currentGroupID) {
+            const message: GroupConversationSendMessage = {
+                groupID: this.currentGroupID,
+                message: this.groupConversationForm.value.message,
+                since: Date.now(),
+            };
+
+            this.store.dispatch(sendGroupConversationMessage(message));
+            this.groupConversationForm.reset();
+        }
+    }
+
+    openDeleteModal() {
+        this.showDeleteModal = true;
+    }
+
+    cancelGroupDelete() {
+        this.showDeleteModal = false;
+    }
+
+    confirmDelete() {
+        const groupId = this.currentGroupID;
+
+        if (groupId) {
+            this.store.dispatch(deleteGroup({ groupId }));
+        }
+    }
+
+    ngOnDestroy() {
+        this.ngUnsubscribe.next();
+        this.ngUnsubscribe.complete();
     }
 }

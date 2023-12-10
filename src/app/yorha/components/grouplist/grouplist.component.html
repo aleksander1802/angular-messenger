@@ -7,7 +7,7 @@
                 [buttonText]="'Create'"
                 (click)="onCreateClick()"
                 [disabled]="
-                    showDeleteModal || (this.isGroupLoading$ | async) || false
+                    showDeleteModal || (isGroupLoading$ | async) || false
                 "
             ></app-cyber-button>
         </div>
@@ -20,7 +20,7 @@
                 class="group__buttons__refresh__button"
                 [disabled]="
                     (countdownSubscription | async) ||
-                    (this.isGroupLoading$ | async)
+                    (isGroupLoading$ | async)
                 "
                 (click)="onRefreshClick()"
             >
@@ -44,7 +44,7 @@
                     type="button"
                     class="group__list__item__delete"
                     [disabled]="
-                        isCreateMode || (this.isGroupLoading$ | async) || false
+                        isCreateMode || (isGroupLoading$ | async) || false
                     "
                     (click)="openDeleteModal(item.id.S)"
                     *ngIf="item.createdBy.S === currentLocalStorageUID.uid"
@@ -62,7 +62,7 @@
             </h2>
             <div class="group__modal__buttons">
                 <app-cyber-button
-                    [disabled]="(this.isGroupLoading$ | async) || false"
+                    [disabled]="(isGroupLoading$ | async) || false"
                     (click)="confirmDelete()"
                     [buttonText]="'Delete'"
                 ></app-cyber-button>
@@ -105,7 +105,7 @@
                 <app-cyber-button
                     [disabled]="
                         groupForm.invalid ||
-                        (this.isGroupLoading$ | async) ||
+                        (isGroupLoading$ | async) ||
                         false
                     "
                     (click)="onCreateGroupSubmit()"

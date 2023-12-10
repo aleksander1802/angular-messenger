@@ -16,6 +16,7 @@ import { GroupService } from 'src/app/yorha/services/group.service';
 import { GroupItem } from 'src/app/yorha/models/group.interface';
 import { selectGroup } from '../selectors/group.selectors';
 import { TimerService } from 'src/app/yorha/services/timer.service';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class GroupEffects {
@@ -24,7 +25,8 @@ export class GroupEffects {
         private store: Store,
         private groupService: GroupService,
         private toastService: ToastService,
-        private timerService: TimerService
+        private timerService: TimerService,
+        private router: Router
     ) {}
 
     loadGroup$ = createEffect(() =>
@@ -152,6 +154,12 @@ export class GroupEffects {
                             'The group was successfully deleted',
                             false
                         );
+
+                        const currentPath = this.router.url;
+
+                        if (currentPath.startsWith('/group/')) {
+                            this.router.navigate(['/']);
+                        }
 
                         return groupActions.deleteGroupSuccess({ groupId });
                     }),

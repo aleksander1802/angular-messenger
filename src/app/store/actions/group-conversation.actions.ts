@@ -5,7 +5,7 @@ import { GroupConversationItem } from 'src/app/yorha/models/group.interface';
 
 export const loadGroupConversation = createAction(
     GroupConversationActionType.GROUP_LOAD_CONVERSATION,
-    props<{ groupID: string }>()
+    props<{ groupID: string; since?: number }>()
 );
 
 export const loadGroupConversationSuccess = createAction(
@@ -32,6 +32,32 @@ export const updateGroupConversationFailure = createAction(
     GroupConversationActionType.GROUP_UPDATE_CONVERSATION_FAILURE,
     props<{ groupID: string; error: ErrorFailure }>()
 );
+
+
+
+
+
+export const sendGroupConversationMessage = createAction(
+    GroupConversationActionType.GROUP_SEND_MESSAGE,
+    props<{ groupID: string; message: string; since: number }>()
+);
+
+export const sendGroupConversationMessageSuccess = createAction(
+    GroupConversationActionType.GROUP_SEND_MESSAGE_SUCCESS,
+    props<{ groupID: string; since: number }>()
+);
+
+export const sendGroupConversationMessageFailure = createAction(
+    GroupConversationActionType.GROUP_SEND_MESSAGE_FAILURE,
+    props<{ groupID: string; error: ErrorFailure }>()
+);
+
+
+
+
+
+
+
 
 export const conversationLoadingFalse = createAction(
     GroupConversationActionType.GROUP_CONVERSATION_LOADING_FALSE
