@@ -27,16 +27,49 @@
         *ngIf="items$ | async as groupMessageData; else loading"
     >
         <ul class="groupMessage__list__items">
-            <li *ngFor="let groupMessage of groupMessageData" class="groupMessage__list__item">
+            <li
+                *ngFor="let groupMessage of groupMessageData"
+                class="groupMessage__list__item"
+            >
                 <div>
-                    <span>{{groupMessage.createdAt.S | date: 'medium'}} </span>
-                    
-                    <span> {{groupMessage.authorID.S}}</span>
-                    <br>
-                    <span>{{groupMessage.message.S}}</span>
+                    <span
+                        >{{ groupMessage.createdAt.S | date : "medium" }}
+                    </span>
+
+                    <span> {{ groupMessage.authorID.S }}</span>
+                    <br />
+                    <span>{{ groupMessage.message.S }}</span>
                 </div>
             </li>
         </ul>
+    </div>
+
+    <div>
+        <form
+            class="group__form"
+            *ngIf="groupConversationForm"
+            [formGroup]="groupConversationForm"
+        >
+            <div
+                class="group__form__control"
+                [ngClass]="{ invalid: message?.touched && message?.invalid }"
+            >
+                <input
+                    id="message"
+                    type="text"
+                    formControlName="message"
+                    autocomplete="message"
+                />
+                <div
+                    class="validation"
+                    *ngIf="message?.touched && message?.invalid"
+                >
+                    <small *ngIf="getError('name', 'required')">
+                        Please enter message
+                    </small>
+                </div>
+            </div>
+        </form>
     </div>
 
     <ng-template #loading>

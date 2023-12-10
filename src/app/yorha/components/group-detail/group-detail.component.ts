@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import { Observable, distinctUntilChanged, tap } from 'rxjs';
+import { Observable, distinctUntilChanged } from 'rxjs';
 import { LocalStorageAuthValue } from 'src/app/auth/models/login-response.interface';
 
 import { TimerService } from '../../services/timer.service';
@@ -17,6 +17,7 @@ import {
     selectGroupMessagesLoading,
     selectSince,
 } from 'src/app/store/selectors/group-conversation.selectors';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
     selector: 'app-group-detail',
@@ -38,13 +39,19 @@ export class GroupDetailComponent implements OnInit {
 
     currentGroupID: string | null = null;
 
+    hasItems: boolean | null = false;
+
+    groupConversationForm: FormGroup | undefined;
+
     constructor(
         private route: ActivatedRoute,
         private store: Store,
-        private timerService: TimerService
+        private timerService: TimerService,
+        private fb: FormBuilder
     ) {}
 
     ngOnInit() {
+        this.initForm();
         this.getLocalStorageUid();
 
         this.route.paramMap.subscribe((params) => {
@@ -63,6 +70,22 @@ export class GroupDetailComponent implements OnInit {
         this.initIsGroupMessagesLoadingObservable();
     }
 
+    private initForm() {
+        this.groupConversationForm = this.fb.group({
+            message: ['', [Validators.required]],
+        });
+    }
+
+    get message() {
+        return this.groupConversationForm?.get('name');
+    }
+
+    getError(controlName: string, errorName: string) {
+        return this.groupConversationForm
+            ?.get(controlName)
+            ?.hasError(errorName);
+    }
+
     private getLocalStorageUid() {
         const localStorageValue = localStorage.getItem('auth');
 
@@ -78,11 +101,14 @@ export class GroupDetailComponent implements OnInit {
     private initGroupMessageItemsObservable(groupID: string) {
         this.items$ = this.store.pipe(
             select(selectGroupConversationItems(groupID)),
-            distinctUntilChanged(),
-            tap((groupMessageData) =>
-                console.log('GroupMessageData:', groupMessageData)
-            )
+            distinctUntilChanged()
         );
+
+        this.items$.subscribe((value) => {
+            console.log(value);
+
+            this.hasItems = value && value.length > 0;
+        });
     }
 
     private initSinceValueObservable(groupID: string) {
@@ -103,13 +129,21 @@ export class GroupDetailComponent implements OnInit {
         console.log(
             `this.currentGroupID: ${this.currentGroupID}, this.since: ${this.since}`
         );
-        if (this.currentGroupID && this.since) {
-            this.store.dispatch(
-                updateGroupConversation({
-                    groupID: this.currentGroupID,
-                    since: this.since,
-                })
-            );
+        if (this.currentGroupID) {
+            if (this.hasItems && this.since) {
+                this.store.dispatch(
+                    updateGroupConversation({
+                        groupID: this.currentGroupID,
+                        since: this.since,
+                    })
+                );
+            } else {
+                this.store.dispatch(
+                    updateGroupConversation({
+                        groupID: this.currentGroupID,
+                    })
+                );
+            }
         }
     }
 

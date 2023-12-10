@@ -20,7 +20,7 @@ export const loadGroupConversationFailure = createAction(
 
 export const updateGroupConversation = createAction(
     GroupConversationActionType.GROUP_UPDATE_CONVERSATION,
-    props<{ groupID: string; since: number }>()
+    props<{ groupID: string; since?: number }>()
 );
 
 export const updateGroupConversationSuccess = createAction(

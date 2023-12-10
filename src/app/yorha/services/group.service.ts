@@ -41,6 +41,8 @@ export class GroupService {
         let params = new HttpParams().set('groupID', groupID);
 
         if (since) {
+            console.log('since');
+            
             params = params.append('since', since.toString());
         }
 
