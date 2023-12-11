@@ -8,6 +8,7 @@ import { Store, select } from '@ngrx/store';
 import { selectPeople } from '../selectors/people.selectors';
 import { ToastService } from 'src/app/shared/services/toast/toast.service';
 import { TimerService } from 'src/app/yorha/services/timer.service';
+import { PeopleLocalStorageService } from 'src/app/yorha/services/people-local-storage.service';
 
 @Injectable()
 export class PeopleEffects {
@@ -16,7 +17,8 @@ export class PeopleEffects {
         private peopleService: PeopleService,
         private store: Store,
         private toastService: ToastService,
-        private timerService: TimerService
+        private timerService: TimerService,
+        private peopleLocalStorageService: PeopleLocalStorageService
     ) {}
 
     loadPeople$ = createEffect(() =>
@@ -34,6 +36,10 @@ export class PeopleEffects {
                                 people,
                                 localStorageId: action,
                             };
+
+                            this.peopleLocalStorageService.updatePeopleStorage(
+                                people.Items
+                            );
 
                             return peopleActions.loadPeopleListSuccess(
                                 combinedPayload
@@ -80,6 +86,10 @@ export class PeopleEffects {
                             people,
                             localStorageId: action,
                         };
+
+                        this.peopleLocalStorageService.updatePeopleStorage(
+                            people.Items
+                        );
 
                         return peopleActions.updatePeopleListSuccess(
                             combinedPayload

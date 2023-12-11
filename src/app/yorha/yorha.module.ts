@@ -8,6 +8,7 @@ import { ProfileLinkComponent } from './components/profile-link/profile-link.com
 import { PeopleListComponent } from './components/people-list/people-list.component';
 import { GroupDetailComponent } from './components/group-detail/group-detail.component';
 import { ConversationDetailComponent } from './components/conversation-detail/conversation-detail.component';
+import { PeopleNamePipe } from './pipes/people-name.pipe';
 
 @NgModule({
     declarations: [
@@ -17,6 +18,7 @@ import { ConversationDetailComponent } from './components/conversation-detail/co
         PeopleListComponent,
         GroupDetailComponent,
         ConversationDetailComponent,
+        PeopleNamePipe,
     ],
     imports: [CommonModule, SharedModule, YoRHaRoutingModule],
 })

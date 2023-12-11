@@ -34,6 +34,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { deleteGroup } from 'src/app/store/actions/group.actions';
 import { GroupStorageService } from '../../services/group-local-storage.service';
 import { selectGroupLoading } from 'src/app/store/selectors/group.selectors';
+import { PeopleItem } from '../../models/people.interface';
+import { PeopleLocalStorageService } from '../../services/people-local-storage.service';
 
 @Component({
     selector: 'app-group-detail',
@@ -46,6 +48,9 @@ import { selectGroupLoading } from 'src/app/store/selectors/group.selectors';
 })
 export class GroupDetailComponent implements OnInit, OnDestroy {
     @ViewChild('scrollContainer') scrollContainer!: ElementRef;
+
+    peopleList: PeopleItem[] =
+        this.peopleLocalStorageService.getPeopleStorage();
 
     items$: Observable<GroupConversationItem[] | null> | undefined;
 
@@ -74,6 +79,7 @@ export class GroupDetailComponent implements OnInit, OnDestroy {
     constructor(
         private route: ActivatedRoute,
         private store: Store,
+        private peopleLocalStorageService: PeopleLocalStorageService,
         private timerService: TimerService,
         private fb: FormBuilder,
         private groupStorageService: GroupStorageService

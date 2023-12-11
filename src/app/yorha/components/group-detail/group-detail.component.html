@@ -59,7 +59,10 @@
                                     <span
                                         class="conversation__list__item__profile__info-name"
                                     >
-                                        {{ groupMessage.authorID.S }}</span
+                                        {{
+                                            groupMessage.authorID.S
+                                                | peopleName : peopleList
+                                        }}</span
                                     >
                                     <span
                                         class="conversation__list__item__profile__info-date"
