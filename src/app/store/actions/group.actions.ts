@@ -2,7 +2,8 @@ import { createAction, props } from '@ngrx/store';
 import { GroupsActionType } from '../action-types/group-action.types';
 import {
     GeneratedGroup,
-    Group,    
+    Group,
+    GroupCreateId,
     GroupItem,
 } from 'src/app/yorha/models/group.interface';
 import { ErrorFailure } from 'src/app/shared/models/error-types.interface';
@@ -47,11 +48,11 @@ export const updateGroupListFailure = createAction(
 
 export const deleteGroup = createAction(
     GroupsActionType.GROUP_DELETE,
-    props<{ groupId: string }>()
+    props<GroupCreateId>()
 );
 export const deleteGroupSuccess = createAction(
     GroupsActionType.GROUP_DELETE_SUCCESS,
-    props<{ groupId: string }>()
+    props<GroupCreateId>()
 );
 export const deleteGroupFailure = createAction(
     GroupsActionType.GROUP_DELETE_FAILURE,
@@ -61,4 +62,3 @@ export const deleteGroupFailure = createAction(
 export const loadGroupListUpdateLoading = createAction(
     GroupsActionType.GROUP_LOADING_FALSE
 );
-

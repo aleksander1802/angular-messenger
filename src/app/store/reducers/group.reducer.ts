@@ -66,9 +66,9 @@ export const groupReducer = createReducer(
 
     on(groupActions.deleteGroup, (state) => ({ ...state, loading: true })),
 
-    on(groupActions.deleteGroupSuccess, (state, { groupId }) => {
+    on(groupActions.deleteGroupSuccess, (state, { groupID }) => {
         const updatedGroups =
-            state.groups?.filter((group) => group.id.S !== groupId) || null;
+            state.groups?.filter((group) => group.id.S !== groupID) || null;
         return {
             ...state,
             groups: updatedGroups,

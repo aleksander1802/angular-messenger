@@ -57,15 +57,15 @@ export class ProfileEffects {
     updateProfile$ = createEffect(() =>
         this.actions$.pipe(
             ofType(profileActions.updateProfile),
-            mergeMap((action) =>
-                this.profileService.updateProfile({ name: action.name }).pipe(
+            mergeMap(({ name }) =>
+                this.profileService.updateProfile({ name }).pipe(
                     map(() => {
                         this.toastService.showToast(
                             'Profile updated successfully',
                             false
                         );
                         return profileActions.updateProfileSuccess({
-                            name: action.name,
+                            name,
                         });
                     }),
                     catchError((error) => {

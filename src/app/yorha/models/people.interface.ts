@@ -30,6 +30,23 @@ export interface CompanionId {
     companion: string;
 }
 
-export interface ConversationId {
+export interface ConversationID {
     conversationID: string;
+}
+
+export interface ConversationMessage {
+    Count: number;
+    Items: ConversationMessageItem[];
+}
+
+export interface ConversationMessageItem {
+    authorID: {
+        S: string;
+    };
+    message: {
+        S: string;
+    };
+    createdAt: {
+        S: string;
+    };
 }

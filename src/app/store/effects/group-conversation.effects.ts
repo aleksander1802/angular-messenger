@@ -18,45 +18,43 @@ export class GroupConversationEffects {
     loadGroupConversation$ = createEffect(() =>
         this.actions$.pipe(
             ofType(groupConversationActions.loadGroupConversation),
-            switchMap((action) => {
-                return this.groupService
-                    .getGroupMessages(action.groupID, action.since)
-                    .pipe(
-                        map((messages) => {
-                            const sortedItems = messages.Items.sort((a, b) =>
-                                a.createdAt.S.localeCompare(b.createdAt.S)
-                            );
+            switchMap(({ groupID, since }) => {
+                return this.groupService.getGroupMessages(groupID, since).pipe(
+                    map((messages) => {
+                        const items = messages.Items.sort((a, b) =>
+                            a.createdAt.S.localeCompare(b.createdAt.S)
+                        );
 
-                            const combinedConversation = {
-                                groupID: action.groupID,
-                                items: sortedItems,
-                            };
+                        const combinedConversation = {
+                            groupID,
+                            items,
+                        };
 
-                            return groupConversationActions.loadGroupConversationSuccess(
-                                combinedConversation
-                            );
-                        }),
-                        catchError((error) => {
-                            let errorMessage = error.message;
+                        return groupConversationActions.loadGroupConversationSuccess(
+                            combinedConversation
+                        );
+                    }),
+                    catchError((error) => {
+                        let errorMessage = error.message;
 
-                            if (error.status === 0) {
-                                errorMessage = 'Internet connection lost';
-                            } else {
-                                errorMessage = error.error.message;
-                            }
+                        if (error.status === 0) {
+                            errorMessage = 'Internet connection lost';
+                        } else {
+                            errorMessage = error.error.message;
+                        }
 
-                            this.toastService.showToast(errorMessage, true);
+                        this.toastService.showToast(errorMessage, true);
 
-                            return of(
-                                groupConversationActions.loadGroupConversationFailure(
-                                    {
-                                        groupID: action.groupID,
-                                        error,
-                                    }
-                                )
-                            );
-                        })
-                    );
+                        return of(
+                            groupConversationActions.loadGroupConversationFailure(
+                                {
+                                    groupID,
+                                    error,
+                                }
+                            )
+                        );
+                    })
+                );
             })
         )
     );
@@ -64,52 +62,50 @@ export class GroupConversationEffects {
     updateGroupConversation$ = createEffect(() =>
         this.actions$.pipe(
             ofType(groupConversationActions.updateGroupConversation),
-            switchMap((action) => {
-                return this.groupService
-                    .getGroupMessages(action.groupID, action.since)
-                    .pipe(
-                        map((messages) => {
-                            this.toastService.showToast(
-                                'Group conversation have been successfully updated',
-                                false
-                            );
+            switchMap(({ groupID, since }) => {
+                return this.groupService.getGroupMessages(groupID, since).pipe(
+                    map((messages) => {
+                        this.toastService.showToast(
+                            'Group conversation have been successfully updated',
+                            false
+                        );
 
-                            this.timerService.setTimer(action.groupID, 60);
-                            this.timerService.startTimer(action.groupID);
+                        this.timerService.setTimer(groupID, 60);
+                        this.timerService.startTimer(groupID);
 
-                            const sortedItems = messages.Items.sort((a, b) =>
-                                a.createdAt.S.localeCompare(b.createdAt.S)
-                            );
+                        const items = messages.Items.sort((a, b) =>
+                            a.createdAt.S.localeCompare(b.createdAt.S)
+                        );
 
-                            const combinedConversation = {
-                                groupID: action.groupID,
-                                items: sortedItems,
-                            };
+                        const combinedConversation = {
+                            groupID,
+                            items,
+                        };
 
-                            return groupConversationActions.updateGroupConversationSuccess(
-                                combinedConversation
-                            );
-                        }),
-                        catchError((error) => {
-                            let errorMessage = error.message;
+                        return groupConversationActions.updateGroupConversationSuccess(
+                            combinedConversation
+                        );
+                    }),
+                    catchError((error) => {
+                        let errorMessage = error.message;
 
-                            if (error.status === 0) {
-                                errorMessage = 'Internet connection lost';
-                            } else {
-                                errorMessage = error.error.message;
-                            }
+                        if (error.status === 0) {
+                            errorMessage = 'Internet connection lost';
+                        } else {
+                            errorMessage = error.error.message;
+                        }
 
-                            this.toastService.showToast(errorMessage, true);
-                            return of(
-                                groupConversationActions.updateGroupConversationFailure(
-                                    {
-                                        groupID: action.groupID,
-                                        error,
-                                    }
-                                )
-                            );
-                        })
-                    );
+                        this.toastService.showToast(errorMessage, true);
+                        return of(
+                            groupConversationActions.updateGroupConversationFailure(
+                                {
+                                    groupID,
+                                    error,
+                                }
+                            )
+                        );
+                    })
+                );
             })
         )
     );
@@ -117,9 +113,9 @@ export class GroupConversationEffects {
     sendGroupConversationMessage$ = createEffect(() =>
         this.actions$.pipe(
             ofType(groupConversationActions.sendGroupConversationMessage),
-            switchMap((action) => {
+            switchMap(({ groupID, message, since }) => {
                 return this.groupService
-                    .sendGroupMessage(action.groupID, action.message)
+                    .sendGroupMessage(groupID, message)
                     .pipe(
                         map(() => {
                             this.toastService.showToast(
@@ -128,8 +124,8 @@ export class GroupConversationEffects {
                             );
 
                             const combinedConversation = {
-                                groupID: action.groupID,
-                                since: action.since,
+                                groupID,
+                                since,
                             };
 
                             return groupConversationActions.sendGroupConversationMessageSuccess(
@@ -149,7 +145,7 @@ export class GroupConversationEffects {
                             return of(
                                 groupConversationActions.sendGroupConversationMessageFailure(
                                     {
-                                        groupID: action.groupID,
+                                        groupID,
                                         error,
                                     }
                                 )

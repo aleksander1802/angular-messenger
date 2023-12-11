@@ -252,10 +252,10 @@ export class GroupDetailComponent implements OnInit, OnDestroy {
     }
 
     confirmDelete() {
-        const groupId = this.currentGroupID;
+        const groupID = this.currentGroupID;
 
-        if (groupId) {
-            this.store.dispatch(deleteGroup({ groupId }));
+        if (groupID) {
+            this.store.dispatch(deleteGroup({ groupID }));
         }
     }
 

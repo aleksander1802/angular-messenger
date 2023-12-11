@@ -152,11 +152,11 @@ export class GroupEffects {
     deleteGroup$ = createEffect(() =>
         this.actions$.pipe(
             ofType(groupActions.deleteGroup),
-            switchMap(({ groupId }) =>
-                this.groupService.deleteGroup(groupId).pipe(
+            switchMap(({ groupID }) =>
+                this.groupService.deleteGroup(groupID).pipe(
                     map(() => {
                         this.groupStorageService.removeMyGroupFromStorage(
-                            groupId
+                            groupID
                         );
 
                         this.toastService.showToast(
@@ -170,7 +170,7 @@ export class GroupEffects {
                             this.router.navigate(['/']);
                         }
 
-                        return groupActions.deleteGroupSuccess({ groupId });
+                        return groupActions.deleteGroupSuccess({ groupID });
                     }),
                     catchError((error) => {
                         let errorMessage = error.message;

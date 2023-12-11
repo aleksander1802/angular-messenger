@@ -39,6 +39,7 @@ $angular-messenger-theme: mat.define-light-theme(
 // that you are using.
 @include mat.all-component-themes($angular-messenger-theme);
 
+
 @import url("./assets/fonts/nier/stylesheet.scss");
 
 :root {
@@ -68,7 +69,6 @@ $angular-messenger-theme: mat.define-light-theme(
     --color-high-trans: rgba(218, 212, 187, 0.8);
     --color-low-trans: rgba(87, 84, 74, 0.6);
     --color-alert-trans: rgba(8, 4, 3, 0.7);
-
 
     --mask: conic-gradient(
         from -46deg at top 85px right 115px,

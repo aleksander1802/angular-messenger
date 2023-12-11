@@ -17,11 +17,20 @@ export const APP_GROUPS_DELETE =
 
 export const APP_USERS = 'https://tasks.app.rs.school/angular/users';
 
-export const APP_CONVERSATIONS_LIST =
+export const APP_CONVERSATION_LIST =
     'https://tasks.app.rs.school/angular/conversations/list';
 
-export const APP_CONVERSATIONS_CREATE =
+export const APP_CONVERSATION_CREATE =
     'https://tasks.app.rs.school/angular/conversations/create';
+
+export const APP_CONVERSATION_MESSAGES =
+    'https://tasks.app.rs.school/angular/conversations/read';
+
+export const APP_CONVERSATION_ADD_NEW_MESSAGE =
+    'https://tasks.app.rs.school/angular/conversations/append';
+
+export const APP_CONVERSATION_DELETE =
+    'https://tasks.app.rs.school/angular/conversations/delete';
 
 export const APP_GROUP_MESSAGES =
     'https://tasks.app.rs.school/angular/groups/read';
