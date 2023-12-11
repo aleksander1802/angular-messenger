@@ -1,6 +1,5 @@
 <form class="login" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
     <h2 class="login__title">Sign In</h2>
-    
 
     <div
         class="login__control"
@@ -56,10 +55,7 @@
     <div class="login__button-submit">
         <app-cyber-button
             [disabled]="
-                loginForm.invalid ||
-                isSubmitting ||
-                isHttpError ||
-                hasUserChangedInput
+                loginForm.invalid || isSubmitting || hasUserChangedInput
             "
             type="submit"
             [buttonText]="isSubmitting ? 'Logging in...' : 'Login'"

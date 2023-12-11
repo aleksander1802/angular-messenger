@@ -20,7 +20,7 @@ import { Router } from '@angular/router';
 export class LoginPageComponent implements OnInit, OnDestroy {
     loginForm!: FormGroup;
     isSubmitting = false;
-    isHttpError = false;
+
     hasUserChangedInput = false;
 
     private ngUnsubscribe: Subject<void> = new Subject<void>();
@@ -120,7 +120,6 @@ export class LoginPageComponent implements OnInit, OnDestroy {
                     this.handleOtherErrors();
             }
         } else {
-            this.isHttpError = true;
             this.handleOtherErrors();
         }
     }
@@ -146,4 +145,3 @@ export class LoginPageComponent implements OnInit, OnDestroy {
         this.ngUnsubscribe.complete();
     }
 }
-

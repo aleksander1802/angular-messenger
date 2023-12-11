@@ -142,7 +142,7 @@
         </h2>
         <div class="conversation__modal__buttons">
             <app-cyber-button
-                [disabled]="(isgroupMessageLoading$ | async) || false"
+                [disabled]="(isgroupBeingDeleted$ | async) || false"
                 (click)="confirmDelete()"
                 [buttonText]="'Delete'"
             ></app-cyber-button>

@@ -33,6 +33,7 @@ import {
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { deleteGroup } from 'src/app/store/actions/group.actions';
 import { GroupStorageService } from '../../services/group-local-storage.service';
+import { selectGroupLoading } from 'src/app/store/selectors/group.selectors';
 
 @Component({
     selector: 'app-group-detail',
@@ -49,6 +50,8 @@ export class GroupDetailComponent implements OnInit, OnDestroy {
     items$: Observable<GroupConversationItem[] | null> | undefined;
 
     isgroupMessageLoading$: Observable<boolean> | undefined;
+
+    isgroupBeingDeleted$: Observable<boolean> | undefined;
 
     currentSinceValue$: Observable<number | null> | undefined;
 
@@ -80,6 +83,7 @@ export class GroupDetailComponent implements OnInit, OnDestroy {
         this.initForm();
         this.getLocalStorageUid();
         this.initIsGroupMessagesLoadingObservable();
+        this.initGroupDeleteLoading();
 
         this.route.paramMap
             .pipe(takeUntil(this.ngUnsubscribe))
@@ -200,6 +204,10 @@ export class GroupDetailComponent implements OnInit, OnDestroy {
             .subscribe(() => {
                 this.scrollToBottom();
             });
+    }
+
+    private initGroupDeleteLoading() {
+        this.isgroupBeingDeleted$ = this.store.pipe(select(selectGroupLoading));
     }
 
     private initCountdownSubscription(groupID: string) {
