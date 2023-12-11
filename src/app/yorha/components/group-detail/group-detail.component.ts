@@ -32,6 +32,7 @@ import {
 } from 'src/app/store/selectors/group-conversation.selectors';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { deleteGroup } from 'src/app/store/actions/group.actions';
+import { GroupStorageService } from '../../services/group-local-storage.service';
 
 @Component({
     selector: 'app-group-detail',
@@ -65,11 +66,14 @@ export class GroupDetailComponent implements OnInit, OnDestroy {
 
     showDeleteModal = false;
 
+    isMyGroup = false;
+
     constructor(
         private route: ActivatedRoute,
         private store: Store,
         private timerService: TimerService,
-        private fb: FormBuilder
+        private fb: FormBuilder,
+        private groupStorageService: GroupStorageService
     ) {}
 
     ngOnInit() {
@@ -81,7 +85,11 @@ export class GroupDetailComponent implements OnInit, OnDestroy {
             .pipe(takeUntil(this.ngUnsubscribe))
             .subscribe((params) => {
                 if (params) {
-                    this.currentGroupID = params.get('groupID');
+                    const groupId = params.get('groupID');
+                    this.currentGroupID = groupId;
+                    if (groupId) {
+                        this.getMyGroups(groupId);
+                    }
                 }
             });
 
@@ -113,6 +121,11 @@ export class GroupDetailComponent implements OnInit, OnDestroy {
         if (localStorageValue) {
             this.currentLocalStorage = JSON.parse(localStorageValue);
         }
+    }
+
+    private getMyGroups(groupID: string) {
+        const myGroup = this.groupStorageService.getGroups();
+        this.isMyGroup = myGroup.includes(groupID);
     }
 
     private initGroupConverstionDispatch(groupID: string, since?: number) {

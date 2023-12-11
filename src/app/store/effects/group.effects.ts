@@ -17,12 +17,14 @@ import { GroupItem } from 'src/app/yorha/models/group.interface';
 import { selectGroup } from '../selectors/group.selectors';
 import { TimerService } from 'src/app/yorha/services/timer.service';
 import { Router } from '@angular/router';
+import { GroupStorageService } from 'src/app/yorha/services/group-local-storage.service';
 
 @Injectable()
 export class GroupEffects {
     constructor(
         private actions$: Actions,
         private store: Store,
+        private groupStorageService: GroupStorageService,
         private groupService: GroupService,
         private toastService: ToastService,
         private timerService: TimerService,
@@ -104,6 +106,14 @@ export class GroupEffects {
             switchMap((group) =>
                 this.groupService.createGroup(group.name).pipe(
                     map((groupID) => {
+                        this.groupStorageService.addMyGroupToStorage(
+                            groupID.groupID
+                        );
+
+                        this.toastService.showToast(
+                            'The group was successfully created',
+                            false
+                        );
                         const newGroup: GroupItem = {
                             id: {
                                 S: groupID.groupID,
@@ -118,11 +128,6 @@ export class GroupEffects {
                                 S: group.createdBy,
                             },
                         };
-
-                        this.toastService.showToast(
-                            'The group was successfully created',
-                            false
-                        );
 
                         return groupActions.createGroupSuccess(newGroup);
                     }),
@@ -150,6 +155,10 @@ export class GroupEffects {
             switchMap(({ groupId }) =>
                 this.groupService.deleteGroup(groupId).pipe(
                     map(() => {
+                        this.groupStorageService.removeMyGroupFromStorage(
+                            groupId
+                        );
+
                         this.toastService.showToast(
                             'The group was successfully deleted',
                             false
