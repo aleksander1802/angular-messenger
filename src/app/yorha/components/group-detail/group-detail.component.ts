@@ -72,6 +72,8 @@ export class GroupDetailComponent implements OnInit, OnDestroy {
 
     private ngUnsubscribe = new Subject<void>();
 
+    private debounceDelay = 1000;
+
     showDeleteModal = false;
 
     isMyGroup = false;
@@ -148,7 +150,7 @@ export class GroupDetailComponent implements OnInit, OnDestroy {
             distinctUntilChanged()
         );
     }
-    private debounceDelay = 1000;
+
     private initSinceValueObservable(groupID: string) {
         this.currentSinceValue$ = this.store.pipe(
             select(selectSince(groupID)),
@@ -227,11 +229,13 @@ export class GroupDetailComponent implements OnInit, OnDestroy {
             return;
         }
 
+        const defaultDate = 1702312323642;
+
         if (this.groupConversationForm?.valid && this.currentGroupID) {
             const message: GroupConversationSendMessage = {
                 groupID: this.currentGroupID,
                 message: this.groupConversationForm.value.message,
-                since: Date.now(),
+                since: this.since ? +this.since + 1 : defaultDate,
             };
 
             this.store.dispatch(sendGroupConversationMessage(message));

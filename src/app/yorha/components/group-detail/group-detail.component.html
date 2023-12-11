@@ -38,6 +38,10 @@
                 <li
                     *ngFor="let groupMessage of groupMessageData"
                     class="conversation__list__item"
+                    [ngClass]="{
+                        myMessage:
+                            currentLocalStorage.uid === groupMessage.authorID.S
+                    }"
                 >
                     <div class="conversation__list__item">
                         <p class="conversation__list__item__date">

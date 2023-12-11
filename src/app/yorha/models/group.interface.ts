@@ -52,5 +52,5 @@ export interface GroupConversationItem {
 export interface GroupConversationSendMessage {
     groupID: string;
     message: string;
-    since: number;
+    since: number | null;
 }

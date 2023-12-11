@@ -36,16 +36,26 @@ export class GroupConversationEffects {
                                 combinedConversation
                             );
                         }),
-                        catchError((error) =>
-                            of(
+                        catchError((error) => {
+                            let errorMessage = error.message;
+
+                            if (error.status === 0) {
+                                errorMessage = 'Internet connection lost';
+                            } else {
+                                errorMessage = error.error.message;
+                            }
+
+                            this.toastService.showToast(errorMessage, true);
+
+                            return of(
                                 groupConversationActions.loadGroupConversationFailure(
                                     {
                                         groupID: action.groupID,
                                         error,
                                     }
                                 )
-                            )
-                        )
+                            );
+                        })
                     );
             })
         )
@@ -80,16 +90,25 @@ export class GroupConversationEffects {
                                 combinedConversation
                             );
                         }),
-                        catchError((error) =>
-                            of(
+                        catchError((error) => {
+                            let errorMessage = error.message;
+
+                            if (error.status === 0) {
+                                errorMessage = 'Internet connection lost';
+                            } else {
+                                errorMessage = error.error.message;
+                            }
+
+                            this.toastService.showToast(errorMessage, true);
+                            return of(
                                 groupConversationActions.updateGroupConversationFailure(
                                     {
                                         groupID: action.groupID,
                                         error,
                                     }
                                 )
-                            )
-                        )
+                            );
+                        })
                     );
             })
         )
@@ -117,16 +136,25 @@ export class GroupConversationEffects {
                                 combinedConversation
                             );
                         }),
-                        catchError((error) =>
-                            of(
+                        catchError((error) => {
+                            let errorMessage = error.message;
+
+                            if (error.status === 0) {
+                                errorMessage = 'Internet connection lost';
+                            } else {
+                                errorMessage = error.error.message;
+                            }
+
+                            this.toastService.showToast(errorMessage, true);
+                            return of(
                                 groupConversationActions.sendGroupConversationMessageFailure(
                                     {
                                         groupID: action.groupID,
                                         error,
                                     }
                                 )
-                            )
-                        )
+                            );
+                        })
                     );
             })
         )

@@ -144,15 +144,38 @@
                     }
 
                     &-message {
-                        max-width: 1300px;
+                        max-width: 70%;
                         font-size: 18px;
                         overflow-wrap: break-word;
                         padding: 0.3rem;
+                        text-align: left;
                     }
                 }
             }
             &:last-child {
                 animation: elementChanged 1s ease;
+            }
+        }
+    }
+}
+
+.myMessage {
+    .conversation {
+        &__list {
+            &__item {
+                &__profile {
+                    flex-direction: row-reverse;
+                    &__info {
+                        align-items: flex-end;
+                        &__nameDate {
+                            flex-direction: row-reverse;
+                        }
+
+                        &-message {
+                            text-align: right;
+                        }
+                    }
+                }
             }
         }
     }

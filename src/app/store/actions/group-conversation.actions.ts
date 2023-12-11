@@ -33,31 +33,20 @@ export const updateGroupConversationFailure = createAction(
     props<{ groupID: string; error: ErrorFailure }>()
 );
 
-
-
-
-
 export const sendGroupConversationMessage = createAction(
     GroupConversationActionType.GROUP_SEND_MESSAGE,
-    props<{ groupID: string; message: string; since: number }>()
+    props<{ groupID: string; message: string; since: number | null }>()
 );
 
 export const sendGroupConversationMessageSuccess = createAction(
     GroupConversationActionType.GROUP_SEND_MESSAGE_SUCCESS,
-    props<{ groupID: string; since: number }>()
+    props<{ groupID: string; since: number | null }>()
 );
 
 export const sendGroupConversationMessageFailure = createAction(
     GroupConversationActionType.GROUP_SEND_MESSAGE_FAILURE,
     props<{ groupID: string; error: ErrorFailure }>()
 );
-
-
-
-
-
-
-
 
 export const conversationLoadingFalse = createAction(
     GroupConversationActionType.GROUP_CONVERSATION_LOADING_FALSE

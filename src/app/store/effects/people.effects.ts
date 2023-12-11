@@ -24,8 +24,7 @@ export class PeopleEffects {
     loadPeople$ = createEffect(() =>
         this.actions$.pipe(
             ofType(peopleActions.loadPeopleList),
-            withLatestFrom(this.store.pipe(select(selectPeople))),
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            withLatestFrom(this.store.pipe(select(selectPeople))),            
             mergeMap(([action, peoples]) => {
                 if (peoples) {
                     return of(peopleActions.loadPeopleListLoadingFalse());
