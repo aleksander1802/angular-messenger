@@ -30,11 +30,10 @@ export class PeopleService {
         return this.http.get<Conversation>(APP_CONVERSATION_LIST);
     }
 
-    createConversation(companionUid: string): Observable<ConversationID> {
-        return this.http.post<ConversationID>(
-            APP_CONVERSATION_CREATE,
-            companionUid
-        );
+    createConversation(companion: string): Observable<ConversationID> {
+        return this.http.post<ConversationID>(APP_CONVERSATION_CREATE, {
+            companion,
+        });
     }
 
     getConversationMessages(conversationID: string, since?: number) {

@@ -40,6 +40,7 @@ export const groupConversationReducer = createReducer<GroupConversationState>(
         (state, { groupID, items }) => {
             const existingData = state.groupConversationItems?.[groupID] || {
                 groupConversationItem: null,
+                error: null,
                 since: null,
             };
 

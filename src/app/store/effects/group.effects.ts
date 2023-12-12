@@ -32,7 +32,7 @@ export class GroupEffects {
     ) {}
 
     loadGroup$ = createEffect(() =>
-        this.actions$.pipe(
+        this.actions$.pipe( 
             ofType(groupActions.loadGroupList),
             withLatestFrom(this.store.pipe(select(selectGroup))),
             // eslint-disable-next-line @typescript-eslint/no-unused-vars

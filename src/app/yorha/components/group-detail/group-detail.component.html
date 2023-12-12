@@ -1,6 +1,6 @@
 <div class="conversation">
-    <p class="conversation__notfound">
-        <a class="conversation__notfound__link" [routerLink]="['/']"
+    <p class="conversation__homepage">
+        <a class="conversation__homepage__link" [routerLink]="['/']"
             >Go to Home Page
         </a>
     </p>
@@ -18,7 +18,7 @@
                 <button
                     class="conversation__header__buttons__refresh__button"
                     [disabled]="
-                        (isgroupMessageLoading$ | async) ||
+                        (isGroupMessageLoading$ | async) ||
                         (countdownSubscription$ | async)
                     "
                     (click)="onUpdateGroupMessages()"
@@ -90,8 +90,8 @@
 
         <form
             class="conversation__form"
-            *ngIf="groupConversationForm"
-            [formGroup]="groupConversationForm"
+            *ngIf="conversationForm"
+            [formGroup]="conversationForm"
         >
             <div
                 class="conversation__form__control"
@@ -116,8 +116,8 @@
             <div class="conversation__form__button-submit">
                 <app-cyber-button
                     [disabled]="
-                        groupConversationForm.invalid ||
-                        (isgroupMessageLoading$ | async) ||
+                        conversationForm.invalid ||
+                        (isGroupMessageLoading$ | async) ||
                         false
                     "
                     type="submit"
@@ -149,12 +149,12 @@
         </h2>
         <div class="conversation__modal__buttons">
             <app-cyber-button
-                [disabled]="(isgroupBeingDeleted$ | async) || false"
+                [disabled]="(isGroupBeingDeleted$ | async) || false"
                 (click)="confirmDelete()"
                 [buttonText]="'Delete'"
             ></app-cyber-button>
             <app-cyber-button
-                (click)="cancelGroupDelete()"
+                (click)="cancelDelete()"
                 [buttonText]="'Cancel'"
             ></app-cyber-button>
         </div>

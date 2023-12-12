@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { PeopleItem } from '../../models/people.interface';
+import { Observable, Subject, takeUntil } from 'rxjs';
+import { ConversationItem, PeopleItem } from '../../models/people.interface';
 import { TimerService } from '../../services/timer.service';
 import {
     loadPeopleList,
@@ -12,16 +12,21 @@ import {
     selectPeopleListLoading,
 } from 'src/app/store/selectors/people.selectors';
 import { LocalStorageAuthValue } from 'src/app/auth/models/login-response.interface';
+import {
+    createConversation,
+    loadConversationList,
+} from 'src/app/store/actions/people-conversation.actions';
+import { selectPeopleConversationList } from 'src/app/store/selectors/people-conversation.selectors';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-people-list',
     templateUrl: './people-list.component.html',
     styleUrls: ['./people-list.component.scss'],
 })
-export class PeopleListComponent implements OnInit {
+export class PeopleListComponent implements OnInit, OnDestroy {
     peopleItems$: Observable<PeopleItem[] | null> | undefined;
 
-    
     isPeopleListLoading$: Observable<boolean> | undefined;
 
     countdownSubscription$: Observable<number | null> | undefined;
@@ -30,7 +35,17 @@ export class PeopleListComponent implements OnInit {
 
     currentLocalStorage!: LocalStorageAuthValue;
 
-    constructor(private store: Store, private timerService: TimerService) {}
+    private ngUnsubscribe = new Subject<void>();
+
+    existingConversation$: Observable<ConversationItem[] | null> | undefined;
+
+    existingConversationList: ConversationItem[] | null = null;
+
+    constructor(
+        private store: Store,
+        private timerService: TimerService,
+        private router: Router
+    ) {}
 
     ngOnInit() {
         this.getLocalStorageUid();
@@ -38,6 +53,7 @@ export class PeopleListComponent implements OnInit {
         this.initPeopleItemsObservable();
         this.initIsPeopleListLoadingObservable();
         this.initCountdownSubscription();
+        this.initExistingConversation();
     }
 
     private getLocalStorageUid() {
@@ -54,10 +70,33 @@ export class PeopleListComponent implements OnInit {
 
     private initPeopleItemsObservable() {
         this.peopleItems$ = this.store.pipe(select(selectPeople));
+
+        this.peopleItems$
+            .pipe(takeUntil(this.ngUnsubscribe))
+            .subscribe((peopleItems) => {
+                if (peopleItems) {
+                    this.store.dispatch(loadConversationList());
+                }
+            });
+    }
+
+    private initExistingConversation() {
+        this.existingConversation$ = this.store.pipe(
+            select(selectPeopleConversationList)
+        );
+
+        this.existingConversation$
+            .pipe(takeUntil(this.ngUnsubscribe))
+            .subscribe((conversationList) => {
+                if (conversationList && conversationList.length > 0) {
+                    this.existingConversationList = conversationList;
+                }
+            });
     }
 
     onUpdatePeopleList() {
         this.store.dispatch(updatePeopleList(this.currentLocalStorage));
+        this.store.dispatch(loadConversationList());
     }
 
     private initIsPeopleListLoadingObservable() {
@@ -72,7 +111,50 @@ export class PeopleListComponent implements OnInit {
         );
     }
 
-    onStartConversationWithUser(userUid: string) {
-        console.log(userUid);
+    onStartConversationWithUser(companion: string) {
+        if (
+            this.existingConversationList &&
+            this.existingConversationList.length > 0
+        ) {
+            const conversation =
+                this.existingConversationList.find(
+                    (item) => item.companionID.S === companion
+                ) || null;
+
+            if (conversation) {
+                const routeId = conversation.id.S;
+
+                this.router.navigate(['conversation', routeId]);
+            } else {
+                this.store.dispatch(createConversation({ companion }));
+            }
+        } else {
+            this.store.dispatch(createConversation({ companion }));
+        }
+    }
+
+    changeColorExistingConversation(companion: string) {
+        if (
+            this.existingConversationList &&
+            this.existingConversationList.length > 0
+        ) {
+            const existingConversation =
+                this.existingConversationList?.find(
+                    (item) => item.companionID.S === companion
+                ) || null;
+
+            if (existingConversation) {
+                return companion;
+            } else {
+                return null;
+            }
+        } else {
+            return null;
+        }
+    }
+
+    ngOnDestroy() {
+        this.ngUnsubscribe.next();
+        this.ngUnsubscribe.complete();
     }
 }

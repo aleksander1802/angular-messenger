@@ -15,7 +15,13 @@ export enum PeopleConversationActionType {
     PEOPLE_LOAD_CONVERSATION_MESSAGE_SUCCESS = '[People Conversation] Load Conversation Message Success',
     PEOPLE_LOAD_CONVERSATION_MESSAGE_FAILURE = '[People Conversation] Load Conversation Message Failure',
 
+    PEOPLE_UPDATE_CONVERSATION_MESSAGE = '[People Conversation] Update Conversation Message',
+    PEOPLE_UPDATE_CONVERSATION_MESSAGE_SUCCESS = '[People Conversation] Update Conversation Message Success',
+    PEOPLE_UPDATE_CONVERSATION_MESSAGE_FAILURE = '[People Conversation] Update Conversation Message Failure',
+
     PEOPLE_SEND_CONVERSATION_MESSAGE = '[People Conversation] Send Conversation Message',
     PEOPLE_SEND_CONVERSATION_MESSAGE_SUCCESS = '[People Conversation] Send Conversation Message Success',
     PEOPLE_SEND_CONVERSATION_MESSAGE_FAILURE = '[People Conversation] Send Conversation Message Failure',
+
+    PEOPLE_LOAD_CONVERSATION_LIST_LOADING_FALSE = '[People Conversation] Conversation Loading False',
 }

@@ -11,7 +11,7 @@ const routes: Routes = [
     },
     { path: 'group/:groupID', component: GroupDetailComponent },
     {
-        path: 'conversation/:conversationId',
+        path: 'conversation/:conversationID',
         component: ConversationDetailComponent,
     },
 ];

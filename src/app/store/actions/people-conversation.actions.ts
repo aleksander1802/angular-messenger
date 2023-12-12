@@ -5,6 +5,7 @@ import {
     CompanionId,
     ConversationID,
     ConversationItem,
+    ConversationMessageItem,
 } from 'src/app/yorha/models/people.interface';
 import { PeopleConversationActionType } from '../action-types/people-conversation.types';
 
@@ -50,4 +51,53 @@ export const deleteConversationSuccess = createAction(
 export const deleteConversationFailure = createAction(
     PeopleConversationActionType.PEOPLE_DELETE_CONVERSATION_FAILURE,
     props<{ error: ErrorFailure }>()
+);
+
+export const loadConversationMessage = createAction(
+    PeopleConversationActionType.PEOPLE_LOAD_CONVERSATION_MESSAGE,
+    props<{ conversationID: string; since?: number }>()
+);
+
+export const loadConversationMessageSuccess = createAction(
+    PeopleConversationActionType.PEOPLE_LOAD_CONVERSATION_MESSAGE_SUCCESS,
+    props<{ conversationID: string; items: ConversationMessageItem[] }>()
+);
+
+export const loadConversationMessageFailure = createAction(
+    PeopleConversationActionType.PEOPLE_LOAD_CONVERSATION_MESSAGE_FAILURE,
+    props<{ conversationID: string; error: ErrorFailure }>()
+);
+
+export const updateConversationMessage = createAction(
+    PeopleConversationActionType.PEOPLE_UPDATE_CONVERSATION_MESSAGE,
+    props<{ conversationID: string; since?: number }>()
+);
+
+export const updateConversationMessageSuccess = createAction(
+    PeopleConversationActionType.PEOPLE_UPDATE_CONVERSATION_MESSAGE_SUCCESS,
+    props<{ conversationID: string; items: ConversationMessageItem[] }>()
+);
+
+export const updateConversationMessageFailure = createAction(
+    PeopleConversationActionType.PEOPLE_UPDATE_CONVERSATION_MESSAGE_FAILURE,
+    props<{ conversationID: string; error: ErrorFailure }>()
+);
+
+export const sendConversationMessage = createAction(
+    PeopleConversationActionType.PEOPLE_SEND_CONVERSATION_MESSAGE,
+    props<{ conversationID: string; message: string; since: number | null }>()
+);
+
+export const sendConversationMessageSuccess = createAction(
+    PeopleConversationActionType.PEOPLE_SEND_CONVERSATION_MESSAGE_SUCCESS,
+    props<{ conversationID: string; since: number | null }>()
+);
+
+export const sendConversationMessageFailure = createAction(
+    PeopleConversationActionType.PEOPLE_SEND_CONVERSATION_MESSAGE_FAILURE,
+    props<{ conversationID: string; error: ErrorFailure }>()
+);
+
+export const conversationListLoadingFalse = createAction(
+    PeopleConversationActionType.PEOPLE_LOAD_CONVERSATION_LIST_LOADING_FALSE
 );

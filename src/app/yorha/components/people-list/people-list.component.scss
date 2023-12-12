@@ -99,7 +99,7 @@
 
             &__button {
                 color: var(--color-alert-trans);
-                font-weight: 600;                
+                font-weight: 600;
                 background-color: transparent;
                 border: none;
                 width: 100%;
@@ -109,4 +109,8 @@
             }
         }
     }
+}
+
+.exist {
+    background-color: var(--color-alert);
 }

@@ -54,9 +54,9 @@ export class GroupDetailComponent implements OnInit, OnDestroy {
 
     items$: Observable<GroupConversationItem[] | null> | undefined;
 
-    isgroupMessageLoading$: Observable<boolean> | undefined;
+    isGroupMessageLoading$: Observable<boolean> | undefined;
 
-    isgroupBeingDeleted$: Observable<boolean> | undefined;
+    isGroupBeingDeleted$: Observable<boolean> | undefined;
 
     currentSinceValue$: Observable<number | null> | undefined;
 
@@ -68,9 +68,9 @@ export class GroupDetailComponent implements OnInit, OnDestroy {
 
     currentGroupID: string | null = null;
 
-    groupConversationForm: FormGroup | undefined;
+    conversationForm: FormGroup | undefined;
 
-    private ngUnsubscribe = new Subject<void>();
+    private ngUnsubscribe = new Subject<void>(); 
 
     private debounceDelay = 1000;
 
@@ -112,17 +112,17 @@ export class GroupDetailComponent implements OnInit, OnDestroy {
     }
 
     private initForm() {
-        this.groupConversationForm = this.fb.group({
+        this.conversationForm = this.fb.group({
             message: ['', [Validators.required]],
         });
     }
 
     get message() {
-        return this.groupConversationForm?.get('message');
+        return this.conversationForm?.get('message');
     }
 
     getError(controlName: string, errorName: string) {
-        return this.groupConversationForm
+        return this.conversationForm
             ?.get(controlName)
             ?.hasError(errorName);
     }
@@ -203,11 +203,11 @@ export class GroupDetailComponent implements OnInit, OnDestroy {
     }
 
     private initIsGroupMessagesLoadingObservable() {
-        this.isgroupMessageLoading$ = this.store.pipe(
+        this.isGroupMessageLoading$ = this.store.pipe(
             select(selectGroupMessagesLoading)
         );
 
-        this.isgroupMessageLoading$
+        this.isGroupMessageLoading$
             .pipe(takeUntil(this.ngUnsubscribe))
             .subscribe(() => {
                 this.scrollToBottom();
@@ -215,7 +215,7 @@ export class GroupDetailComponent implements OnInit, OnDestroy {
     }
 
     private initGroupDeleteLoading() {
-        this.isgroupBeingDeleted$ = this.store.pipe(select(selectGroupLoading));
+        this.isGroupBeingDeleted$ = this.store.pipe(select(selectGroupLoading));
     }
 
     private initCountdownSubscription(groupID: string) {
@@ -225,21 +225,21 @@ export class GroupDetailComponent implements OnInit, OnDestroy {
     }
 
     onSendConversationMessage() {
-        if (this.groupConversationForm?.invalid) {
+        if (this.conversationForm?.invalid) {
             return;
         }
 
         const defaultDate = 1702312323642;
 
-        if (this.groupConversationForm?.valid && this.currentGroupID) {
+        if (this.conversationForm?.valid && this.currentGroupID) {
             const message: GroupConversationSendMessage = {
                 groupID: this.currentGroupID,
-                message: this.groupConversationForm.value.message,
+                message: this.conversationForm.value.message,
                 since: this.since ? +this.since + 1 : defaultDate,
             };
 
             this.store.dispatch(sendGroupConversationMessage(message));
-            this.groupConversationForm.reset();
+            this.conversationForm.reset();
         }
     }
 
@@ -247,7 +247,7 @@ export class GroupDetailComponent implements OnInit, OnDestroy {
         this.showDeleteModal = true;
     }
 
-    cancelGroupDelete() {
+    cancelDelete() {
         this.showDeleteModal = false;
     }
 

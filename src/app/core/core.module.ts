@@ -27,6 +27,11 @@ import {
     groupConversationReducer,
 } from '../store/reducers/group-conversation.reducer';
 import { GroupConversationEffects } from '../store/effects/group-conversation.effects';
+import { PeopleConversationEffects } from '../store/effects/people-conversation.effects';
+import {
+    peopleConversationFeatureKey,
+    peopleConversationReducer,
+} from '../store/reducers/people-conversation.reducer';
 
 @NgModule({
     declarations: [NotFoundComponent, ProfileComponent, ProfilePageComponent],
@@ -44,11 +49,16 @@ import { GroupConversationEffects } from '../store/effects/group-conversation.ef
             groupConversationFeatureKey,
             groupConversationReducer
         ),
+        StoreModule.forFeature(
+            peopleConversationFeatureKey,
+            peopleConversationReducer
+        ),
         EffectsModule.forRoot([
             ProfileEffects,
             GroupEffects,
             PeopleEffects,
             GroupConversationEffects,
+            PeopleConversationEffects,
         ]),
     ],
 })

@@ -27,7 +27,11 @@
         *ngIf="peopleItems$ | async as peopleData; else loading"
     >
         <ul class="people__list__items">
-            <li *ngFor="let person of peopleData" class="people__list__item">
+            <li
+                *ngFor="let person of peopleData"
+                class="people__list__item"
+               
+            >
                 <button
                     (click)="onStartConversationWithUser(person.uid.S)"
                     class="people__list__item__button"

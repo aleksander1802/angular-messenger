@@ -50,3 +50,10 @@ export interface ConversationMessageItem {
         S: string;
     };
 }
+
+export interface PeopleConversationSendMessage {
+    conversationID: string;
+    message: string;
+    since: number | null;
+}
+
