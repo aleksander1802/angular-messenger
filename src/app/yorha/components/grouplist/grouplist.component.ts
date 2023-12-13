@@ -15,6 +15,7 @@ import {
 } from 'src/app/store/actions/group.actions';
 import { LocalStorageAuthValue } from 'src/app/auth/models/login-response.interface';
 import { TimerService } from '../../services/timer.service';
+import { GroupStorageService } from '../../services/group-local-storage.service';
 
 @Component({
     selector: 'app-grouplist',
@@ -45,7 +46,8 @@ export class GrouplistComponent implements OnInit, OnDestroy {
     constructor(
         private store: Store,
         private fb: FormBuilder,
-        private timerService: TimerService
+        private timerService: TimerService,
+        private groupStorageService: GroupStorageService
     ) {}
 
     ngOnInit() {
@@ -61,10 +63,27 @@ export class GrouplistComponent implements OnInit, OnDestroy {
         this.groupItems$ = this.store.pipe(select(selectGroup));
         this.createGroupSubscription = this.groupItems$
             .pipe(filter((groups) => groups !== null))
-            .subscribe(() => {
+            .subscribe((groups) => {
                 this.onCancelCreate();
                 this.cancelGroupDelete();
+
+                if (groups) {
+                    this.initMyGroups(groups);
+                }
             });
+    }
+
+    private initMyGroups(groups: GroupItem[]) {
+        const currentUid = this.currentLocalStorageUID.uid;
+        const myGroup = groups.filter(
+            (group) => group.createdBy.S === currentUid
+        );
+
+        if (myGroup) {
+            for (let i = 0; i < myGroup.length; i += 1) {
+                this.groupStorageService.addMyGroupToStorage(myGroup[i].id.S);
+            }
+        }
     }
 
     private initIsGroupLoadingObservable() {
@@ -124,7 +143,7 @@ export class GrouplistComponent implements OnInit, OnDestroy {
 
             const newGeneratedGroup: GeneratedGroup = {
                 name: groupName,
-                createdAt: new Date().toISOString(),
+                createdAt: Date.now().toString(),
                 createdBy: this.currentLocalStorageUID.uid,
             };
 

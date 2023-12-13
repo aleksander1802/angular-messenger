@@ -57,8 +57,6 @@ export class ConversationDetailComponent implements OnInit, OnDestroy {
 
     showDeleteModal = false;
 
-    isMyConversation = false;
-
     currentLocalStorage!: LocalStorageAuthValue;
 
     countdownSubscription$: Observable<number | null> | undefined;
@@ -94,10 +92,6 @@ export class ConversationDetailComponent implements OnInit, OnDestroy {
                     const conversationID = params.get('conversationID');
 
                     this.currentConversationID = conversationID;
-
-                    if (conversationID) {
-                        this.getMyConversations(conversationID);
-                    }
                 }
             });
 
@@ -151,13 +145,6 @@ export class ConversationDetailComponent implements OnInit, OnDestroy {
 
     getError(controlName: string, errorName: string) {
         return this.conversationForm?.get(controlName)?.hasError(errorName);
-    }
-
-    private getMyConversations(conversationID: string) {
-        const myConversation =
-            this.peopleLocalStorageService.getConversations();
-
-        this.isMyConversation = myConversation.includes(conversationID);
     }
 
     private initIsConversationLoadingObservable() {

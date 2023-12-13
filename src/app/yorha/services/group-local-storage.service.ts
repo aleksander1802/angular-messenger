@@ -33,7 +33,7 @@ export class GroupStorageService {
             const groupsValue = localStorage.getItem(this.GROUPS_KEY);
             const groups = (groupsValue && JSON.parse(groupsValue)) || {};
 
-            groups[uid] = groups[uid] ? [...groups[uid], groupID] : [groupID];
+            groups[uid] = groups[uid] ? [...new Set([...groups[uid], groupID])] : [...new Set([groupID])];
 
             localStorage.setItem(this.GROUPS_KEY, JSON.stringify(groups));
         }
@@ -46,7 +46,7 @@ export class GroupStorageService {
 
         if (uid) {
             const groupsValue = localStorage.getItem(this.GROUPS_KEY);
-            const groups = (groupsValue && JSON.parse(groupsValue)) || null;
+            const groups = (groupsValue && JSON.parse(groupsValue)) || {};
 
             if (groups) {
                 groups[uid] = groups[uid].filter(

@@ -15,6 +15,7 @@ import { LocalStorageAuthValue } from 'src/app/auth/models/login-response.interf
 import {
     createConversation,
     loadConversationList,
+    updateConversationList,
 } from 'src/app/store/actions/people-conversation.actions';
 import { selectPeopleConversationList } from 'src/app/store/selectors/people-conversation.selectors';
 import { Router } from '@angular/router';
@@ -39,7 +40,7 @@ export class PeopleListComponent implements OnInit, OnDestroy {
 
     existingConversation$: Observable<ConversationItem[] | null> | undefined;
 
-    existingConversationList: ConversationItem[] | []  = [];
+    existingConversationList: ConversationItem[] | [] = [];
 
     private debounceDelay = 1000;
 
@@ -104,7 +105,7 @@ export class PeopleListComponent implements OnInit, OnDestroy {
         this.store
             .pipe(debounceTime(this.debounceDelay), take(1))
             .subscribe(() => {
-                this.store.dispatch(loadConversationList());
+                this.store.dispatch(updateConversationList());
             });
     }
 

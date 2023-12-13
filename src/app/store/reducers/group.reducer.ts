@@ -19,21 +19,23 @@ export const initialState: GroupState = {
 
 export const groupReducer = createReducer(
     initialState,
-    on(groupActions.loadGroupList, (state) => ({ ...state, loading: true })),
+    on(
+        groupActions.loadGroupList,
+        groupActions.updateGroupList,
+        groupActions.createGroup,
+        groupActions.deleteGroup,
+        (state) => ({ ...state, loading: true })
+    ),
 
-    on(groupActions.loadGroupListSuccess, (state, action) => ({
-        ...state,
-        groups: action.Items,
-        loading: false,
-    })),
-
-    on(groupActions.loadGroupListFailure, (state, { error }) => ({
-        ...state,
-        error,
-        loading: false,
-    })),
-
-    on(groupActions.createGroup, (state) => ({ ...state, loading: true })),
+    on(
+        groupActions.loadGroupListSuccess,
+        groupActions.updateGroupListSuccess,
+        (state, { Items }) => ({
+            ...state,
+            groups: Items,
+            loading: false,
+        })
+    ),
 
     on(groupActions.createGroupSuccess, (state, action) => {
         return {
@@ -43,28 +45,6 @@ export const groupReducer = createReducer(
             loading: false,
         };
     }),
-
-    on(groupActions.createGroupFailure, (state, { error }) => ({
-        ...state,
-        error,
-        loading: false,
-    })),
-
-    on(groupActions.updateGroupList, (state) => ({ ...state, loading: true })),
-
-    on(groupActions.updateGroupListSuccess, (state, action) => ({
-        ...state,
-        groups: action.Items,
-        loading: false,
-    })),
-
-    on(groupActions.updateGroupListFailure, (state, { error }) => ({
-        ...state,
-        error,
-        loading: false,
-    })),
-
-    on(groupActions.deleteGroup, (state) => ({ ...state, loading: true })),
 
     on(groupActions.deleteGroupSuccess, (state, { groupID }) => {
         const updatedGroups =
@@ -77,11 +57,17 @@ export const groupReducer = createReducer(
         };
     }),
 
-    on(groupActions.deleteGroupFailure, (state, { error }) => ({
-        ...state,
-        error,
-        loading: false,
-    })),
+    on(
+        groupActions.loadGroupListFailure,
+        groupActions.createGroupFailure,
+        groupActions.updateGroupListFailure,
+        groupActions.deleteGroupFailure,
+        (state, { error }) => ({
+            ...state,
+            error,
+            loading: false,
+        })
+    ),
 
     on(groupActions.loadGroupListUpdateLoading, (state) => ({
         ...state,

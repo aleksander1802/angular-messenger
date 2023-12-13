@@ -1,7 +1,11 @@
 export enum PeopleConversationActionType {
-    PEOPLE_LOAD_CONVERSATION_LIST = '[People Conversation] Load Conversation',
-    PEOPLE_LOAD_CONVERSATION_LIST_SUCCESS = '[People Conversation] Load Conversation Success',
-    PEOPLE_LOAD_CONVERSATION_LIST_FAILURE = '[People Conversation] Load Conversation Failure',
+    PEOPLE_LOAD_CONVERSATION_LIST = '[People Conversation] Load Conversation List',
+    PEOPLE_LOAD_CONVERSATION_LIST_SUCCESS = '[People Conversation] Load Conversation List Success',
+    PEOPLE_LOAD_CONVERSATION_LIST_FAILURE = '[People Conversation] Load Conversation List Failure',
+
+    PEOPLE_UPDATE_CONVERSATION_LIST = '[People Conversation] Update Conversation List',
+    PEOPLE_UPDATE_CONVERSATION_LIST_SUCCESS = '[People Conversation] Update Conversation List Success',
+    PEOPLE_UPDATE_CONVERSATION_LIST_FAILURE = '[People Conversation] Update Conversation List Failure',
 
     PEOPLE_CREATE_CONVERSATION = '[People Conversation] Create Conversation',
     PEOPLE_CREATE_CONVERSATION_SUCCESS = '[People Conversation] Create Conversation Success',

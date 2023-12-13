@@ -36,7 +36,7 @@ export class PeopleEffects {
                                 localStorageId: action,
                             };
 
-                            this.peopleLocalStorageService.updatePeopleStorage(
+                            this.peopleLocalStorageService.addPeopleListToStorage(
                                 people.Items
                             );
 
@@ -86,7 +86,7 @@ export class PeopleEffects {
                             localStorageId: action,
                         };
 
-                        this.peopleLocalStorageService.updatePeopleStorage(
+                        this.peopleLocalStorageService.addPeopleListToStorage(
                             people.Items
                         );
 

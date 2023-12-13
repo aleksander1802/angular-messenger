@@ -7,7 +7,6 @@ import * as peopleConversationActions from '../actions/people-conversation.actio
 import { switchMap, map, catchError, of, withLatestFrom } from 'rxjs';
 import { ConversationItem } from 'src/app/yorha/models/people.interface';
 import { Router } from '@angular/router';
-import { PeopleLocalStorageService } from 'src/app/yorha/services/people-local-storage.service';
 import { Store, select } from '@ngrx/store';
 import { selectPeopleConversationList } from '../selectors/people-conversation.selectors';
 
@@ -19,7 +18,6 @@ export class PeopleConversationEffects {
         private toastService: ToastService,
         private timerService: TimerService,
         private router: Router,
-        private peopleLocalStorageService: PeopleLocalStorageService,
         private store: Store
     ) {}
 
@@ -38,8 +36,6 @@ export class PeopleConversationEffects {
                 } else {
                     return this.peopleService.getConversationList().pipe(
                         map((conversations) => {
-
-                            'Обновляем список бесед'
                             return peopleConversationActions.loadConversationListSuccess(
                                 conversations
                             );
@@ -69,16 +65,46 @@ export class PeopleConversationEffects {
         )
     );
 
+    updatePeopleConversationList$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(peopleConversationActions.updateConversationList),
+            switchMap(() => {
+                return this.peopleService.getConversationList().pipe(
+                    map((conversations) => {
+                        return peopleConversationActions.loadConversationListSuccess(
+                            conversations
+                        );
+                    }),
+                    catchError((error) => {
+                        let errorMessage = error.message;
+
+                        if (error.status === 0) {
+                            errorMessage = 'Internet connection lost';
+                        } else {
+                            errorMessage = error.error.message;
+                        }
+
+                        this.toastService.showToast(errorMessage, true);
+
+                        return of(
+                            peopleConversationActions.loadConversationListFailure(
+                                {
+                                    error,
+                                }
+                            )
+                        );
+                    })
+                );
+            })
+        )
+    );
+
     createPeopleConversation$ = createEffect(() =>
         this.actions$.pipe(
             ofType(peopleConversationActions.createConversation),
             switchMap(({ companion }) => {
                 return this.peopleService.createConversation(companion).pipe(
                     map(({ conversationID }) => {
-                        this.peopleLocalStorageService.addMyConversationToStorage(
-                            conversationID
-                        );
-
                         const conversationItem: ConversationItem = {
                             id: { S: conversationID },
                             companionID: { S: companion },
@@ -127,10 +153,6 @@ export class PeopleConversationEffects {
                     .deleteConversation(conversationID)
                     .pipe(
                         map(() => {
-                            this.peopleLocalStorageService.removeMyConversationFromStorage(
-                                conversationID
-                            );
-
                             this.toastService.showToast(
                                 'The conversation was successfully deleted',
                                 false
@@ -166,7 +188,7 @@ export class PeopleConversationEffects {
         )
     );
 
-    loadConversationMessage$ = createEffect(() =>
+    loadPeopleConversationMessage$ = createEffect(() =>
         this.actions$.pipe(
             ofType(peopleConversationActions.loadConversationMessage),
             switchMap(({ conversationID, since }) => {
@@ -212,7 +234,7 @@ export class PeopleConversationEffects {
         )
     );
 
-    updateGroupConversation$ = createEffect(() =>
+    updatePeopleConversationMessage$ = createEffect(() =>
         this.actions$.pipe(
             ofType(peopleConversationActions.updateConversationMessage),
             switchMap(({ conversationID, since }) => {
@@ -265,7 +287,7 @@ export class PeopleConversationEffects {
         )
     );
 
-    sendGroupConversationMessage$ = createEffect(() =>
+    sendPeopleConversationMessage$ = createEffect(() =>
         this.actions$.pipe(
             ofType(peopleConversationActions.sendConversationMessage),
             switchMap(({ conversationID, message, since }) => {

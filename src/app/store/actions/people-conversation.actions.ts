@@ -23,6 +23,20 @@ export const loadConversationListFailure = createAction(
     props<{ error: ErrorFailure }>()
 );
 
+export const updateConversationList = createAction(
+    PeopleConversationActionType.PEOPLE_UPDATE_CONVERSATION_LIST
+);
+
+export const updateConversationListSuccess = createAction(
+    PeopleConversationActionType.PEOPLE_UPDATE_CONVERSATION_LIST_SUCCESS,
+    props<Conversation>()
+);
+
+export const updateConversationListFailure = createAction(
+    PeopleConversationActionType.PEOPLE_UPDATE_CONVERSATION_LIST_FAILURE,
+    props<{ error: ErrorFailure }>()
+);
+
 export const createConversation = createAction(
     PeopleConversationActionType.PEOPLE_CREATE_CONVERSATION,
     props<CompanionId>()

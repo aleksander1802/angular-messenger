@@ -36,11 +36,23 @@ export class AuthService {
         };
 
         localStorage.setItem('auth', JSON.stringify(authValue));
+
         this.isLoggedInSubject.next(true);
     }
 
     clearCredentials() {
-        localStorage.removeItem('auth');
+        localStorage.clear();
+
+        const cookies = document.cookie.split(';');
+
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i];
+            const eqPos = cookie.indexOf('=');
+            const name = eqPos > -1 ? cookie.substring(0, eqPos) : cookie;
+            document.cookie =
+                name + '=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/;';
+        }
+
         this.isLoggedInSubject.next(false);
     }
 }

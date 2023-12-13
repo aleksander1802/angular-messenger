@@ -34,6 +34,7 @@ export const peopleConversationReducer = createReducer<PeopleConversationState>(
 
     on(
         peopleConversationActions.loadConversationList,
+        peopleConversationActions.updateConversationList,
         peopleConversationActions.createConversation,
         peopleConversationActions.deleteConversation,
         peopleConversationActions.loadConversationMessage,
@@ -47,6 +48,7 @@ export const peopleConversationReducer = createReducer<PeopleConversationState>(
 
     on(
         peopleConversationActions.loadConversationListSuccess,
+        peopleConversationActions.updateConversationListSuccess,
         (state, { Items }) => ({
             ...state,
             peopleConversationList: [...Items],
@@ -56,6 +58,7 @@ export const peopleConversationReducer = createReducer<PeopleConversationState>(
 
     on(
         peopleConversationActions.loadConversationListFailure,
+        peopleConversationActions.updateConversationListFailure,
         peopleConversationActions.createConversationFailure,
         peopleConversationActions.deleteConversationFailure,
         (state, { error }) => ({

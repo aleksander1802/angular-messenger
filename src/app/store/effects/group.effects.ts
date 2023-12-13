@@ -32,7 +32,7 @@ export class GroupEffects {
     ) {}
 
     loadGroup$ = createEffect(() =>
-        this.actions$.pipe( 
+        this.actions$.pipe(
             ofType(groupActions.loadGroupList),
             withLatestFrom(this.store.pipe(select(selectGroup))),
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -103,29 +103,28 @@ export class GroupEffects {
     createGroup$ = createEffect(() =>
         this.actions$.pipe(
             ofType(groupActions.createGroup),
-            switchMap((group) =>
-                this.groupService.createGroup(group.name).pipe(
-                    map((groupID) => {
-                        this.groupStorageService.addMyGroupToStorage(
-                            groupID.groupID
-                        );
+            switchMap(({ createdAt, createdBy, name }) =>
+                this.groupService.createGroup(name).pipe(
+                    map(({ groupID }) => {
+                        this.groupStorageService.addMyGroupToStorage(groupID);
 
                         this.toastService.showToast(
                             'The group was successfully created',
                             false
                         );
+
                         const newGroup: GroupItem = {
                             id: {
-                                S: groupID.groupID,
+                                S: groupID,
                             },
                             name: {
-                                S: group.name,
+                                S: name,
                             },
                             createdAt: {
-                                S: Date.now().toString(),
+                                S: createdAt,
                             },
                             createdBy: {
-                                S: group.createdBy,
+                                S: createdBy,
                             },
                         };
 
