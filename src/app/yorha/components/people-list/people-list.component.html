@@ -30,11 +30,16 @@
             <li
                 *ngFor="let person of peopleData"
                 class="people__list__item"
-               
+                [ngClass]="{
+                    exist:
+                        person.uid.S
+                        | existConversationClass : existingConversationList
+                }"
             >
                 <button
                     (click)="onStartConversationWithUser(person.uid.S)"
                     class="people__list__item__button"
+                    [disabled]="this.isPeopleListLoading$ | async"
                 >
                     {{ person.name.S }}
                 </button>

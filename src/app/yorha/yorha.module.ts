@@ -9,6 +9,7 @@ import { PeopleListComponent } from './components/people-list/people-list.compon
 import { GroupDetailComponent } from './components/group-detail/group-detail.component';
 import { ConversationDetailComponent } from './components/conversation-detail/conversation-detail.component';
 import { PeopleNamePipe } from './pipes/people-name.pipe';
+import { ExistConversationClassPipe } from './pipes/exist-conversation-class.pipe';
 
 @NgModule({
     declarations: [
@@ -19,6 +20,7 @@ import { PeopleNamePipe } from './pipes/people-name.pipe';
         GroupDetailComponent,
         ConversationDetailComponent,
         PeopleNamePipe,
+        ExistConversationClassPipe,
     ],
     imports: [CommonModule, SharedModule, YoRHaRoutingModule],
 })

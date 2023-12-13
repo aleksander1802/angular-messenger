@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import { Observable, Subject, debounceTime, take, takeUntil } from 'rxjs';
 import { ConversationItem, PeopleItem } from '../../models/people.interface';
 import { TimerService } from '../../services/timer.service';
 import {
@@ -39,7 +39,9 @@ export class PeopleListComponent implements OnInit, OnDestroy {
 
     existingConversation$: Observable<ConversationItem[] | null> | undefined;
 
-    existingConversationList: ConversationItem[] | null = null;
+    existingConversationList: ConversationItem[] | []  = [];
+
+    private debounceDelay = 1000;
 
     constructor(
         private store: Store,
@@ -72,7 +74,10 @@ export class PeopleListComponent implements OnInit, OnDestroy {
         this.peopleItems$ = this.store.pipe(select(selectPeople));
 
         this.peopleItems$
-            .pipe(takeUntil(this.ngUnsubscribe))
+            .pipe(
+                takeUntil(this.ngUnsubscribe),
+                debounceTime(this.debounceDelay)
+            )
             .subscribe((peopleItems) => {
                 if (peopleItems) {
                     this.store.dispatch(loadConversationList());
@@ -96,7 +101,11 @@ export class PeopleListComponent implements OnInit, OnDestroy {
 
     onUpdatePeopleList() {
         this.store.dispatch(updatePeopleList(this.currentLocalStorage));
-        this.store.dispatch(loadConversationList());
+        this.store
+            .pipe(debounceTime(this.debounceDelay), take(1))
+            .subscribe(() => {
+                this.store.dispatch(loadConversationList());
+            });
     }
 
     private initIsPeopleListLoadingObservable() {

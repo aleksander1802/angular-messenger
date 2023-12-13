@@ -38,6 +38,8 @@ export class PeopleConversationEffects {
                 } else {
                     return this.peopleService.getConversationList().pipe(
                         map((conversations) => {
+
+                            'Обновляем список бесед'
                             return peopleConversationActions.loadConversationListSuccess(
                                 conversations
                             );
@@ -129,6 +131,13 @@ export class PeopleConversationEffects {
                                 conversationID
                             );
 
+                            this.toastService.showToast(
+                                'The conversation was successfully deleted',
+                                false
+                            );
+
+                            this.router.navigate(['/']);
+
                             return peopleConversationActions.deleteConversationSuccess(
                                 { conversationID }
                             );
@@ -212,7 +221,7 @@ export class PeopleConversationEffects {
                     .pipe(
                         map((messages) => {
                             this.toastService.showToast(
-                                'Group conversation have been successfully updated',
+                                'Conversation have been successfully updated',
                                 false
                             );
 
