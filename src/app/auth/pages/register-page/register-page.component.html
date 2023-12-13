@@ -67,6 +67,9 @@
             <small *ngIf="getError('password', 'required')"
                 >Please enter a password. <br
             /></small>
+            <small *ngIf="getError('password', 'minlength')"
+                >At least 8 characters. <br
+            /></small>
             <small *ngIf="getError('password', 'strongPassword')">
                 Your password isn't strong enough. <br />
                 Recommendations: {{ password?.errors?.['message'] }}

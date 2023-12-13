@@ -10,7 +10,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-const namePattern = '^[a-zA-Z ]*$';
+const namePattern = /^[\p{L} ]+$/u;
 
 @Component({
     selector: 'app-register-page',
@@ -49,7 +49,14 @@ export class RegisterPageComponent implements OnInit, OnDestroy {
                 ],
             ],
             email: ['', [Validators.required, Validators.email]],
-            password: ['', [Validators.required, passwordValidator()]],
+            password: [
+                '',
+                [
+                    Validators.required,
+                    Validators.minLength(8),
+                    passwordValidator(),
+                ],
+            ],
         });
     }
 

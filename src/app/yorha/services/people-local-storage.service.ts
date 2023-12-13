@@ -16,7 +16,6 @@ export class PeopleLocalStorageService {
 
     addPeopleListToStorage(conversationID: PeopleItem[]) {
         const people = [...conversationID];
-        console.log('people length:', people.length);
 
         localStorage.setItem(this.PEOPLE_KEY, JSON.stringify(people));
     }

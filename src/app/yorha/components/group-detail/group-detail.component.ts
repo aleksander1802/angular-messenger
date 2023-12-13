@@ -70,7 +70,7 @@ export class GroupDetailComponent implements OnInit, OnDestroy {
 
     conversationForm: FormGroup | undefined;
 
-    private ngUnsubscribe = new Subject<void>(); 
+    private ngUnsubscribe = new Subject<void>();
 
     private debounceDelay = 1000;
 
@@ -122,9 +122,7 @@ export class GroupDetailComponent implements OnInit, OnDestroy {
     }
 
     getError(controlName: string, errorName: string) {
-        return this.conversationForm
-            ?.get(controlName)
-            ?.hasError(errorName);
+        return this.conversationForm?.get(controlName)?.hasError(errorName);
     }
 
     private getLocalStorageUid() {
@@ -138,17 +136,6 @@ export class GroupDetailComponent implements OnInit, OnDestroy {
     private getMyGroups(groupID: string) {
         const myGroup = this.groupStorageService.getGroups();
         this.isMyGroup = myGroup.includes(groupID);
-    }
-
-    private initGroupConverstionDispatch(groupID: string, since?: number) {
-        this.store.dispatch(loadGroupConversation({ groupID, since }));
-    }
-
-    private initGroupConverstionItemsObservable(groupID: string) {
-        this.items$ = this.store.pipe(
-            select(selectGroupConversationItems(groupID)),
-            distinctUntilChanged()
-        );
     }
 
     private initSinceValueObservable(groupID: string) {
@@ -166,14 +153,21 @@ export class GroupDetailComponent implements OnInit, OnDestroy {
                 this.since = value;
                 if (value) {
                     this.initGroupConverstionDispatch(groupID, value);
-                    this.initGroupConverstionItemsObservable(groupID);
                 } else {
                     this.initGroupConverstionDispatch(groupID);
-                    this.initGroupConverstionItemsObservable(groupID);
                 }
 
                 this.scrollToBottom();
             });
+    }
+
+    private initGroupConverstionDispatch(groupID: string, since?: number) {
+        this.items$ = this.store.pipe(
+            select(selectGroupConversationItems(groupID)),
+            distinctUntilChanged()
+        );
+
+        this.store.dispatch(loadGroupConversation({ groupID, since }));
     }
 
     private scrollToBottom() {

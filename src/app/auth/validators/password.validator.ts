@@ -4,32 +4,24 @@ export function passwordValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
         const { value } = control;
 
-        const eightCharacters = value?.length >= 8;
-        const uppercaseLowercase = /[a-z]/.test(value) && /[A-Z]/.test(value);
-        const lettersNumbers = /\d/.test(value) && /[a-zA-Z]/.test(value);
+        const uppercase = /[A-Z]/.test(value);
+        const digit = /\d/.test(value);
         const specialCharacter = /[!@#?]/.test(value);
 
-        if (
-            eightCharacters &&
-            uppercaseLowercase &&
-            lettersNumbers &&
-            specialCharacter
-        ) {
+        if (uppercase && digit && specialCharacter) {
             return null;
         }
+
         let message = '';
-        if (!eightCharacters) {
-            message += 'at least 8 characters, ';
+
+        if (!uppercase) {
+            message += 'at least one capital letter, ';
         }
-        if (!uppercaseLowercase) {
-            message += 'a mixture of both uppercase and lowercase letters, ';
-        }
-        if (!lettersNumbers) {
-            message += 'a mixture of letters and numbers, ';
+        if (!digit) {
+            message += 'at least one digit, ';
         }
         if (!specialCharacter) {
-            message +=
-                'inclusion of at least one special character, e.g., ! @ # ? ';
+            message += 'at least one special character, e.g., ! @ # ? ';
         }
         return { strongPassword: true, message };
     };
