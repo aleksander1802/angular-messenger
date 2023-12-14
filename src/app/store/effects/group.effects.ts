@@ -41,17 +41,12 @@ export class GroupEffects {
                     return of(groupActions.loadGroupListUpdateLoading());
                 } else {
                     return this.groupService.getGroups().pipe(
-                        map((groups) => {
-                            return groupActions.loadGroupListSuccess(groups);
+                        map((group) => {
+                            return groupActions.loadGroupListSuccess(group);
                         }),
                         catchError((error) => {
-                            let errorMessage = error.message;
-
-                            if (error.status === 0) {
-                                errorMessage = 'Internet connection lost';
-                            } else {
-                                errorMessage = error.error.message;
-                            }
+                            const errorMessage =
+                                error.error.message || error.message;
 
                             this.toastService.showToast(errorMessage, true);
                             return of(
@@ -82,13 +77,8 @@ export class GroupEffects {
                         return groupActions.updateGroupListSuccess(groups);
                     }),
                     catchError((error) => {
-                        let errorMessage = error.message;
-
-                        if (error.status === 0) {
-                            errorMessage = 'Internet connection lost';
-                        } else {
-                            errorMessage = error.error.message;
-                        }
+                        const errorMessage =
+                            error.error.message || error.message;
 
                         this.toastService.showToast(errorMessage, true);
                         return of(
@@ -131,13 +121,8 @@ export class GroupEffects {
                         return groupActions.createGroupSuccess(newGroup);
                     }),
                     catchError((error) => {
-                        let errorMessage = error.message;
-
-                        if (error.status === 0) {
-                            errorMessage = 'Internet connection lost';
-                        } else {
-                            errorMessage = error.error.message;
-                        }
+                        const errorMessage =
+                            error.error.message || error.message;
 
                         this.toastService.showToast(errorMessage, true);
 
@@ -172,13 +157,8 @@ export class GroupEffects {
                         return groupActions.deleteGroupSuccess({ groupID });
                     }),
                     catchError((error) => {
-                        let errorMessage = error.message;
-
-                        if (error.status === 0) {
-                            errorMessage = 'Internet connection lost';
-                        } else {
-                            errorMessage = error.error.message;
-                        }
+                        const errorMessage =
+                            error.error.message || error.message;
 
                         this.toastService.showToast(errorMessage, true);
 

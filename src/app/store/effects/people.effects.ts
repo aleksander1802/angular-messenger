@@ -24,7 +24,7 @@ export class PeopleEffects {
     loadPeople$ = createEffect(() =>
         this.actions$.pipe(
             ofType(peopleActions.loadPeopleList),
-            withLatestFrom(this.store.pipe(select(selectPeople))),            
+            withLatestFrom(this.store.pipe(select(selectPeople))),
             mergeMap(([action, peoples]) => {
                 if (peoples) {
                     return of(peopleActions.loadPeopleListLoadingFalse());
@@ -45,13 +45,8 @@ export class PeopleEffects {
                             );
                         }),
                         catchError((error) => {
-                            let errorMessage = error.message;
-
-                            if (error.status === 0) {
-                                errorMessage = 'Internet connection lost';
-                            } else {
-                                errorMessage = error.error.message;
-                            }
+                            const errorMessage =
+                                error.error.message || error.message;
 
                             this.toastService.showToast(errorMessage, true);
                             return of(
@@ -95,13 +90,8 @@ export class PeopleEffects {
                         );
                     }),
                     catchError((error) => {
-                        let errorMessage = error.message;
-
-                        if (error.status === 0) {
-                            errorMessage = 'Internet connection lost';
-                        } else {
-                            errorMessage = error.error.message;
-                        }
+                        const errorMessage =
+                            error.error.message || error.message;
 
                         this.toastService.showToast(errorMessage, true);
                         return of(

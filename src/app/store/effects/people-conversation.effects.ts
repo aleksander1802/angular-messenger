@@ -41,13 +41,8 @@ export class PeopleConversationEffects {
                             );
                         }),
                         catchError((error) => {
-                            let errorMessage = error.message;
-
-                            if (error.status === 0) {
-                                errorMessage = 'Internet connection lost';
-                            } else {
-                                errorMessage = error.error.message;
-                            }
+                            const errorMessage =
+                                error.error.message || error.message;
 
                             this.toastService.showToast(errorMessage, true);
 
@@ -76,13 +71,8 @@ export class PeopleConversationEffects {
                         );
                     }),
                     catchError((error) => {
-                        let errorMessage = error.message;
-
-                        if (error.status === 0) {
-                            errorMessage = 'Internet connection lost';
-                        } else {
-                            errorMessage = error.error.message;
-                        }
+                        const errorMessage =
+                            error.error.message || error.message;
 
                         this.toastService.showToast(errorMessage, true);
 
@@ -122,13 +112,8 @@ export class PeopleConversationEffects {
                         );
                     }),
                     catchError((error) => {
-                        let errorMessage = error.message;
-
-                        if (error.status === 0) {
-                            errorMessage = 'Internet connection lost';
-                        } else {
-                            errorMessage = error.error.message;
-                        }
+                        const errorMessage =
+                            error.error.message || error.message;
 
                         this.toastService.showToast(errorMessage, true);
 
@@ -165,13 +150,8 @@ export class PeopleConversationEffects {
                             );
                         }),
                         catchError((error) => {
-                            let errorMessage = error.message;
-
-                            if (error.status === 0) {
-                                errorMessage = 'Internet connection lost';
-                            } else {
-                                errorMessage = error.error.message;
-                            }
+                            const errorMessage =
+                                error.error.message || error.message;
 
                             this.toastService.showToast(errorMessage, true);
 
@@ -210,13 +190,8 @@ export class PeopleConversationEffects {
                             );
                         }),
                         catchError((error) => {
-                            let errorMessage = error.message;
-
-                            if (error.status === 0) {
-                                errorMessage = 'Internet connection lost';
-                            } else {
-                                errorMessage = error.error.message;
-                            }
+                            const errorMessage =
+                                error.error.message || error.message;
 
                             this.toastService.showToast(errorMessage, true);
 
@@ -264,13 +239,8 @@ export class PeopleConversationEffects {
                             );
                         }),
                         catchError((error) => {
-                            let errorMessage = error.message;
-
-                            if (error.status === 0) {
-                                errorMessage = 'Internet connection lost';
-                            } else {
-                                errorMessage = error.error.message;
-                            }
+                            const errorMessage =
+                                error.error.message || error.message;
 
                             this.toastService.showToast(errorMessage, true);
                             return of(
@@ -310,13 +280,8 @@ export class PeopleConversationEffects {
                             );
                         }),
                         catchError((error) => {
-                            let errorMessage = error.message;
-
-                            if (error.status === 0) {
-                                errorMessage = 'Internet connection lost';
-                            } else {
-                                errorMessage = error.error.message;
-                            }
+                            const errorMessage =
+                                error.error.message || error.message;
 
                             this.toastService.showToast(errorMessage, true);
                             return of(

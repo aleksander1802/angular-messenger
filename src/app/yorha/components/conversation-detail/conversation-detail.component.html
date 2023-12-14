@@ -5,7 +5,7 @@
         </a>
     </p>
     <div class="conversation__header">
-        <h2 class="conversation__header__title">Group dialog</h2>
+        <h2 class="conversation__header__title">Conversation dialog</h2>
 
         <div class="conversation__header__buttons">
             <div class="conversation__header__buttons__refresh">
@@ -132,7 +132,7 @@
     </div>
 
     <ng-template #loading>
-        <p>Loading...</p>
+        <app-loading></app-loading>
     </ng-template>
 </div>
 
@@ -147,7 +147,7 @@
 <div *ngIf="showDeleteModal">
     <div class="conversation__modal">
         <h2 class="conversation__modal__title">
-            Are you sure you want to delete this group?
+            Are you sure you want to delete this conversation?
         </h2>
         <div class="conversation__modal__buttons">
             <app-cyber-button

@@ -15,8 +15,3 @@ export const selectPeopleListLoading = createSelector(
     selectPeopleState,
     (state) => state.peopleListLoading
 );
-
-export const selectConversationListLoading = createSelector(
-    selectPeopleState,
-    (state) => state.conversationListLoading
-);

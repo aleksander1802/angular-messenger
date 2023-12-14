@@ -6,9 +6,15 @@ import { RouterModule } from '@angular/router';
 import { ToastComponent } from './components/toast/toast.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../material/material.module';
+import { LoadingComponent } from './components/loading/loading.component';
 
 @NgModule({
-    declarations: [CyberButtonComponent, MainLayoutComponent, ToastComponent],
+    declarations: [
+        CyberButtonComponent,
+        MainLayoutComponent,
+        ToastComponent,
+        LoadingComponent,
+    ],
     imports: [CommonModule, RouterModule, ReactiveFormsModule, MaterialModule],
 
     exports: [
@@ -16,6 +22,7 @@ import { MaterialModule } from '../material/material.module';
         ToastComponent,
         ReactiveFormsModule,
         MaterialModule,
+        LoadingComponent,
     ],
 })
 export class SharedModule {}

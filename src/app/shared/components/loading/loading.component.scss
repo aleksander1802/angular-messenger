@@ -1,0 +1,26 @@
+.loading {
+    height: 100px;
+    width: 100px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    
+  }
+  
+  .loading__image {
+    background: var(--loading-icon-light);
+    background-color: transparent;
+    height: 100px;
+    width: 100px;
+    animation: rotateX 2s linear infinite; 
+    @keyframes rotateX {
+      0% {
+        transform: rotateY(0deg);
+      }
+      100% {
+        transform: rotateY(360deg);
+      }
+    }
+  }
+  
