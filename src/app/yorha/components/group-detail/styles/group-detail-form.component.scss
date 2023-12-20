@@ -9,7 +9,7 @@
             color: var(--color-low);
             width: 100%;
             position: relative;
-            border-left: 15px solid var(--color-alert-trans);
+            border-left: 15px solid var(--font-dark);
             box-shadow: 1px 1px 0px 1px var(--shadow-alert-trans);
             &:before {
                 content: "";
@@ -18,7 +18,7 @@
                 left: 10px;
                 width: 5px;
                 height: 100%;
-                background-color: var(--color-alert-trans);
+                background-color: var(--font-dark);
             }
             &__input {
                 width: 100%;

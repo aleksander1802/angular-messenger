@@ -95,6 +95,7 @@
                 background-color: var(--color-alert);
                 padding: 0.2rem;
                 font-size: 16px;
+                z-index: 0;
                 &::after {
                     content: "";
                     position: absolute;
@@ -131,7 +132,7 @@
                         padding-left: 1rem;
                         gap: 0.5rem;
                         background-color: var(--color-high);
-                        border-left: 12px solid var(--color-alert-trans);
+                        border-left: 12px solid var(--font-dark);
                         font-size: 16px;
                         box-shadow: 1px 1px 0px 1px var(--shadow-alert-trans);
                         &:before {
@@ -141,7 +142,7 @@
                             left: 5px;
                             width: 4px;
                             height: 100%;
-                            background-color: var(--color-alert-trans);
+                            background-color: var(--font-dark);
                         }
                     }
 
@@ -151,6 +152,7 @@
                         overflow-wrap: break-word;
                         padding: 0.3rem;
                         text-align: left;
+                        color: var(--color-alert-trans);
                     }
                 }
             }
@@ -190,4 +192,8 @@
     to {
         opacity: 1;
     }
+}
+
+:host-context([data-theme="dark"]) {
+    --color-alert-trans: var( --color-high);
 }
