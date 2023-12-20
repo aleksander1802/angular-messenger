@@ -40,9 +40,13 @@ $angular-messenger-theme: mat.define-light-theme(
     --nier-font: sce-ps3_rodin_latinregular;
     --background-light: url("./assets/wallpapers/light-theme-1080.png")
         center/cover no-repeat;
+    --background-dark: url("./assets/wallpapers/dark-theme-1080.png")
+        center/cover no-repeat;
 
-    --loading-icon-light: url("./assets/icons/loading/home_light-theme.png") center/cover no-repeat;
-    --loading-icon-dark: url("./assets/icons/loading/home_dark-theme.png") center/cover no-repeat;
+    --loading-icon-light: url("./assets/icons/loading/home_light-theme.png")
+        center/cover no-repeat;
+    --loading-icon-dark: url("./assets/icons/loading/home_dark-theme.png")
+        center/cover no-repeat;
 
     --cursor-default: url("./assets/cursors/Hack_Normal_Select_v2.cur"), default;
     --cursor-pointer: url("./assets/cursors/Hack_Link_Select_v2.cur"), default;
@@ -56,6 +60,10 @@ $angular-messenger-theme: mat.define-light-theme(
     --color-high-trans: rgba(218, 212, 187, 0.8);
     --color-low-trans: rgba(87, 84, 74, 0.6);
     --color-alert-trans: rgba(8, 4, 3, 0.7);
+
+    --shadow-alert-trans: rgba(8, 4, 3, 0.7);
+
+    --background-modal: rgb(255, 255, 255, 0.9);
 
     --mask: conic-gradient(
         from -46deg at top 85px right 115px,
@@ -76,10 +84,9 @@ body {
     height: 100%;
 }
 body {
-    position: relative;
     margin: 0;
-    overflow-y: scroll;
-    background: var(--background-light);
+    overflow: hidden;
+    position: relative;
 }
 
 ul {
@@ -129,9 +136,11 @@ strong {
     height: 5px;
     width: 5px;
 }
+
 *::-webkit-scrollbar-track {
     background: transparent;
 }
+
 *::-webkit-scrollbar-thumb {
     background-color: var(--color-alert-trans);
     border: 3px solid transparent;

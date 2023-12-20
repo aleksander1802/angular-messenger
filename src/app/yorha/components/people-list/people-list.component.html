@@ -12,7 +12,7 @@
             <button
                 class="people__buttons__refresh__button"
                 [disabled]="
-                    (this.isPeopleListLoading$ | async) ||
+                    (isPeopleListLoading$ | async) ||
                     (countdownSubscription$ | async)
                 "
                 (click)="onUpdatePeopleList()"
@@ -39,7 +39,10 @@
                 <button
                     (click)="onStartConversationWithUser(person.uid.S)"
                     class="people__list__item__button"
-                    [disabled]="this.isPeopleListLoading$ | async"
+                    [disabled]="
+                        (isPeopleListLoading$ | async) ||
+                        (isConversationLoading$ | async)
+                    "
                 >
                     {{ person.name.S }}
                 </button>

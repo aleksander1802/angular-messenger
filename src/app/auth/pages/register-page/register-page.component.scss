@@ -6,9 +6,9 @@
     width: 700px;
     margin: 0 auto;
     padding: 2rem 1.5rem;
-    background: var(--background-auth);
+    background: var(--color-alert-trans);
     border-radius: 10px;
-
+    color: var(--color-high);
     clip-path: polygon(
         0 0,
         calc(100% - 115px) 0,

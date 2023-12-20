@@ -16,7 +16,7 @@ import { LoadingComponent } from './components/loading/loading.component';
         LoadingComponent,
     ],
     imports: [CommonModule, RouterModule, ReactiveFormsModule, MaterialModule],
-
+    
     exports: [
         CyberButtonComponent,
         ToastComponent,

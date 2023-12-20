@@ -8,7 +8,7 @@ import { ToastService } from 'src/app/shared/services/toast/toast.service';
     styleUrls: ['./toast.component.scss'],
 })
 export class ToastComponent implements OnInit, OnDestroy {
-    message = "";
+    message = '';
     isError = false;
 
     private toastSubscription: Subscription | undefined;

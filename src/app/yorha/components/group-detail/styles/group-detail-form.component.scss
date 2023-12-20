@@ -10,7 +10,7 @@
             width: 100%;
             position: relative;
             border-left: 15px solid var(--color-alert-trans);
-            box-shadow: 1px 1px 0px 1px var(--color-alert-trans);
+            box-shadow: 1px 1px 0px 1px var(--shadow-alert-trans);
             &:before {
                 content: "";
                 position: absolute;
@@ -24,9 +24,15 @@
                 width: 100%;
                 border-color: transparent;
                 background-color: var(--color-high-trans);
+
                 outline: none;
                 padding: 0.8rem;
                 padding-left: 2rem;
+            }
+        }
+        &__button {
+            &-submit {
+                position: sticky;
             }
         }
     }

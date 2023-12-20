@@ -17,7 +17,10 @@ import {
     loadConversationList,
     updateConversationList,
 } from 'src/app/store/actions/people-conversation.actions';
-import { selectPeopleConversationList } from 'src/app/store/selectors/people-conversation.selectors';
+import {
+    selectConversationLoading,
+    selectPeopleConversationList,
+} from 'src/app/store/selectors/people-conversation.selectors';
 import { Router } from '@angular/router';
 
 @Component({
@@ -29,6 +32,8 @@ export class PeopleListComponent implements OnInit, OnDestroy {
     peopleItems$: Observable<PeopleItem[] | null> | undefined;
 
     isPeopleListLoading$: Observable<boolean> | undefined;
+
+    isConversationLoading$: Observable<boolean> | undefined;
 
     countdownSubscription$: Observable<number | null> | undefined;
 
@@ -55,6 +60,7 @@ export class PeopleListComponent implements OnInit, OnDestroy {
         this.initPeopleListDispatch();
         this.initPeopleItemsObservable();
         this.initIsPeopleListLoadingObservable();
+        this.initIsConversationLoading();
         this.initCountdownSubscription();
         this.initExistingConversation();
     }
@@ -112,6 +118,12 @@ export class PeopleListComponent implements OnInit, OnDestroy {
     private initIsPeopleListLoadingObservable() {
         this.isPeopleListLoading$ = this.store.pipe(
             select(selectPeopleListLoading)
+        );
+    }
+
+    private initIsConversationLoading() {
+        this.isConversationLoading$ = this.store.pipe(
+            select(selectConversationLoading)
         );
     }
 

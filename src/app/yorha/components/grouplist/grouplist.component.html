@@ -1,9 +1,7 @@
 <div class="group">
-
-    <ng-template #loading >
+    <ng-template #loading>
         <app-loading></app-loading>
-        </ng-template>
-
+    </ng-template>
 
     <h2>Groups</h2>
 
@@ -34,7 +32,6 @@
         </div>
     </div>
 
-    
     <div
         class="group__list"
         *ngIf="groupItems$ | async as groupData; else loading"
@@ -62,33 +59,31 @@
     </div>
 </div>
 
-
-
 <div *ngIf="isCreateMode">
     <form class="group__form" *ngIf="groupForm" [formGroup]="groupForm">
         <h2 class="group__form__title">Create group</h2>
+        <label for="name">group name</label>
         <div
             class="group__form__control"
             [ngClass]="{ invalid: name?.touched && name?.invalid }"
         >
-            <label for="name">group name</label>
             <input
                 id="name"
                 type="text"
                 formControlName="name"
                 autocomplete="name"
             />
-            <div class="validation" *ngIf="name?.touched && name?.invalid">
-                <small *ngIf="getError('name', 'required')">
-                    Please enter a name
-                </small>
-                <small *ngIf="getError('name', 'maxlength')">
-                    The name exceeds 30 characters
-                </small>
-                <small *ngIf="getError('name', 'pattern')">
-                    The name must contain only letters, numbers, or spaces
-                </small>
-            </div>
+        </div>
+        <div class="validation" *ngIf="name?.touched && name?.invalid">
+            <small *ngIf="getError('name', 'required')">
+                Please enter a name
+            </small>
+            <small *ngIf="getError('name', 'maxlength')">
+                The name exceeds 30 characters
+            </small>
+            <small *ngIf="getError('name', 'pattern')">
+                The name must contain only letters, numbers, or spaces
+            </small>
         </div>
 
         <div class="group__form__buttons">

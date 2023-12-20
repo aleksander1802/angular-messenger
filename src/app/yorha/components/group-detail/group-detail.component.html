@@ -133,15 +133,15 @@
     </ng-template>
 </div>
 
-
-<app-cyber-button
-    *ngIf="isMyGroup"
-    type="button"
-    [buttonText]="'Delete'"
-    class="delete__button"
-    (click)="openDeleteModal()"
->
-</app-cyber-button>
+<div class="delete__button">
+    <app-cyber-button
+        *ngIf="isMyGroup"
+        type="button"
+        [buttonText]="'Delete'"
+        (click)="openDeleteModal()"
+    >
+    </app-cyber-button>
+</div>
 
 <div *ngIf="showDeleteModal">
     <div class="conversation__modal">

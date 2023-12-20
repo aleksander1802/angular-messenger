@@ -28,6 +28,7 @@ import { GroupStorageService } from '../../services/group-local-storage.service'
 })
 export class GrouplistComponent implements OnInit, OnDestroy {
     groupItems$: Observable<GroupItem[] | null> | undefined;
+
     isGroupLoading$: Observable<boolean> | undefined;
 
     showDeleteModal = false;

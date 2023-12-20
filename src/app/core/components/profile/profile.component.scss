@@ -77,13 +77,13 @@ span {
     }
 
     &__logout {
-        position: absolute;
+        position: fixed;
         top: 1rem;
         right: 2rem;
     }
 
     &__prevpage {
-        position: absolute;
+        position: fixed;
         bottom: 1rem;
         left: 1rem;
     }

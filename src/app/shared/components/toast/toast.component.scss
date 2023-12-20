@@ -3,16 +3,17 @@
     top: 1rem;
     right: 1rem;
     padding: 1rem;
+    padding-left: 2.5rem;
     background-color: var(--success-color);
     color: #fff;
     transition: opacity 0.3s ease-in-out;
     opacity: 1;
     min-width: 300px;
     max-width: 450px;
-    text-align: center;
+    text-align: left;
     overflow-wrap: break-word;
     border: none;
-    border-right: 15px solid #d2cdb6;
+    border-right: 15px solid var(--font-light);
     -webkit-clip-path: polygon(0 70%, 10% 100%, 100% 100%, 100% 0, 0 0);
     clip-path: polygon(0 70%, 10% 100%, 100% 100%, 100% 0, 0 0);
 }
@@ -21,7 +22,7 @@
 .toast-container:before {
     content: "";
     position: absolute;
-    background-color: #d2cdb6;
+    background-color: var(--font-light);
     height: 100%;
     width: 5px;
     top: 0;
