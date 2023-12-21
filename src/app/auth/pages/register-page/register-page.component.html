@@ -45,8 +45,7 @@
             >The register email is invalid</small
         >
 
-        <small
-            *ngIf="isPrimaryDuplicationError || getError('email', 'taken')"
+        <small *ngIf="isPrimaryDuplicationError || getError('email', 'taken')"
             >Email address is already taken</small
         >
     </div>
@@ -91,10 +90,6 @@
     </div>
 </form>
 
-
 <div class="register__glory">
-    <img
-        src="../../../../assets/icons/auth/glory.png"
-        alt="For the glory of mankind"
-    />
+    <img src="./assets/icons/auth/glory.png" alt="For the glory of mankind" />
 </div>
