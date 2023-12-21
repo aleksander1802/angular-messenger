@@ -1,61 +1,61 @@
 <form class="register" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
     <h2 class="register__title">Sign Up</h2>
 
+    <label for="name">name</label>
     <div
         class="register__control"
         [ngClass]="{ invalid: name?.touched && name?.invalid }"
     >
-        <label for="name">name</label>
         <input
             id="name"
             type="text"
             formControlName="name"
             autocomplete="name"
         />
-        <div class="validation" *ngIf="name?.touched && name?.invalid">
-            <small *ngIf="getError('name', 'required')">
-                Please enter a name
-            </small>
-            <small *ngIf="getError('name', 'maxlength')">
-                The name exceeds 40 characters
-            </small>
-            <small *ngIf="getError('name', 'pattern')">
-                Allowed only letters or spaces
-            </small>
-        </div>
+    </div>
+    <div class="validation" *ngIf="name?.touched && name?.invalid">
+        <small *ngIf="getError('name', 'required')">
+            Please enter a name
+        </small>
+        <small *ngIf="getError('name', 'maxlength')">
+            The name exceeds 40 characters
+        </small>
+        <small *ngIf="getError('name', 'pattern')">
+            Allowed only letters or spaces
+        </small>
     </div>
 
+    <label for="email">email</label>
     <div
         class="register__control"
         [ngClass]="{ invalid: email?.touched && email?.invalid }"
     >
-        <label for="email">email</label>
         <input
             id="email"
             type="email"
             formControlName="email"
             autocomplete="email"
         />
-        <div class="validation" *ngIf="email?.touched && email?.invalid">
-            <small *ngIf="getError('email', 'required')"
-                >Please enter a register email</small
-            >
-            <small *ngIf="getError('email', 'email')"
-                >The register email is invalid</small
-            >
+    </div>
+    <div class="validation" *ngIf="email?.touched && email?.invalid">
+        <small *ngIf="getError('email', 'required')"
+            >Please enter a register email</small
+        >
+        <small *ngIf="getError('email', 'email')"
+            >The register email is invalid</small
+        >
 
-            <small
-                *ngIf="isPrimaryDuplicationError || getError('email', 'taken')"
-                >Email address is already taken</small
-            >
-        </div>
+        <small
+            *ngIf="isPrimaryDuplicationError || getError('email', 'taken')"
+            >Email address is already taken</small
+        >
     </div>
 
+    <label for="password"> password </label>
     <div
         class="register__control"
         [ngClass]="{ invalid: password?.touched && password?.invalid }"
     >
-        <label for="password"> password </label>
         <input
             id="password"
             type="password"
@@ -63,18 +63,18 @@
             autocomplete="current-password"
             (input)="password?.markAsTouched()"
         />
-        <div class="validation" *ngIf="password?.touched && password?.invalid">
-            <small *ngIf="getError('password', 'required')"
-                >Please enter a password. <br
-            /></small>
-            <small *ngIf="getError('password', 'minlength')"
-                >At least 8 characters. <br
-            /></small>
-            <small *ngIf="getError('password', 'strongPassword')">
-                Your password isn't strong enough. <br />
-                Recommendations: {{ password?.errors?.['message'] }}
-            </small>
-        </div>
+    </div>
+    <div class="validation" *ngIf="password?.touched && password?.invalid">
+        <small *ngIf="getError('password', 'required')"
+            >Please enter a password. <br
+        /></small>
+        <small *ngIf="getError('password', 'minlength')"
+            >At least 8 characters. <br
+        /></small>
+        <small *ngIf="getError('password', 'strongPassword')">
+            Your password isn't strong enough. <br />
+            Recommendations: {{ password?.errors?.['message'] }}
+        </small>
     </div>
 
     <div class="register__button-submit">
@@ -90,3 +90,11 @@
         ></app-cyber-button>
     </div>
 </form>
+
+
+<div class="register__glory">
+    <img
+        src="../../../../assets/icons/auth/glory.png"
+        alt="For the glory of mankind"
+    />
+</div>

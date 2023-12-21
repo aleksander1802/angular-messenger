@@ -50,10 +50,29 @@
 
                         <div class="conversation__list__item__profile">
                             <div
+                                *ngIf="
+                                    currentLocalStorage.uid ===
+                                        groupMessage.authorID.S;
+                                    else other
+                                "
                                 class="conversation__list__item__profile__icon"
                             >
-                                Icon
+                                <img
+                                    src="../../../../assets/icons/avatar/avatar_me.png"
+                                    alt="my avatar"
+                                />
                             </div>
+
+                            <ng-template #other>
+                                <div
+                                    class="conversation__list__item__profile__icon"
+                                >
+                                    <img
+                                        src="../../../../assets/icons/avatar/avatar_other.png"
+                                        alt="my avatar"
+                                    />
+                                </div>
+                            </ng-template>
                             <div
                                 class="conversation__list__item__profile__info"
                             >
