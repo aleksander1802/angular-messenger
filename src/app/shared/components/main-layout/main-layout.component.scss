@@ -1,0 +1,20 @@
+.main {
+    background: var(--background-light);
+    &__button {
+        &__theme {
+            position: absolute;
+            top: 1rem;
+            left: 2rem;
+            background: var(--loading-icon-light);
+            height: 120px;
+            width: 100px;
+            border: none;
+            cursor: var(--cursor-default);
+        }
+    }
+}
+
+:host-context([data-theme="dark"]) {
+    --background-light: var(--background-dark);
+    --loading-icon-light: var(--loading-icon-dark);
+}

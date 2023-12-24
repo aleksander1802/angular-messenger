@@ -1,0 +1,56 @@
+<div class="people">
+    <h2>People</h2>
+
+    <div class="people__buttons">
+        <div class="people__buttons__refresh">
+            <div *ngIf="countdownSubscription$ | async">
+                Next update in
+                {{ countdownSubscription$ | async }}
+                seconds
+            </div>
+
+            <button
+                class="people__buttons__refresh__button"
+                [disabled]="
+                    (isPeopleListLoading$ | async) ||
+                    (countdownSubscription$ | async)
+                "
+                (click)="onUpdatePeopleList()"
+            >
+                <mat-icon>refresh</mat-icon>
+            </button>
+        </div>
+    </div>
+
+    <div
+        class="people__list"
+        *ngIf="peopleItems$ | async as peopleData; else loading"
+    >
+        <ul class="people__list__items">
+            <li
+                *ngFor="let person of peopleData"
+                class="people__list__item"
+                [ngClass]="{
+                    exist:
+                        person.uid.S
+                        | existConversationClass : existingConversationList
+                }"
+            >
+                <button
+                    (click)="onStartConversationWithUser(person.uid.S)"
+                    class="people__list__item__button"
+                    [disabled]="
+                        (isPeopleListLoading$ | async) ||
+                        (isConversationLoading$ | async)
+                    "
+                >
+                    {{ person.name.S }}
+                </button>
+            </li>
+        </ul>
+    </div>
+
+    <ng-template #loading>
+        <app-loading></app-loading>
+    </ng-template>
+</div>

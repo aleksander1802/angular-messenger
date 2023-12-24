@@ -1,0 +1,123 @@
+<div class="group">
+    <ng-template #loading>
+        <app-loading></app-loading>
+    </ng-template>
+
+    <h2>Groups</h2>
+
+    <div class="group__buttons">
+        <div class="group__buttons__create">
+            <app-cyber-button
+                [buttonText]="'Create'"
+                (click)="onCreateClick()"
+                [disabled]="
+                    showDeleteModal || (isGroupLoading$ | async) || false
+                "
+            ></app-cyber-button>
+        </div>
+        <div class="group__buttons__refresh">
+            <div *ngIf="countdownSubscription | async">
+                Next update in {{ countdownSubscription | async }} seconds
+            </div>
+
+            <button
+                class="group__buttons__refresh__button"
+                [disabled]="
+                    (countdownSubscription | async) || (isGroupLoading$ | async)
+                "
+                (click)="onRefreshClick()"
+            >
+                <mat-icon>refresh</mat-icon>
+            </button>
+        </div>
+    </div>
+
+    <div
+        class="group__list"
+        *ngIf="groupItems$ | async as groupData; else loading"
+    >
+        <ul class="group__list__items">
+            <li *ngFor="let item of groupData" class="group__list__item">
+                <a
+                    [routerLink]="'/group/' + item.id.S"
+                    class="group__list__item__link"
+                    >{{ item.name.S }}</a
+                >
+                <button
+                    type="button"
+                    class="group__list__item__delete"
+                    [disabled]="
+                        isCreateMode || (isGroupLoading$ | async) || false
+                    "
+                    (click)="openDeleteModal(item.id.S)"
+                    *ngIf="item.createdBy.S === currentLocalStorageUID.uid"
+                >
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div *ngIf="isCreateMode">
+    <form class="group__form" *ngIf="groupForm" [formGroup]="groupForm">
+        <h2 class="group__form__title">Create group</h2>
+        <label for="name">group name</label>
+        <div
+            class="group__form__control"
+            [ngClass]="{ invalid: name?.touched && name?.invalid }"
+        >
+            <input
+                id="name"
+                type="text"
+                formControlName="name"
+                autocomplete="name"
+            />
+        </div>
+        <div class="validation" *ngIf="name?.touched && name?.invalid">
+            <small *ngIf="getError('name', 'required')">
+                Please enter a name
+            </small>
+            <small *ngIf="getError('name', 'maxlength')">
+                The name exceeds 30 characters
+            </small>
+            <small *ngIf="getError('name', 'pattern')">
+                The name must contain only letters, numbers, or spaces
+            </small>
+        </div>
+
+        <div class="group__form__buttons">
+            <app-cyber-button
+                [disabled]="
+                    groupForm.invalid || (isGroupLoading$ | async) || false
+                "
+                (click)="onCreateGroupSubmit()"
+                [buttonText]="'Create'"
+            ></app-cyber-button>
+
+            <app-cyber-button
+                (click)="onCancelCreate()"
+                [buttonText]="'Cancel'"
+            ></app-cyber-button>
+        </div>
+    </form>
+</div>
+
+<div *ngIf="showDeleteModal">
+    <div class="group__modal">
+        <h2 class="group__modal__title">
+            Are you sure you want to delete this group?
+        </h2>
+        <div class="group__modal__buttons">
+            <app-cyber-button
+                [disabled]="(isGroupLoading$ | async) || false"
+                (click)="confirmDelete()"
+                [buttonText]="'Delete'"
+            ></app-cyber-button>
+            <app-cyber-button
+                (click)="cancelGroupDelete()"
+                [buttonText]="'Cancel'"
+            ></app-cyber-button>
+        </div>
+    </div>
+</div>

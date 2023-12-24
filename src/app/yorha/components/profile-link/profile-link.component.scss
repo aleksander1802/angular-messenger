@@ -1,0 +1,25 @@
+.profile {
+    position: absolute;
+    bottom: 16.2rem;
+    left: -12.5rem;
+    transform: rotate(-90deg);
+    background-color: var(--color-alert-trans);    
+    transition: all 0.3s ease;
+    box-shadow: 5px 5px 1px 2px var(--font-dark);
+    &__link {
+        display: inline-block;
+        font-size: 4.9rem;
+        text-decoration: none;
+        color: var(--color-high-trans);
+        letter-spacing: 2.4rem;
+        font-weight: 700;
+        &:hover {
+            color: var(--color-high);
+        }
+    }
+
+    &:hover {
+        background-color: var(--font-dark); 
+        box-shadow: 5px 5px 1px 2px var(--color-alert);
+    }
+}

@@ -1,0 +1,69 @@
+.conversation {
+    &__form {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+
+        &__control {
+            color: var(--color-low);
+            width: 100%;
+            position: relative;
+            border-left: 15px solid var(--font-dark);
+            box-shadow: 1px 1px 0px 1px var(--shadow-alert-trans);
+            &:before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 10px;
+                width: 5px;
+                height: 100%;
+                background-color: var(--font-dark);
+            }
+            &__input {
+                width: 100%;
+                border-color: transparent;
+                background-color: var(--color-high-trans);
+
+                outline: none;
+                padding: 0.8rem;
+                padding-left: 2rem;
+            }
+        }
+        &__button {
+            &-submit {
+                position: sticky;
+            }
+        }
+    }
+}
+
+.validation {
+    color: var(--danger-color);
+    position: absolute;
+    bottom: -1.2rem;
+    left: 0;
+}
+
+.invalid {
+    color: var(--danger-color);
+
+    input {
+        border: 1px solid var(--danger-color);
+        outline-color: var(--danger-color);
+    }
+
+    border-left: 15px solid var(--danger-color);
+
+    &:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 10px;
+        width: 5px;
+        height: 100%;
+        background-color: var(--danger-color);
+    }
+
+    box-shadow: 1px 1px 0px 1px var(--danger-color);
+}

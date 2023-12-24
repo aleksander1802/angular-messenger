@@ -1,0 +1,40 @@
+.toast-container {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    padding: 1rem;
+    padding-left: 2.5rem;
+    background-color: var(--success-color);
+    color: #fff;
+    transition: opacity 0.3s ease-in-out;
+    opacity: 1;
+    min-width: 300px;
+    max-width: 450px;
+    text-align: left;
+    overflow-wrap: break-word;
+    border: none;
+    border-right: 15px solid var(--font-light);
+    -webkit-clip-path: polygon(0 70%, 10% 100%, 100% 100%, 100% 0, 0 0);
+    clip-path: polygon(0 70%, 10% 100%, 100% 100%, 100% 0, 0 0);
+}
+
+.toast-container:after,
+.toast-container:before {
+    content: "";
+    position: absolute;
+    background-color: var(--font-light);
+    height: 100%;
+    width: 5px;
+    top: 0;
+    right: 5px;
+    z-index: 1;
+}
+
+.error {
+    background-color: var(--danger-color);
+}
+
+.toast-container.ng-enter,
+.toast-container.ng-leave {
+    opacity: 0;
+}
