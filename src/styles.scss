@@ -145,3 +145,9 @@ strong {
     background-color: var(--color-alert-trans);
     border: 3px solid transparent;
 }
+
+@media (max-width: 1600px) {
+    .container {
+        max-width: 1200px;
+    }
+}

@@ -93,3 +93,9 @@ label {
     margin-bottom: 0.5rem;
     margin-top: 0.5rem;
 }
+
+@media (max-width: 1600px) {
+    .register__glory {
+        bottom: 1rem;
+    }
+}

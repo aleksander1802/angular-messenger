@@ -99,3 +99,9 @@ label {
     margin-bottom: 0.5rem;
     margin-top: 0.5rem;
 }
+
+@media (max-width: 1600px) {
+    .login__glory {
+        bottom: 2rem;
+    }
+}
